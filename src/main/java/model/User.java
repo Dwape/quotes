@@ -1,10 +1,16 @@
-package user;
+package model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Created by Dwape on 3/26/18.
  */
+
+@Entity
 public class User {
 
+    @Id
     private int id;
     private String username;
     private String email;

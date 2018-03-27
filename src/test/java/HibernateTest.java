@@ -10,7 +10,6 @@ public class HibernateTest {
 
     public static void main(String[] args) {
         User user = new User();
-        user.setId(1);
         user.setUsername("Giansco");
 
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -18,5 +17,6 @@ public class HibernateTest {
         session.beginTransaction();
         session.save(user);
         session.getTransaction().commit();
+        session.close();
     }
 }

@@ -8,10 +8,13 @@ import java.sql.Date;
  */
 
 @Entity
-@Table(name = "user")
+@Table(name = "user", indexes = @Index(name = "username", columnList = "username", unique = true))
 public class User {
 
-    @Id
+    @Id @GeneratedValue
+    @Column(name = "id")
+    private long id;
+
     @Column(name = "username")
     private String username;
 
@@ -43,6 +46,14 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setUsername(String username) {

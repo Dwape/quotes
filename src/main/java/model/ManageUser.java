@@ -16,108 +16,97 @@ public class ManageUser {
 
     /**
      * Adds a new user to the database.
-     * @param username Used to identify the user, used as the key in the database.
-     * @param email The user's email.
-     * @param password The user's password, used to log-in.
-     * @param name The user's real name.
-     * @param surname The user's surname.
-     * @param dateOfBirth The user's date of birth.
+     * @param newUser The user to be added to the database.
      * @return The user's username.
      */
-    public String addUser(String username, String email, String password, String name, String surname, Date dateOfBirth){
+    public Long addUser(User newUser){
 
-        User newUser = new User(username, email, password, name, surname, dateOfBirth);
-
-        Session session = HibernateFactory.getSessionFactory().openSession();
         Transaction tx = null;
+        Long userID = null;
 
-        try {
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            session.save(newUser);
+            userID = (Long) session.save(newUser);
+            newUser.setId(userID); //sets the user's id to the generated one.
             tx.commit();
         } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
+            if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
-        return username; //is this returned by save method? It shouldn't be necessary unless we use a generated id.
+        return userID;
     }
 
     /**
      * Updates a user's password.
-     * @param username The user's username.
+     * @param userID The user's id.
      * @param newPassword The user's new password.
      */
-    public void changePassword(String username, String newPassword){
-        User user = retrieveUser(username);
+    public void changePassword(Long userID, String newPassword){
+        User user = retrieveUser(userID);
         user.setPassword(newPassword);
         updateUser(user);
     }
 
     /**
      * Updates a user's email address.
-     * @param username The user's username.
+     * @param userID The user's id.
      * @param newEmail The new email address.
      */
-    public void changeEmail(String username, String newEmail){
-        User user = retrieveUser(username);
+    public void changeEmail(Long userID, String newEmail){
+        User user = retrieveUser(userID);
         user.setEmail(newEmail);
         updateUser(user);
     }
 
     /**
      * Updates a user's name.
-     * @param username The user's username.
+     * @param userID The user's id.
      * @param newName The new name.
      */
-    public void changeName(String username, String newName){
-        User user = retrieveUser(username);
+    public void changeName(Long userID, String newName){
+        User user = retrieveUser(userID);
         user.setName(newName);
         updateUser(user);
     }
 
     /**
      * Updates a user's surname.
-     * @param username The user's username.
+     * @param userID The user's id.
      * @param newSurname The new surname.
      */
-    public void changeSurname(String username, String newSurname){
-        User user = retrieveUser(username);
+    public void changeSurname(Long userID, String newSurname){
+        User user = retrieveUser(userID);
         user.setSurname(newSurname);
         updateUser(user);
     }
 
     /**
      * Updates a user's date of birth.
-     * @param username The user's username.
+     * @param userID The user's id.
      * @param newDateOfBirth The new date of birth.
      */
-    public void changeDateOfBirth(String username, Date newDateOfBirth){
-        User user = retrieveUser(username);
+    public void changeDateOfBirth(Long userID, Date newDateOfBirth){
+        User user = retrieveUser(userID);
         user.setDateOfBirth(newDateOfBirth);
         updateUser(user);
     }
 
     /**
      * Retrieves a user from the database, by using its key (username).
-     * @param username The user's username, used as key in the database.
+     * @param userID The user's id, used as key in the database.
      * @return The user.
      */
-    private User retrieveUser(String username){
+    private User retrieveUser(Long userID){
 
-        Session session = HibernateFactory.getSessionFactory().openSession();
         Transaction tx = null;
         User user = null;
 
-        try {
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            user = session.get(User.class, username);
+            user = session.get(User.class, userID);
         } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
+            if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return user;
     }
@@ -129,40 +118,34 @@ public class ManageUser {
      */
     private void updateUser(User user){
 
-        Session session = HibernateFactory.getSessionFactory().openSession();
         Transaction tx = null;
 
-        try {
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
             session.update(user);
             tx.commit();
         } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
+            if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
     /**
      * Deletes a user from the database.
-     * @param username The user's username, used as the key in the database.
+     * @param userID The user's id, used as the key in the database.
      */
-    public void deleteUser(String username) {
+    public void deleteUser(Long userID) {
 
-        Session session = HibernateFactory.getSessionFactory().openSession();
         Transaction tx = null;
 
-        try {
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            User user = session.get(User.class, username);
+            User user = session.get(User.class, userID);
             session.delete(user);
             tx.commit();
         } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
+            if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 }

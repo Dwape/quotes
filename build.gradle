@@ -6,6 +6,7 @@
  */
  
 apply plugin: 'java'
+apply plugin: 'war'
 
 repositories {
     mavenCentral()
@@ -16,4 +17,5 @@ dependencies {
     compile 'org.hsqldb:hsqldb:2.4.0'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.15.Final'
     testCompile group: 'junit', name: 'junit', version: '4.+'
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0'
 }

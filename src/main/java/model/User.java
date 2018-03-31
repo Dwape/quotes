@@ -2,6 +2,9 @@ package model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by Dwape on 3/26/18.
@@ -32,6 +35,10 @@ public class User {
 
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
+
+    @OneToMany
+    @JoinTable(name="USER_POST_RELATION")
+    private Collection<Post> postArray = new ArrayList<>();
 
     public User() {}
 
@@ -98,5 +105,13 @@ public class User {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Collection<Post> getPostArray() {
+        return postArray;
+    }
+
+    public void setPostArray(Collection<Post> postArray) {
+        this.postArray = postArray;
     }
 }

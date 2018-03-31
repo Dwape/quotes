@@ -17,7 +17,7 @@ public class ManageUser {
     /**
      * Adds a new user to the database.
      * @param newUser The user to be added to the database.
-     * @return The user's username.
+     * @return The user's id.
      */
     public Long addUser(User newUser){
 

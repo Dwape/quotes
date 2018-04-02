@@ -4,8 +4,10 @@ import hibernate.HibernateFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Created by Dwape on 3/27/18.
@@ -92,7 +94,7 @@ public class ManageUser {
     }
 
     /**
-     * Retrieves a user from the database, by using its key (username).
+     * Retrieves a user from the database, by using its key (user id).
      * @param userID The user's id, used as key in the database.
      * @return The user.
      */
@@ -147,5 +149,36 @@ public class ManageUser {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Verifies a user, checking if his username exists in the database and if the password porvided is the one
+     * that corresponds to said username.
+     * @param username The user's username, used to log in.
+     * @param password The user's password, used to log in.
+     * @return The user, if the password is incorrect or the user does not exist in the database, this method
+     * returns null.
+     */
+    public User verifyUser(String username, String password) {
+
+        Transaction tx = null;
+        Session session = HibernateFactory.getSessionFactory().openSession();
+
+        try {
+            tx = session.beginTransaction();
+            //String hql = "FROM User WHERE User.username = " + username; //String hql = "FROM User U WHERE U.username = " + username;
+            //String hql = "SELECT USER.username FROM USER";
+            String hql = "FROM User U WHERE U.username = :username";
+            Query query = session.createQuery(hql);
+            query.setParameter("username", username);
+            List results = query.list();
+            if (results.size() == 0) return null;
+            User user = (User) results.get(0);
+            if (user.getPassword().equals(password)) return user;
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return null;
     }
 }

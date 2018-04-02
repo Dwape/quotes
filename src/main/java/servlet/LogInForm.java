@@ -14,9 +14,14 @@ public class LogInForm extends HttpServlet {
 
         // Set response content type
         response.setContentType("text/html");
+        // New location to be redirected
+        String site = new String("http://localhost:8080/login.html");
 
+        response.setStatus(response.SC_MOVED_TEMPORARILY);
+        response.setHeader("Location", site);
+        /*
         PrintWriter out = response.getWriter();
-        String title = "Using GET Method to Read Form Data";
+        String title = "Login";
         String docType =
                 "<!doctype html public \"-//w3c//dtd html 4.0 " + "transitional//en\">\n";
 
@@ -33,6 +38,9 @@ public class LogInForm extends HttpServlet {
                 "</ul>\n" +
                 "</body>" +
                 "</html>"
-      );
+        );
+        RequestDispatcher view = request.getRequestDispatcher("webapp/index.html");
+        view.forward(request, response);
+        */
     }
 }

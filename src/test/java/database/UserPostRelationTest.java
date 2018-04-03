@@ -1,7 +1,7 @@
 package database;
 
 import hibernate.ManagePost;
-import model.ManageUser;
+import hibernate.ManageUser;
 import model.Post;
 import model.User;
 import org.junit.Test;

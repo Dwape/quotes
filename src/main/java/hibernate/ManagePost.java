@@ -1,5 +1,5 @@
 package hibernate;
-
+//java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:hsqldb/hemrajdb --dbname.0 testdb
 import model.Post;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

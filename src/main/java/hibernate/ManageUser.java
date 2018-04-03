@@ -1,6 +1,7 @@
-package model;
+package hibernate;
 
 import hibernate.HibernateFactory;
+import model.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -159,7 +160,7 @@ public class ManageUser {
      * @return The user, if the password is incorrect or the user does not exist in the database, this method
      * returns null.
      */
-    public User verifyUser(String username, String password) {
+    public static User verifyUser(String username, String password) {
 
         Transaction tx = null;
         Session session = HibernateFactory.getSessionFactory().openSession();

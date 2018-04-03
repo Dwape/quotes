@@ -1,9 +1,6 @@
 package database;
 
-import model.ManageUser;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import hibernate.ManageUser;
 import model.User;
 import org.junit.Test;
 
@@ -44,12 +41,11 @@ public class HibernateTest {
 
     @Test
     public void verifyTest(){
-        ManageUser manager = new ManageUser();
-        User user = manager.verifyUser("Dwape", "1234323");
+        User user = ManageUser.verifyUser("Dwape", "1234323");
         assert(user != null);
-        User user2 = manager.verifyUser("Dwape", "34434");
+        User user2 = ManageUser.verifyUser("Dwape", "34434");
         assert(user2 == null);
-        User user3 = manager.verifyUser("Giannini", "5454");
+        User user3 = ManageUser.verifyUser("Giannini", "5454");
         assert(user3 == null);
     }
 }

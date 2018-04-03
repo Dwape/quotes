@@ -41,11 +41,11 @@ public class HibernateTest {
 
     @Test
     public void verifyTest(){
-        User user = ManageUser.verifyUser("Dwape", "1234323");
+        User user = ManageUser.verifyUser("Giansco", "352312");
         assert(user != null);
-        User user2 = ManageUser.verifyUser("Dwape", "34434");
+        /*User user2 = ManageUser.verifyUser("Dwape", "34434");
         assert(user2 == null);
         User user3 = ManageUser.verifyUser("Giannini", "5454");
-        assert(user3 == null);
+        assert(user3 == null);*/
     }
 }

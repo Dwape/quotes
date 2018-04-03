@@ -37,6 +37,7 @@ public class User {
     private String surname;
 
     @Column(name = "date_of_birth")
+    //@DateTimeFormat(pattern = "MM-dd-yyyy")
     private Date dateOfBirth;
 
     @Transient

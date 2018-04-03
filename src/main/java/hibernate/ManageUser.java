@@ -22,7 +22,7 @@ public class ManageUser {
      * @param newUser The user to be added to the database.
      * @return The user's id.
      */
-    public Long addUser(User newUser){
+    public static Long addUser(User newUser){
 
         Transaction tx = null;
         Long userID = null;
@@ -44,7 +44,7 @@ public class ManageUser {
      * @param userID The user's id.
      * @param newPassword The user's new password.
      */
-    public void changePassword(Long userID, String newPassword){
+    public static void changePassword(Long userID, String newPassword){
         User user = retrieveUser(userID);
         user.setPassword(newPassword);
         updateUser(user);
@@ -55,7 +55,7 @@ public class ManageUser {
      * @param userID The user's id.
      * @param newEmail The new email address.
      */
-    public void changeEmail(Long userID, String newEmail){
+    public static void changeEmail(Long userID, String newEmail){
         User user = retrieveUser(userID);
         user.setEmail(newEmail);
         updateUser(user);
@@ -66,7 +66,7 @@ public class ManageUser {
      * @param userID The user's id.
      * @param newName The new name.
      */
-    public void changeName(Long userID, String newName){
+    public static void changeName(Long userID, String newName){
         User user = retrieveUser(userID);
         user.setName(newName);
         updateUser(user);
@@ -77,7 +77,7 @@ public class ManageUser {
      * @param userID The user's id.
      * @param newSurname The new surname.
      */
-    public void changeSurname(Long userID, String newSurname){
+    public static void changeSurname(Long userID, String newSurname){
         User user = retrieveUser(userID);
         user.setSurname(newSurname);
         updateUser(user);
@@ -88,7 +88,7 @@ public class ManageUser {
      * @param userID The user's id.
      * @param newDateOfBirth The new date of birth.
      */
-    public void changeDateOfBirth(Long userID, Date newDateOfBirth){
+    public static void changeDateOfBirth(Long userID, Date newDateOfBirth){
         User user = retrieveUser(userID);
         user.setDateOfBirth(newDateOfBirth);
         updateUser(user);
@@ -99,7 +99,7 @@ public class ManageUser {
      * @param userID The user's id, used as key in the database.
      * @return The user.
      */
-    private User retrieveUser(Long userID){
+    private static User retrieveUser(Long userID){
 
         Transaction tx = null;
         User user = null;
@@ -119,7 +119,7 @@ public class ManageUser {
      * and the user in the database.
      * @param user The modified user.
      */
-    private void updateUser(User user){
+    private static void updateUser(User user){
 
         Transaction tx = null;
 
@@ -137,7 +137,7 @@ public class ManageUser {
      * Deletes a user from the database.
      * @param userID The user's id, used as the key in the database.
      */
-    public void deleteUser(Long userID) {
+    public static void deleteUser(Long userID) {
 
         Transaction tx = null;
 
@@ -179,5 +179,28 @@ public class ManageUser {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Checks if the username passed as parameter is already in use.
+     * @param username The username that will be searched.
+     * @return True if the username is already in use, false otherwise.
+     */
+    public static boolean usernameInUse(String username) {
+        Transaction tx = null;
+        Session session = HibernateFactory.getSessionFactory().openSession();
+
+        try {
+            tx = session.beginTransaction();
+            String hql = "FROM User U WHERE U.username = :username";
+            Query query = session.createQuery(hql);
+            query.setParameter("username", username);
+            List results = query.list();
+            if (results.size() != 0) return true;
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return false;
     }
 }

@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/register")
+public class RegisterServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public LoginServlet() {
+    public RegisterServlet() {
         super();
     }
 
@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         RequestDispatcher dispatcher //
-                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
+                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/registerView.jsp");
 
         dispatcher.forward(request, response);
     }
@@ -35,26 +35,30 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        User userAccount = ManageUser.verifyUser(username, password);
-
-        if (userAccount == null) {
-            String errorMessage = "Invalid Username or Password";
-
+        if (ManageUser.usernameInUse(username)) {
+            String errorMessage = "Username already in use";
             request.setAttribute("errorMessage", errorMessage);
-
-            /*
-            RequestDispatcher dispatcher //
-                    = this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
-
-            dispatcher.forward(request, response);
-            return;
-            */
             doGet(request, response);
             return;
         }
+        String password = request.getParameter("password");
+        String confirmPassword = request.getParameter("confirmPassword");
+        if (!password.equals(confirmPassword)) {
+            String errorMessage = "Passwords do not match";
+            request.setAttribute("errorMessage", errorMessage);
+            doGet(request, response);
+            return;
+        }
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
+        String email = request.getParameter("email");
+        //Date is missing
 
-        AppUtils.storeLoginedUser(request.getSession(), userAccount);
+        User newUser = new User(username, email, password, name, surname, null); //date is missing.
+
+        ManageUser.addUser(newUser);
+
+        AppUtils.storeLoginedUser(request.getSession(), newUser);
 
         //
         int redirectId = -1;
@@ -72,5 +76,4 @@ public class LoginServlet extends HttpServlet {
         }
 
     }
-
 }

@@ -11,23 +11,21 @@ public class HibernateTest {
 
     @Test
     public void addUserTest(){
-        ManageUser manager = new ManageUser();
         //manager.addUser("Giansco", "gianluca.scolaro@ing.austral.edu.ar", "352312", "Gianluca", "Scolaro", new Date(1232332));
         //manager.addUser("Dwape", "eduardo.lalor@ing.austral.edu.ar", "1234323", "Eduardo", "Lalor", new Date(123233221));
         User user1 = new User("Gengu", "noway@mail.com", "afdafa", "Jeff", "Fromtheoverwatchteam", new Date(123434432));
         User user2 = new User("Giansco", "gianluca.scolaro@ing.austral.edu.ar", "352312", "Gianluca", "Scolaro", new Date(1232332));
         User user3 = new User("Dwape", "eduardo.lalor@ing.austral.edu.ar", "1234323", "Eduardo", "Lalor", new Date(123233221));
-        manager.addUser(user1);
-        manager.addUser(user2);
-        manager.addUser(user3);
+        ManageUser.addUser(user1);
+        ManageUser.addUser(user2);
+        ManageUser.addUser(user3);
         //User user4 = new User("Dope", "mymail@mail.com", "145455", "LUL", "OMEGA", new Date(122345234));
         //manager.addUser(user4);
     }
 
     @Test
     public void deleteUserTest(){
-        ManageUser manager = new ManageUser();
-        manager.deleteUser(1L);
+        ManageUser.deleteUser(4L);
     }
 
     @Test

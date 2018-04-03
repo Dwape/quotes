@@ -10,6 +10,10 @@
     User Info
 </a>
 ||
+<a href="${pageContext.request.contextPath}/manage_account">
+    Manage Account
+</a>
+||
 <a href="${pageContext.request.contextPath}/login">
     Login
 </a>

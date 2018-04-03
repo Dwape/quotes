@@ -32,12 +32,16 @@
             <td><input type="text" name="username" value= "${userAccount.username}" required/> </td>
         </tr>
         <tr>
+            <td>Date of Birth</td>
+            <td><input type="date" name="dateOfBirth" value= "${userAccount.dateOfBirth}" required/> </td>
+        </tr>
+        <tr>
             <td>Password</td>
-            <td><input type="password" name="password" value= "${userAccount.confirmPassword}" required/> </td>
+            <td><input type="password" name="password" value= "${userAccount.password}" required/> </td>
         </tr>
         <tr>
             <td>Confirm Password</td>
-            <td><input type="text" name="confirmPassword" value= "${userAccount.username}" required/> </td>
+            <td><input type="text" name="confirmPassword" value= "${userAccount.confirmPassword}" required/> </td>
         </tr>
         <tr>
             <td colspan ="2">

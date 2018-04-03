@@ -2,28 +2,32 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Manage Account</title>
 </head>
 <body>
 
 <jsp:include page="_menu.jsp"></jsp:include>
 
-<h3>Login Page</h3>
+<h3>Manage Account</h3>
 
 <p style="color: red;">${errorMessage}</p>
 
-<form method="POST" action="${pageContext.request.contextPath}/login" >
+<form method="POST" action="${pageContext.request.contextPath}/manage_account">
     <input type="hidden" name="redirectId" value="${param.redirectId}" />
+    <h2>${loginedUser.username}</h2>
     <table border="0">
         <tr>
-            <td>User Name</td>
-            <td><input type="text" name="username" value= "${userAccount.username}" required/> </td>
+            <td>Name</td>
+            <td><input type="text" name="name" value= "${loginedUser.name}" /> </td>
         </tr>
         <tr>
-            <td>Password</td>
-            <td><input type="password" name="password" value= "${userAccount.password}" required/> </td>
+            <td>Surname</td>
+            <td><input type="text" name="surname" value= "${loginedUser.surname}" /> </td>
         </tr>
-
+        <tr>
+            <td>Email</td>
+            <td><input type="email" name="email" value= "${loginedUser.email}" /> </td>
+        </tr>
         <tr>
             <td colspan ="2">
                 <input type="submit" value= "Submit" />
@@ -32,13 +36,6 @@
         </tr>
     </table>
 </form>
-
-<p style="color:blue;">Login with:</p>
-
-Giansco/352312 <br>
-Gengu/afdafa
-
-
 
 </body>
 </html>

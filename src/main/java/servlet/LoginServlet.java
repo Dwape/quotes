@@ -34,12 +34,12 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String userName = request.getParameter("userName");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
-        User userAccount = ManageUser.verifyUser(userName, password);
+        User userAccount = ManageUser.verifyUser(username, password);
 
         if (userAccount == null) {
-            String errorMessage = "Invalid userName or Password";
+            String errorMessage = "Invalid Username or Password";
 
             request.setAttribute("errorMessage", errorMessage);
 

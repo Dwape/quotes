@@ -6,6 +6,21 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+
+
+
+
+
+//DEPRECATED
+
+
+
+
+
+
+
+
+
 @WebServlet("/log_in")
 public class LogInForm extends HttpServlet {
 
@@ -15,7 +30,7 @@ public class LogInForm extends HttpServlet {
         // Set response content type
         response.setContentType("text/html");
         // New location to be redirected
-        String site = new String("http://localhost:8080/login.html");
+        String site = new String("http://localhost:8080/loginForm.jsp");
 
         response.setStatus(response.SC_MOVED_TEMPORARILY);
         response.setHeader("Location", site);

@@ -152,7 +152,7 @@ public class ManageUser {
     }
 
     /**
-     * Verifies a user, checking if his username exists in the database and if the password porvided is the one
+     * Verifies a user, checking if his username exists in the database and if the password provided is the one
      * that corresponds to said username.
      * @param username The user's username, used to log in.
      * @param password The user's password, used to log in.
@@ -166,8 +166,6 @@ public class ManageUser {
 
         try {
             tx = session.beginTransaction();
-            //String hql = "FROM User WHERE User.username = " + username; //String hql = "FROM User U WHERE U.username = " + username;
-            //String hql = "SELECT USER.username FROM USER";
             String hql = "FROM User U WHERE U.username = :username";
             Query query = session.createQuery(hql);
             query.setParameter("username", username);

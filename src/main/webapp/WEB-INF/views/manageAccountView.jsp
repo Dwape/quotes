@@ -37,7 +37,7 @@
         </tr>
     </table>
 </form>
-<form method="POST" action="${pageContext.request.contextPath}/manage_account" >
+<form method="POST" action="${pageContext.request.contextPath}/manageAccount" >
     <input type="hidden" name="redirectId" value="${param.redirectId}" />
     <input type="hidden" name="type" value="2" />
     <h3>Change Password</h3>

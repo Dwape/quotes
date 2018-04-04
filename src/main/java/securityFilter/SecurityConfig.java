@@ -20,15 +20,15 @@ public class SecurityConfig {
         List<String> urlPatterns1 = new ArrayList<>();
 
         urlPatterns1.add("/userInfo");
-        urlPatterns1.add("/employeeTask");
+        urlPatterns1.add("/manage_account");
 
         mapConfig.put(ROLE_USER, urlPatterns1);
 
         // Configure For "NONUSER" Role.
         List<String> urlPatterns2 = new ArrayList<>();
 
-        urlPatterns2.add("/userInfo");
-        urlPatterns2.add("/managerTask");
+        /*urlPatterns2.add("/register");*/
+        urlPatterns2.add("/login");
 
         mapConfig.put(ROLE_NONUSER, urlPatterns2);
     }

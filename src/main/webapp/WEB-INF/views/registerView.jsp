@@ -17,31 +17,31 @@
     <table border="0">
         <tr>
             <td>Name</td>
-            <td><input type="text" name="name" value= "${userAccount.name}" required/> </td>
+            <td><input type="text" name="name" value= "${loginedUser.name}" required/> </td>
         </tr>
         <tr>
             <td>Surname</td>
-            <td><input type="text" name="surname" value= "${userAccount.surname}" required/> </td>
+            <td><input type="text" name="surname" value= "${loginedUser.surname}" required/> </td>
         </tr>
         <tr>
             <td>Email</td>
-            <td><input type="email" name="email" value= "${userAccount.email}" required/> </td>
+            <td><input type="email" name="email" value= "${loginedUser.email}" required/> </td>
         </tr>
         <tr>
             <td>User Name</td>
-            <td><input type="text" name="username" value= "${userAccount.username}" required/> </td>
+            <td><input type="text" name="username" value= "${loginedUser.username}" required/> </td>
         </tr>
         <tr>
             <td>Date of Birth</td>
-            <td><input type="date" name="dateOfBirth" value= "${userAccount.dateOfBirth}" required/> </td>
+            <td><input type="date" name="dateOfBirth" value= "${loginedUser.dateOfBirth}" required/> </td>
         </tr>
         <tr>
             <td>Password</td>
-            <td><input type="password" name="password" value= "${userAccount.password}" required/> </td>
+            <td><input type="password" name="password" value= "${loginedUser.password}" required/> </td>
         </tr>
         <tr>
             <td>Confirm Password</td>
-            <td><input type="text" name="confirmPassword" value= "${userAccount.confirmPassword}" required/> </td>
+            <td><input type="password" name="confirmPassword" <%--value= "${loginedUser.confirmPassword}"--%> required/> </td>
         </tr>
         <tr>
             <td colspan ="2">

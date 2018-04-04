@@ -1,11 +1,11 @@
-<a href="${pageContext.request.contextPath}/employeeTask">
+<%--a href="${pageContext.request.contextPath}/employeeTask">
     Employee Task
 </a>
 ||
 <a href="${pageContext.request.contextPath}/managerTask">
     Manager Task
 </a>
-||
+||--%>
 <a href="${pageContext.request.contextPath}/userInfo">
     User Info
 </a>

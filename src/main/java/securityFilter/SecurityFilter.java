@@ -31,21 +31,28 @@ public class SecurityFilter implements Filter {
         // (After successful login).
         User loginedUser = AppUtils.getLoginedUser(request.getSession());
 
-        if (servletPath.equals("/login")) {
+        if (servletPath.equals("/login") && loginedUser != null) {
+            RequestDispatcher dispatcher //
+                    = request.getServletContext().getRequestDispatcher("/WEB-INF/views/userInfoView.jsp");
+
+            dispatcher.forward(request, response);
+            return;
+        }else if (servletPath.equals("/login")) {
             chain.doFilter(request, response);
             return;
         }
+
         HttpServletRequest wrapRequest = request;
 
         if (loginedUser != null) {
             // User Name
-            String userName = loginedUser.getUsername();
+            String username = loginedUser.getUsername();
 
             // Roles
             List<String> roles = loginedUser.getRoles();
 
             // Wrap old request by a new Request with userName and Roles information.
-            wrapRequest = new UserRoleRequestWrapper(userName, roles, request);
+            wrapRequest = new UserRoleRequestWrapper(username, roles, request);
         }
 
         // Pages must be signed in.

@@ -17,11 +17,11 @@
     <table border="0">
         <tr>
             <td>User Name</td>
-            <td><input type="text" name="username" value= "${userAccount.username}" required/> </td>
+            <td><input type="text" name="username" value= "${loginedUser.username}" required/> </td>
         </tr>
         <tr>
             <td>Password</td>
-            <td><input type="password" name="password" value= "${userAccount.password}" required/> </td>
+            <td><input type="password" name="password" value= "${loginedUser.password}" required/> </td>
         </tr>
 
         <tr>

@@ -31,9 +31,26 @@ public class ManageAccountServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    //Improve so that it makes sense (change the way in which the form being used is determined).
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        if (request.getParameter("type").equals("1")) {
+            updateInfo(request, response);
+        }
+        else {
+            changePassword(request, response);
+        }
+
+        // should redirect to manage user
+
+        doGet(request, response); //REMOVE
+
+        //display message saying changes were saved.
+    }
+
+    private void updateInfo(HttpServletRequest request, HttpServletResponse response) {
 
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
@@ -44,21 +61,42 @@ public class ManageAccountServlet extends HttpServlet {
         ManageUser.changeName(user.getId(), name);
         ManageUser.changeSurname(user.getId(), surname);
         ManageUser.changeEmail(user.getId(), email);
+        String message = "Changes saved";
+        request.setAttribute("message", message);
 
-        //
-        int redirectId = -1;
-        try {
-            redirectId = Integer.parseInt(request.getParameter("redirectId"));
-        } catch (Exception e) {
-        }
-        String requestUri = AppUtils.getRedirectAfterLoginUrl(request.getSession(), redirectId);
-        if (requestUri != null) {
-            response.sendRedirect(requestUri);
-        } else {
-            // Default after successful login
-            // redirect to /userInfo page
-            response.sendRedirect(request.getContextPath() + "/userInfo");
-        }
+        user.setName(name);
+        user.setSurname(surname);
+        user.setEmail(email);
+        AppUtils.storeLoginedUser(request.getSession(), user);
+    }
 
+    private void changePassword(HttpServletRequest request, HttpServletResponse response) {
+
+        String oldPassword = request.getParameter("oldPassword");
+        User user = AppUtils.getLoginedUser(request.getSession());
+        User verify = ManageUser.verifyUser(user.getUsername(), oldPassword);
+        if (verify == null){
+            String errorMessage = "Incorrect password";
+            request.setAttribute("errorMessage", errorMessage);
+            return;
+        }
+        String newPassword = request.getParameter("newPassword");
+        String confirmNewPassword = request.getParameter("confirmNewPassword");
+        if (!newPassword.equals(confirmNewPassword)) {
+            String errorMessage = "Passwords do not match";
+            request.setAttribute("errorMessage", errorMessage);
+            return;
+        }
+        if (newPassword.equals(oldPassword)) {
+            String errorMessage = "Your new password must be different from your current password";
+            request.setAttribute("errorMessage", errorMessage);
+            return;
+        }
+        ManageUser.changePassword(user.getId(), newPassword);
+        String message = "Password changed successfully";
+        request.setAttribute("message", message);
+
+        user.setPassword(newPassword);
+        AppUtils.storeLoginedUser(request.getSession(), user);
     }
 }

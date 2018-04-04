@@ -2,7 +2,6 @@ package servlet;
 
 import hibernate.ManageUser;
 import model.User;
-import securityFilter.AppUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -59,22 +58,8 @@ public class RegisterServlet extends HttpServlet {
 
         ManageUser.addUser(newUser);
 
-        AppUtils.storeLoginedUser(request.getSession(), newUser);
+        //request.getSession().setAttribute("LoggedInUser", newUser);
 
-        //
-        int redirectId = -1;
-        try {
-            redirectId = Integer.parseInt(request.getParameter("redirectId"));
-        } catch (Exception e) {
-        }
-        String requestUri = AppUtils.getRedirectAfterLoginUrl(request.getSession(), redirectId);
-        if (requestUri != null) {
-            response.sendRedirect(requestUri);
-        } else {
-            // Default after successful login
-            // redirect to /userInfo page
-            response.sendRedirect(request.getContextPath() + "/userInfo");
-        }
-
+        response.sendRedirect("/userInfo");
     }
 }

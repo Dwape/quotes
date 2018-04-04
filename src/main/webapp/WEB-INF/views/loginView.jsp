@@ -12,16 +12,16 @@
 
 <p style="color: red;">${errorMessage}</p>
 
-<form method="POST" action="${pageContext.request.contextPath}/login" >
+<form method="POST" action="j_security_check" >
     <input type="hidden" name="redirectId" value="${param.redirectId}" />
     <table border="0">
         <tr>
             <td>User Name</td>
-            <td><input type="text" name="username" value= "${userAccount.username}" required/> </td>
+            <td><input type="text" name="j_username" required/> </td>
         </tr>
         <tr>
             <td>Password</td>
-            <td><input type="password" name="password" value= "${userAccount.password}" required/> </td>
+            <td><input type="password" name="j_password" required/> </td>
         </tr>
 
         <tr>

@@ -2,7 +2,6 @@ package servlet;
 
 import hibernate.ManageUser;
 import model.User;
-import securityFilter.AppUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/manageAccount")
+@WebServlet("/secure/manageAccount")
 public class ManageAccountServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -45,7 +44,8 @@ public class ManageAccountServlet extends HttpServlet {
 
         // should redirect to manage user
 
-        doGet(request, response); //REMOVE
+        doGet(request, response);
+        //response.sendRedirect("/register");
 
         //display message saying changes were saved.
     }
@@ -57,24 +57,21 @@ public class ManageAccountServlet extends HttpServlet {
         String email = request.getParameter("email");
         //Date is missing
 
-        User user = AppUtils.getLoginedUser(request.getSession());
-        ManageUser.changeName(user.getId(), name);
-        ManageUser.changeSurname(user.getId(), surname);
-        ManageUser.changeEmail(user.getId(), email);
+        Long userId = Long.parseLong(request.getRemoteUser());
+        ManageUser.changeName(userId, name);
+        ManageUser.changeSurname(userId, surname);
+        ManageUser.changeEmail(userId, email);
         String message = "Changes saved";
         request.setAttribute("message", message);
-
-        user.setName(name);
-        user.setSurname(surname);
-        user.setEmail(email);
-        AppUtils.storeLoginedUser(request.getSession(), user);
     }
 
     private void changePassword(HttpServletRequest request, HttpServletResponse response) {
 
         String oldPassword = request.getParameter("oldPassword");
-        User user = AppUtils.getLoginedUser(request.getSession());
-        User verify = ManageUser.verifyUser(user.getUsername(), oldPassword);
+
+        Long userId = Long.parseLong(request.getRemoteUser());
+
+        User verify = ManageUser.verifyUser((String)request.getSession().getAttribute("Username"), oldPassword);
         if (verify == null){
             String errorMessage = "Incorrect password";
             request.setAttribute("errorMessage", errorMessage);
@@ -92,11 +89,8 @@ public class ManageAccountServlet extends HttpServlet {
             request.setAttribute("errorMessage", errorMessage);
             return;
         }
-        ManageUser.changePassword(user.getId(), newPassword);
+        ManageUser.changePassword(userId, newPassword);
         String message = "Password changed successfully";
         request.setAttribute("message", message);
-
-        user.setPassword(newPassword);
-        AppUtils.storeLoginedUser(request.getSession(), user);
     }
 }

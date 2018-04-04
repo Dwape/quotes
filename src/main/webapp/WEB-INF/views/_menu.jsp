@@ -6,11 +6,11 @@
     Manager Task
 </a>
 ||
-<a href="${pageContext.request.contextPath}/userInfo">
+<a href="${pageContext.request.contextPath}/secure/userInfo">
     User Info
 </a>
 ||
-<a href="${pageContext.request.contextPath}/manageAccount">
+<a href="${pageContext.request.contextPath}/secure/manageAccount">
     Manage Account
 </a>
 ||
@@ -27,4 +27,4 @@
 </a>
 
 &nbsp;
-<span style="color:red">[ ${loginedUser.username} ]</span>
+<span style="color:red">[ ${loggedInUser.username} ]</span>

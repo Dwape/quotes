@@ -1,13 +1,10 @@
 package model;
 
-import securityFilter.SecurityConfig;
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Dwape on 3/26/18.
@@ -40,14 +37,11 @@ public class User {
     //@DateTimeFormat(pattern = "MM-dd-yyyy")
     private Date dateOfBirth;
 
-    @Transient
-    private List<String> roles = new ArrayList<>();
-
     @OneToMany
     @JoinTable(name="USER_POST_RELATION")
     private Collection<Post> postArray = new ArrayList<>();
 
-    public User() {roles.add(SecurityConfig.ROLE_USER);}
+    public User() {}
 
     public User(String username, String email, String password, String name, String surname, Date dateOfBirth){
         this.username = username;
@@ -56,7 +50,6 @@ public class User {
         this.name = name;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
-        roles.add(SecurityConfig.ROLE_USER);
     }
 
     public String getUsername() {
@@ -113,14 +106,6 @@ public class User {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
     }
 
     public Collection<Post> getPostArray() {

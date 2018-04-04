@@ -10,7 +10,7 @@
     User Info
 </a>
 ||
-<a href="${pageContext.request.contextPath}/manage_account">
+<a href="${pageContext.request.contextPath}/manageAccount">
     Manage Account
 </a>
 ||

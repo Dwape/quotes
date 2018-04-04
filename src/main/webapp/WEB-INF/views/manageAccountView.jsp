@@ -13,7 +13,7 @@
 <p style="color: red;">${errorMessage}</p>
 <p style="color: dodgerblue;">${message}</p>
 
-<form method="POST" action="${pageContext.request.contextPath}/manage_account" >
+<form method="POST" action="${pageContext.request.contextPath}/manageAccount" >
     <input type="hidden" name="redirectId" value="${param.redirectId}" />
     <input type="hidden" name="type" value="1" />
     <h2>${loginedUser.username}</h2>

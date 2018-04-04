@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/manage_account")
+@WebServlet("/manageAccount")
 public class ManageAccountServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

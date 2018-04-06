@@ -11,13 +11,10 @@ import java.util.List;
  */
 
 @Entity
-@Table(name = "user", indexes = @Index(name = "username", columnList = "username", unique = true))
+@Table(name = "user")
 public class User {
 
-    @Id @GeneratedValue
-    @Column(name = "id")
-    private long id;
-
+    @Id
     @Column(name = "username")
     private String username;
 
@@ -35,7 +32,7 @@ public class User {
 
     @Column(name = "date_of_birth")
     //@DateTimeFormat(pattern = "MM-dd-yyyy")
-    private Date dateOfBirth;
+    private String dateOfBirth;
 
     @OneToMany
     @JoinTable(name="USER_POST_RELATION")
@@ -43,7 +40,7 @@ public class User {
 
     public User() {}
 
-    public User(String username, String email, String password, String name, String surname, Date dateOfBirth){
+    public User(String username, String email, String password, String name, String surname, String dateOfBirth){
         this.username = username;
         this.email = email;
         this.password = password;
@@ -54,14 +51,6 @@ public class User {
 
     public String getUsername() {
         return username;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public void setUsername(String username) {
@@ -100,11 +89,11 @@ public class User {
         this.surname = surname;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

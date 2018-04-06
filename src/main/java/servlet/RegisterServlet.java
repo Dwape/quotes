@@ -56,10 +56,10 @@ public class RegisterServlet extends HttpServlet {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String email = request.getParameter("email");
-        //Date dateOfBirth = request.getParameter("dateOfBirth"); //how to get a Date from the parameter returned by html
+        String dateOfBirth = request.getParameter("dateOfBirth"); //how to get a Date from the parameter returned by html
         //Date is missing
 
-        User newUser = new User(username, email, password, name, surname, null); //date is missing.
+        User newUser = new User(username, email, password, name, surname, dateOfBirth); //date is missing.
 
         ManageUser.addUser(newUser);
 

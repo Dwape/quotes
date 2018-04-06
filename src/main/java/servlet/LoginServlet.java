@@ -25,6 +25,12 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
+        /*
+        else if (request.getContextPath().equals("/loginFailed")){
+            request.setAttribute("errorMessage", "Incorrect username or password");
+        }
+        */
+
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
 

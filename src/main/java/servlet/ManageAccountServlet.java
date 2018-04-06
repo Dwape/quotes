@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/secure/manageAccount")
@@ -26,6 +27,13 @@ public class ManageAccountServlet extends HttpServlet {
 
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/WEB-INF/views/manageAccountView.jsp");
+
+        User user = ManageUser.retrieveUser(request.getRemoteUser());
+        HttpSession session = request.getSession();
+        session.setAttribute("name", user.getName());
+        session.setAttribute("surname", user.getSurname());
+        session.setAttribute("email", user.getEmail());
+        session.setAttribute("dateOfBirth", user.getDateOfBirth());
 
         dispatcher.forward(request, response);
     }
@@ -55,12 +63,13 @@ public class ManageAccountServlet extends HttpServlet {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String email = request.getParameter("email");
+        String dateOfBirth = request.getParameter("dateOfBirth");
         //Date is missing
 
-        Long userId = Long.parseLong(request.getRemoteUser());
-        ManageUser.changeName(userId, name);
-        ManageUser.changeSurname(userId, surname);
-        ManageUser.changeEmail(userId, email);
+        String username = request.getRemoteUser();
+        ManageUser.changeName(username, name);
+        ManageUser.changeSurname(username, surname);
+        ManageUser.changeEmail(username, email);
         String message = "Changes saved";
         request.setAttribute("message", message);
     }
@@ -69,9 +78,9 @@ public class ManageAccountServlet extends HttpServlet {
 
         String oldPassword = request.getParameter("oldPassword");
 
-        Long userId = Long.parseLong(request.getRemoteUser());
+        String username = request.getRemoteUser();
 
-        User verify = ManageUser.verifyUser((String)request.getSession().getAttribute("Username"), oldPassword);
+        User verify = ManageUser.verifyUser((String)request.getSession().getAttribute("username"), oldPassword);
         if (verify == null){
             String errorMessage = "Incorrect password";
             request.setAttribute("errorMessage", errorMessage);
@@ -89,7 +98,7 @@ public class ManageAccountServlet extends HttpServlet {
             request.setAttribute("errorMessage", errorMessage);
             return;
         }
-        ManageUser.changePassword(userId, newPassword);
+        ManageUser.changePassword(username, newPassword);
         String message = "Password changed successfully";
         request.setAttribute("message", message);
     }

@@ -11,7 +11,7 @@ import java.sql.Date;
 public class UserPostRelationTest {
 
     @Test public void evaluateRelation() {
-        User user = new User("Giansco","email@email","pass123","Gianluca","Scolaro",new Date(2132312));
+        User user = new User("Giansco","email@email","pass123","Gianluca","Scolaro","22-8-1967");
 
         //managerPost.addPost(new Post("To be, or not to be",new Date(2132312),"description",))
         Post post1 = new Post();

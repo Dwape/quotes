@@ -20,93 +20,91 @@ public class ManageUser {
     /**
      * Adds a new user to the database.
      * @param newUser The user to be added to the database.
-     * @return The user's id.
+     * @return The user's username.
      */
-    public static Long addUser(User newUser){
+    public static String addUser(User newUser){
 
         Transaction tx = null;
-        Long userID = null;
 
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            userID = (Long) session.save(newUser);
-            newUser.setId(userID); //sets the user's id to the generated one.
+            session.save(newUser);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
-        return userID;
+        return newUser.getUsername();
     }
 
     /**
      * Updates a user's password.
-     * @param userID The user's id.
+     * @param username The user's username.
      * @param newPassword The user's new password.
      */
-    public static void changePassword(Long userID, String newPassword){
-        User user = retrieveUser(userID);
+    public static void changePassword(String username, String newPassword){
+        User user = retrieveUser(username);
         user.setPassword(newPassword);
         updateUser(user);
     }
 
     /**
      * Updates a user's email address.
-     * @param userID The user's id.
+     * @param username The user's username.
      * @param newEmail The new email address.
      */
-    public static void changeEmail(Long userID, String newEmail){
-        User user = retrieveUser(userID);
+    public static void changeEmail(String username, String newEmail){
+        User user = retrieveUser(username);
         user.setEmail(newEmail);
         updateUser(user);
     }
 
     /**
      * Updates a user's name.
-     * @param userID The user's id.
+     * @param username The user's username.
      * @param newName The new name.
      */
-    public static void changeName(Long userID, String newName){
-        User user = retrieveUser(userID);
+    public static void changeName(String username, String newName){
+        User user = retrieveUser(username);
         user.setName(newName);
         updateUser(user);
     }
 
     /**
      * Updates a user's surname.
-     * @param userID The user's id.
+     * @param username The user's username.
      * @param newSurname The new surname.
      */
-    public static void changeSurname(Long userID, String newSurname){
-        User user = retrieveUser(userID);
+    public static void changeSurname(String username, String newSurname){
+        User user = retrieveUser(username);
         user.setSurname(newSurname);
         updateUser(user);
     }
 
     /**
      * Updates a user's date of birth.
-     * @param userID The user's id.
+     * @param username The user's username.
      * @param newDateOfBirth The new date of birth.
      */
-    public static void changeDateOfBirth(Long userID, Date newDateOfBirth){
-        User user = retrieveUser(userID);
+    public static void changeDateOfBirth(String username, String newDateOfBirth){
+        User user = retrieveUser(username);
         user.setDateOfBirth(newDateOfBirth);
         updateUser(user);
     }
 
     /**
-     * Retrieves a user from the database, by using its key (user id).
-     * @param userID The user's id, used as key in the database.
+     * Retrieves a user from the database, by using its key (username).
+     * @param username The user's username, used as key in the database.
      * @return The user.
      */
-    private static User retrieveUser(Long userID){
+    public static User retrieveUser(String username){
 
         Transaction tx = null;
         User user = null;
 
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            user = session.get(User.class, userID);
+            user = session.get(User.class, username);
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
@@ -135,15 +133,15 @@ public class ManageUser {
 
     /**
      * Deletes a user from the database.
-     * @param userID The user's id, used as the key in the database.
+     * @param username The user's username, used as the key in the database.
      */
-    public static void deleteUser(Long userID) {
+    public static void deleteUser(String username) {
 
         Transaction tx = null;
 
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            User user = session.get(User.class, userID);
+            User user = session.get(User.class, username);
             session.delete(user);
             tx.commit();
         } catch (HibernateException e) {
@@ -167,12 +165,7 @@ public class ManageUser {
 
         try {
             tx = session.beginTransaction();
-            String hql = "FROM User U WHERE U.username = :username";
-            Query query = session.createQuery(hql);
-            query.setParameter("username", username);
-            List results = query.list();
-            if (results.size() == 0) return null;
-            User user = (User) results.get(0);
+            User user = session.get(User.class, username);
             if (user.getPassword().equals(password)) return user;
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
@@ -192,11 +185,8 @@ public class ManageUser {
 
         try {
             tx = session.beginTransaction();
-            String hql = "FROM User U WHERE U.username = :username";
-            Query query = session.createQuery(hql);
-            query.setParameter("username", username);
-            List results = query.list();
-            if (results.size() != 0) return true;
+            User user = session.get(User.class, username);
+            if (user != null) return true;
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();

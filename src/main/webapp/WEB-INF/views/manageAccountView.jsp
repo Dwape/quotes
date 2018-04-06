@@ -16,19 +16,23 @@
 <form method="POST" action="${pageContext.request.contextPath}/secure/manageAccount" >
     <input type="hidden" name="redirectId" value="${param.redirectId}" />
     <input type="hidden" name="type" value="1" />
-    <h2>${loggedInUser.username}</h2>
+    <h2>${username}</h2>
     <table border="0">
         <tr>
             <td>Name</td>
-            <td><input type="text" name="name" value= "${loggedInUser.name}" /> </td>
+            <td><input type="text" name="name" value= "${name}" /> </td>
         </tr>
         <tr>
             <td>Surname</td>
-            <td><input type="text" name="surname" value= "${loggedInUser.surname}" /> </td>
+            <td><input type="text" name="surname" value= "${surname}" /> </td>
         </tr>
         <tr>
             <td>Email</td>
-            <td><input type="email" name="email" value= "${loggedInUser.email}" /> </td>
+            <td><input type="email" name="email" value= "${email}" /> </td>
+        </tr>
+        <tr>
+            <td>Date of Birth</td>
+            <td><input type="date" name="email" value= "${dateOfBirth}" /> </td>
         </tr>
         <tr>
             <td colspan ="2">

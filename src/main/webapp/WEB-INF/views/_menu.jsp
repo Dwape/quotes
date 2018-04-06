@@ -27,4 +27,4 @@
 </a>
 
 &nbsp;
-<span style="color:red">[ ${loggedInUser.username} ]</span>
+<span style="color:red">[ ${username} ]</span>

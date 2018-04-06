@@ -32,5 +32,4 @@ public class UserInfoServlet extends HttpServlet {
 
         //doGet(request, response);
     }
-
 }

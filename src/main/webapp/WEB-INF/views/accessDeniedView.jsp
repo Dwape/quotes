@@ -10,14 +10,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Access Denied</title>
+    <jsp:include page="bootstrapHead.jsp"></jsp:include>
 </head>
 <body>
 
-<jsp:include page="_menu.jsp"></jsp:include>
+    <jsp:include page="_menu.jsp"></jsp:include>
 
-<br/><br/>
+    <br/><br/>
 
-<h3 style="color:red;">Access Denied!</h3>
-
+    <h3 style="color:red;">Access Denied!</h3>
+    <jsp:include page="bootstrapBody.jsp"></jsp:include>
 </body>
 </html>

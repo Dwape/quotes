@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/userInfo")
+@WebServlet("/secure/userInfo")
 public class UserInfoServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -30,7 +30,6 @@ public class UserInfoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        doGet(request, response);
+        //doGet(request, response);
     }
-
 }

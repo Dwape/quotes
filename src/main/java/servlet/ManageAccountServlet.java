@@ -2,7 +2,6 @@ package servlet;
 
 import hibernate.ManageUser;
 import model.User;
-import securityFilter.AppUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,9 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/manageAccount")
+@WebServlet("/secure/manageAccount")
 public class ManageAccountServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -27,6 +27,13 @@ public class ManageAccountServlet extends HttpServlet {
 
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/WEB-INF/views/manageAccountView.jsp");
+
+        User user = ManageUser.retrieveUser(request.getRemoteUser());
+        HttpSession session = request.getSession();
+        session.setAttribute("name", user.getName());
+        session.setAttribute("surname", user.getSurname());
+        session.setAttribute("email", user.getEmail());
+        session.setAttribute("dateOfBirth", user.getDateOfBirth());
 
         dispatcher.forward(request, response);
     }
@@ -45,7 +52,8 @@ public class ManageAccountServlet extends HttpServlet {
 
         // should redirect to manage user
 
-        doGet(request, response); //REMOVE
+        doGet(request, response);
+        //response.sendRedirect("/register");
 
         //display message saying changes were saved.
     }
@@ -55,26 +63,24 @@ public class ManageAccountServlet extends HttpServlet {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String email = request.getParameter("email");
+        String dateOfBirth = request.getParameter("dateOfBirth");
         //Date is missing
 
-        User user = AppUtils.getLoginedUser(request.getSession());
-        ManageUser.changeName(user.getId(), name);
-        ManageUser.changeSurname(user.getId(), surname);
-        ManageUser.changeEmail(user.getId(), email);
+        String username = request.getRemoteUser();
+        ManageUser.changeName(username, name);
+        ManageUser.changeSurname(username, surname);
+        ManageUser.changeEmail(username, email);
         String message = "Changes saved";
         request.setAttribute("message", message);
-
-        user.setName(name);
-        user.setSurname(surname);
-        user.setEmail(email);
-        AppUtils.storeLoginedUser(request.getSession(), user);
     }
 
     private void changePassword(HttpServletRequest request, HttpServletResponse response) {
 
         String oldPassword = request.getParameter("oldPassword");
-        User user = AppUtils.getLoginedUser(request.getSession());
-        User verify = ManageUser.verifyUser(user.getUsername(), oldPassword);
+
+        String username = request.getRemoteUser();
+
+        User verify = ManageUser.verifyUser((String)request.getSession().getAttribute("username"), oldPassword);
         if (verify == null){
             String errorMessage = "Incorrect password";
             request.setAttribute("errorMessage", errorMessage);
@@ -92,11 +98,8 @@ public class ManageAccountServlet extends HttpServlet {
             request.setAttribute("errorMessage", errorMessage);
             return;
         }
-        ManageUser.changePassword(user.getId(), newPassword);
+        ManageUser.changePassword(username, newPassword);
         String message = "Password changed successfully";
         request.setAttribute("message", message);
-
-        user.setPassword(newPassword);
-        AppUtils.storeLoginedUser(request.getSession(), user);
     }
 }

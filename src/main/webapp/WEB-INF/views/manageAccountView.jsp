@@ -14,22 +14,26 @@
     <p style="color: red;">${errorMessage}</p>
     <p style="color: dodgerblue;">${message}</p>
 
-    <form method="POST" action="${pageContext.request.contextPath}/manageAccount" >
+    <form method="POST" action="${pageContext.request.contextPath}/secure/manageAccount" >
         <input type="hidden" name="redirectId" value="${param.redirectId}" />
         <input type="hidden" name="type" value="1" />
-        <h2>${loginedUser.username}</h2>
+        <h2>${username}</h2>
         <table border="0">
             <tr>
                 <td>Name</td>
-                <td><input type="text" name="name" value= "${loginedUser.name}" /> </td>
+                <td><input type="text" name="name" value= "${name}" /> </td>
             </tr>
             <tr>
                 <td>Surname</td>
-                <td><input type="text" name="surname" value= "${loginedUser.surname}" /> </td>
+                <td><input type="text" name="surname" value= "${surname}" /> </td>
             </tr>
             <tr>
                 <td>Email</td>
-                <td><input type="email" name="email" value= "${loginedUser.email}" /> </td>
+                <td><input type="email" name="email" value= "${email}" /> </td>
+            </tr>
+            <tr>
+                <td>Date of Birth</td>
+                <td><input type="date" name="email" value= "${dateOfBirth}" /> </td>
             </tr>
             <tr>
                 <td colspan ="2">
@@ -38,7 +42,7 @@
             </tr>
         </table>
     </form>
-    <form method="POST" action="${pageContext.request.contextPath}/manageAccount" >
+    <form method="POST" action="${pageContext.request.contextPath}/secure/manageAccount" >
         <input type="hidden" name="redirectId" value="${param.redirectId}" />
         <input type="hidden" name="type" value="2" />
         <h3>Change Password</h3>

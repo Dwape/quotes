@@ -1,26 +1,20 @@
 package model;
 
-import securityFilter.SecurityConfig;
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Dwape on 3/26/18.
  */
 
 @Entity
-@Table(name = "user", indexes = @Index(name = "username", columnList = "username", unique = true))
+@Table(name = "user")
 public class User {
 
-    @Id @GeneratedValue
-    @Column(name = "id")
-    private long id;
-
+    @Id
     @Column(name = "username")
     private String username;
 
@@ -38,37 +32,25 @@ public class User {
 
     @Column(name = "date_of_birth")
     //@DateTimeFormat(pattern = "MM-dd-yyyy")
-    private Date dateOfBirth;
-
-    @Transient
-    private List<String> roles = new ArrayList<>();
+    private String dateOfBirth;
 
     @OneToMany
     @JoinTable(name="USER_POST_RELATION")
     private Collection<Post> postArray = new ArrayList<>();
 
-    public User() {roles.add(SecurityConfig.ROLE_USER);}
+    public User() {}
 
-    public User(String username, String email, String password, String name, String surname, Date dateOfBirth){
+    public User(String username, String email, String password, String name, String surname, String dateOfBirth){
         this.username = username;
         this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
-        roles.add(SecurityConfig.ROLE_USER);
     }
 
     public String getUsername() {
         return username;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public void setUsername(String username) {
@@ -107,20 +89,12 @@ public class User {
         this.surname = surname;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
     }
 
     public Collection<Post> getPostArray() {

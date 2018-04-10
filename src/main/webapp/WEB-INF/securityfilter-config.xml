@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE securityfilter-config PUBLIC
+        "-//SecurityFilter.org//DTD Security Filter Configuration 2.0//EN"
+        "http://www.securityfilter.org/dtd/securityfilter-config_2_0.dtd">
+
+<securityfilter-config>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Secure Page</web-resource-name>
+            <url-pattern>/secure/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>*</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login</form-login-page>
+            <form-error-page>/failed_login</form-error-page>
+            <form-default-page>/home</form-default-page>
+        </form-login-config>
+    </login-config>
+
+    <realm className="securityFilter.SecurityRealm"/>
+
+</securityfilter-config>

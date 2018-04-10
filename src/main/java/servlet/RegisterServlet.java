@@ -2,7 +2,6 @@ package servlet;
 
 import hibernate.ManageUser;
 import model.User;
-import securityFilter.AppUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,6 +22,11 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        if (request.getRemoteUser() != null) {
+            response.sendRedirect("/secure/userInfo");
+            return;
+        }
 
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/WEB-INF/views/registerView.jsp");
@@ -52,29 +56,13 @@ public class RegisterServlet extends HttpServlet {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String email = request.getParameter("email");
-        //Date dateOfBirth = request.getParameter("dateOfBirth"); //how to get a Date from the parameter returned by html
+        String dateOfBirth = request.getParameter("dateOfBirth"); //how to get a Date from the parameter returned by html
         //Date is missing
 
-        User newUser = new User(username, email, password, name, surname, null); //date is missing.
+        User newUser = new User(username, email, password, name, surname, dateOfBirth); //date is missing.
 
         ManageUser.addUser(newUser);
 
-        AppUtils.storeLoginedUser(request.getSession(), newUser);
-
-        //
-        int redirectId = -1;
-        try {
-            redirectId = Integer.parseInt(request.getParameter("redirectId"));
-        } catch (Exception e) {
-        }
-        String requestUri = AppUtils.getRedirectAfterLoginUrl(request.getSession(), redirectId);
-        if (requestUri != null) {
-            response.sendRedirect(requestUri);
-        } else {
-            // Default after successful login
-            // redirect to /userInfo page
-            response.sendRedirect(request.getContextPath() + "/userInfo");
-        }
-
+        response.sendRedirect("/login");
     }
 }

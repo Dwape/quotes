@@ -35,16 +35,16 @@
     </form>--%>
 
     <div style="width: 30%" class="container bg-primary text-white p-3 rounded">
-        <form <%--method="POST" action="${pageContext.request.contextPath}/login"--%>>
+        <form method="POST" action="j_security_check">
             <div class="form-group">
                 <%--<input type="hidden" name="redirectId" value="${param.redirectId}" />--%>
                 <label for="exampleInputUsername">Username</label>
-                <input type="text" class="form-control form-control-sm" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Enter username">
+                <input type="text" name="j_username" class="form-control form-control-sm" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Enter username" required>
                 <%--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>--%>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Password">
+                <input type="password" name="j_password" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Password">
             </div>
             <%--<div class="form-check">
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">

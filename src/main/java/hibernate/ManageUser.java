@@ -166,6 +166,7 @@ public class ManageUser {
         try {
             tx = session.beginTransaction();
             User user = session.get(User.class, username);
+            if (user == null) return null;
             if (user.getPassword().equals(password)) return user;
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();

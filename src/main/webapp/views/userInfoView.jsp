@@ -9,9 +9,9 @@
 
     <jsp:include page="_menuLoggedIn.jsp"></jsp:include>
 
-    <h3>Hello: ${username}</h3>
+    <h3>Hello: <%=request.getRemoteUser()%></h3>
 
-    User Name: <b>${username}</b>
+    User Name: <b><%=request.getRemoteUser()%></b>
     <br />
     <%--Gender: ${loginedUser.gender } <br />--%>
 

@@ -20,11 +20,6 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (request.getRemoteUser() != null) {
-            response.sendRedirect("/secure/userInfo");
-            return;
-        }
-
         /*
         else if (request.getContextPath().equals("/loginFailed")){
             request.setAttribute("errorMessage", "Incorrect username or password");
@@ -32,7 +27,7 @@ public class LoginServlet extends HttpServlet {
         */
 
         RequestDispatcher dispatcher //
-                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
+                = this.getServletContext().getRequestDispatcher("/views/loginView.jsp");
 
         dispatcher.forward(request, response);
     }

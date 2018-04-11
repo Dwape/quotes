@@ -26,7 +26,7 @@ public class ManageAccountServlet extends HttpServlet {
             throws ServletException, IOException {
 
         RequestDispatcher dispatcher //
-                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/manageAccountView.jsp");
+                = this.getServletContext().getRequestDispatcher("/views/manageAccountView.jsp");
 
         User user = ManageUser.retrieveUser(request.getRemoteUser());
         HttpSession session = request.getSession();

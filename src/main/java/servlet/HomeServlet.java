@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet({ "/", "/index" })
+@WebServlet({"/", "/index", "/home"})
 public class HomeServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,7 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
 
         RequestDispatcher dispatcher //
-                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/homeView.jsp");
+                = this.getServletContext().getRequestDispatcher("/views/homeView.jsp");
 
         dispatcher.forward(request, response);
     }

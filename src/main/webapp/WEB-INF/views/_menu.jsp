@@ -1,35 +1,3 @@
-<%--a href="${pageContext.request.contextPath}/employeeTask">
-    Employee Task
-</a>
-||
-<a href="${pageContext.request.contextPath}/managerTask">
-    Manager Task
-</a>
-||--%>
-<%--
-<a href="${pageContext.request.contextPath}/userInfo">
-    User Info
-</a>
-||
-<a href="${pageContext.request.contextPath}/manageAccount">
-    Manage Account
-</a>
-||
-<a href="${pageContext.request.contextPath}/login">
-    Login
-</a>
-||
-<a href="${pageContext.request.contextPath}/register">
-    Register
-</a>
-||
-<a href="${pageContext.request.contextPath}/logout">
-    Logout
-</a>
-
-&nbsp;
-<span style="color:red">[ ${loginedUser.username} ]</span>--%>
-
 <nav class="navbar navbar-expand navbar-light bg-light mb-5">
     <a class="navbar-brand" href="${pageContext.request.contextPath}/index">
         <%--<img src="${pageContext.request.contextPath}/assets/images/logoTemp.jpg" width="30" height="30" class="d-inline-block align-top" alt="">--%>

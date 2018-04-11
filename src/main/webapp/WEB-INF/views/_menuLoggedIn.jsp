@@ -12,7 +12,7 @@
                 ${username}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="${pageContext.request.contextPath}/secure/manageAccount">Manage Acct</a>
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/secure/manageAccount">Manage Account</a>
                 <a class="dropdown-item" href="${pageContext.request.contextPath}/secure/userInfo">User Info</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logout</a>

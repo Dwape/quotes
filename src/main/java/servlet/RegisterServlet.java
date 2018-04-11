@@ -23,13 +23,8 @@ public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (request.getRemoteUser() != null) {
-            response.sendRedirect("/secure/userInfo");
-            return;
-        }
-
         RequestDispatcher dispatcher //
-                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/registerView.jsp");
+                = this.getServletContext().getRequestDispatcher("/views/registerView.jsp");
 
         dispatcher.forward(request, response);
     }

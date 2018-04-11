@@ -3,7 +3,7 @@ package model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 public class Post {
@@ -14,6 +14,8 @@ public class Post {
 
     private String description;
 
+    private String username;
+
     @Id
     @GeneratedValue
     private long id;
@@ -22,11 +24,12 @@ public class Post {
 
     public Post(){}
 
-    public Post(String quote, Date datePosted, String description, int idBook) {
+    public Post(String quote, Date datePosted, String description, int idBook, String username) {
         this.quote = quote;
         this.datePosted = datePosted;
         this.description = description;
         this.idBook = idBook;
+        this.username = username;
     }
 
     public String getQuote() {
@@ -67,5 +70,13 @@ public class Post {
 
     public void setIdBook(long idBook) {
         this.idBook = idBook;
+    }
+
+    public String getUsername(){
+        return username;
+    }
+
+    public void setUsername(String username){
+        this.username = username;
     }
 }

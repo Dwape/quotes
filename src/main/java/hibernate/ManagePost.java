@@ -17,7 +17,7 @@ public class ManagePost {
      * @param newPost The post to be added to the database.
      * @return The post's id.
      */
-    public Long addPost(Post newPost){
+    public static Long addPost(Post newPost){
 
         Transaction tx = null;
         Long postID = null;
@@ -38,7 +38,7 @@ public class ManagePost {
      * Deletes a user from the database.
      * @param postID The user's id, used as the key in the database.
      */
-    public void deletePost(Long postID) {
+    public static void deletePost(Long postID) {
 
         Transaction tx = null;
 

@@ -21,18 +21,19 @@
             <label for="postText">Additional text</label>
             <textarea class="form-control" id="postText" rows="5" name="text"></textarea>
         </div>
-        <div class="search">
-            <form id="form-id" method="GET">
-                <input type="text" name="searchText" placeholder="Search for books, authors, categories and more..">
-                <input type="button" value="Search" onclick="search(this.form);"/>
-            </form>
-        </div>
         <%--<div class="form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div>--%>
         <button type="submit" class="btn btn-danger">Post</button>
     </form>
+    <div class="form-group">
+        <label for="form-id">Book</label>
+        <form id="form-id" method="GET">
+            <input type="text" name="searchText" class="form-control form-control-sm" placeholder="Search for books, authors, categories and more.." required>
+            <input type="button" class="btn btn-danger" value="Search" onclick="search(this.form);"/>
+        </form>
+    </div>
 </div>
 <script>
     function search(form){

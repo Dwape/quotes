@@ -27,7 +27,7 @@
         </div>--%>
         <div class="form-group">
             <label for="book">Book</label>
-            <input type="text" id="book" name="searchText" class="form-control form-control-sm" placeholder="Search for books, authors, categories and more.." required>
+            <input type="text" id="book" name="searchText" class="form-control form-control-sm" placeholder="Search for books" required>
             <input type="button" class="btn btn-danger" value="Search" onclick="search(this.form);"/>
             <input type="hidden" name="bookId">
         </div>

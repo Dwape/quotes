@@ -4,11 +4,11 @@
         <i class="fas fa-book mr-2"></i>
         Quotes
     </a>
-    <a class="nav-link" href="${pageContext.request.contextPath}/writePost">Post</a>
+
     <div class="container-fluid d-flex justify-content-end">
         <i class="fas fa-user"></i>
 
-        <div class="dropdown mr-5">
+        <div class="dropdown mr-2">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <%=request.getRemoteUser()%>
             </a>
@@ -19,5 +19,7 @@
                 <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logout</a>
             </div>
         </div>
+
+        <a class="btn btn-outline-info my-2 my-sm-0" href="${pageContext.request.contextPath}/writePost" role="button">Post</a>
     </div>
 </nav>

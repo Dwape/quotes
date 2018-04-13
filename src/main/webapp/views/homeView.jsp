@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Home Page</title>
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
-    <link rel="stylesheet" href="../../css/homeView.css" type="text/css">
+    <link rel="stylesheet" href="../css/homeView.css" type="text/css">
 </head>
 <body>
     <c:choose>

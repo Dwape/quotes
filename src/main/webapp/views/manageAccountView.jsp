@@ -9,12 +9,13 @@
 
     <jsp:include page="_menuLoggedIn.jsp"></jsp:include>
 
-    <h3>Manage Account</h3>
 
-    <p style="color: red;">${errorMessage}</p>
-    <p style="color: dodgerblue;">${message}</p>
+    <div style="width: 30%" class="container p-0">
+        <h3>Manage Account</h3>
+        <p style="color: red;">${errorMessage}</p>
+    </div>
 
-    <form method="POST" action="${pageContext.request.contextPath}/secure/manageAccount" >
+    <%--<form method="POST" action="${pageContext.request.contextPath}/secure/manageAccount" >
         <input type="hidden" name="redirectId" value="${param.redirectId}" />
         <input type="hidden" name="type" value="1" />
         <h2>${username}</h2>
@@ -41,7 +42,40 @@
                 </td>
             </tr>
         </table>
-    </form>
+    </form>--%>
+    <div style="width: 30%" class="container bg-primary text-white p-3 rounded">
+        <form method="POST" action="${pageContext.request.contextPath}/secure/manageAccount">
+            <input type="hidden" name="redirectId" value="${param.redirectId}" />
+            <input type="hidden" name="type" value="1" />
+            <div class="form-group">
+                <label for="inputName">Username</label>
+                <input class="form-control" type="text" placeholder="<%=request.getRemoteUser()%>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="inputName">Name</label>
+                <input type="text" name="name" class="form-control form-control-sm" id="inputName"
+                       aria-describedby="nameHelp" value="${name}">
+            </div>
+            <div class="form-group">
+                <label for="inputSurname">Surname</label>
+                <input type="text" name="surname" class="form-control form-control-sm" id="inputSurname"
+                       aria-describedby="surnameHelp" value="${surname}">
+            </div>
+            <div class="form-group">
+                <label for="inputEmail">Email</label>
+                <input type="text" name="email" class="form-control form-control-sm" id="inputEmail"
+                       aria-describedby="emailHelp" value="${email}">
+            </div>
+            <div class="form-group">
+                <label for="inputDate">Date of Birth</label>
+                <input type="date" name="dateOfBirth" class="form-control form-control-sm" id="inputDate"
+                       aria-describedby="dateOfBirthHelp" value="${dateOfBirth}">
+            </div>
+
+            <button type="submit" class="btn btn-danger">Save changes</button>
+        </form>
+    </div>
+    <div style="width: 30%" class="container my-1 pl-3"><p style="color: dodgerblue;">${message}</p></div>
     <form method="POST" action="${pageContext.request.contextPath}/secure/manageAccount" >
         <input type="hidden" name="redirectId" value="${param.redirectId}" />
         <input type="hidden" name="type" value="2" />
@@ -61,7 +95,7 @@
             </tr>
             <tr>
                 <td colspan ="2">
-                    <input type="submit" value= "Confirm" />
+                    <input type="submit" id="sumbit-button" value= "Confirm" />
                     <a href="${pageContext.request.contextPath}/">Cancel</a>
                 </td>
             </tr>

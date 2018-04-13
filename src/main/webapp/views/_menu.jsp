@@ -31,7 +31,7 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>
         </ul>--%>
-        <a class="btn btn-outline-success mr-2 my-2 my-sm-0" href="${pageContext.request.contextPath}/login" role="button">Login</a>
-        <a class="btn btn-outline-success my-2 my-sm-0" href="${pageContext.request.contextPath}/register" role="button">Sign up</a>
+        <a class="btn btn-outline-info mr-2 my-2 my-sm-0" href="${pageContext.request.contextPath}/login" role="button">Login</a>
+        <a class="btn btn-outline-info my-2 my-sm-0" href="${pageContext.request.contextPath}/register" role="button">Sign up</a>
     </div>
 </nav>

@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<jsp:include page="_menu.jsp"></jsp:include>
+<jsp:include page="_menuLoggedIn.jsp"></jsp:include>
 
 <div style="width: 30%" class="container bg-primary text-white p-3 rounded">
     <form method="POST" action="${pageContext.request.contextPath}/writePost">

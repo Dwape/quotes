@@ -20,11 +20,11 @@ public class Post {
     @GeneratedValue
     private long id;
 
-    private long idBook;
+    private String idBook;
 
     public Post(){}
 
-    public Post(String quote, Date datePosted, String description, int idBook, String username) {
+    public Post(String quote, Date datePosted, String description, String idBook, String username) {
         this.quote = quote;
         this.datePosted = datePosted;
         this.description = description;
@@ -64,11 +64,11 @@ public class Post {
         this.id = id;
     }
 
-    public long getIdBook() {
+    public String getIdBook() {
         return idBook;
     }
 
-    public void setIdBook(long idBook) {
+    public void setIdBook(String idBook) {
         this.idBook = idBook;
     }
 

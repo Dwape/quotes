@@ -15,7 +15,7 @@ public class HibernateTest {
         //manager.addUser("Dwape", "eduardo.lalor@ing.austral.edu.ar", "1234323", "Eduardo", "Lalor", new Date(123233221));
         User user1 = new User("Gengu", "noway@mail.com", "afdafa", "Jeff", "Fromtheoverwatchteam", "22-8-1967");
         User user2 = new User("Giansco", "gianluca.scolaro@ing.austral.edu.ar", "352312", "Gianluca", "Scolaro", "22-8-1967");
-        User user3 = new User("Dwape", "eduardo.lalor@ing.austral.edu.ar", "pass", "Eduardo", "Lalor", "22-8-1967");
+        User user3 = new User("Dwape", "eduardo.lalor@ing.austral.edu.ar", "123", "Eduardo", "Lalor", "22-8-1967");
         ManageUser.addUser(user1);
         ManageUser.addUser(user2);
         ManageUser.addUser(user3);

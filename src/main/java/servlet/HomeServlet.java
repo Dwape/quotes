@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet({"/", "/index", "/home"})
+@WebServlet({"/index", "/home"}) //should remove index
 public class HomeServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

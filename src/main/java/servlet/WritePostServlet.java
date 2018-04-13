@@ -39,10 +39,11 @@ public class WritePostServlet extends HttpServlet {
 
         String quote = request.getParameter("quote");
         String postText = request.getParameter("text");
+        String bookId = request.getParameter("bookId");
         Date datePosted = new Date();
         //String book = request.getParameter("book");
         //Book id should be provided by Google books api.
-        Post post = new Post(quote, datePosted, postText, 1, request.getRemoteUser());
+        Post post = new Post(quote, datePosted, postText, bookId, request.getRemoteUser());
         ManagePost.addPost(post);
 
         response.sendRedirect("/home");

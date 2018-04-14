@@ -1,11 +1,11 @@
 //check if non used json can be removed after another search is done.
 //check why searches sometimes take too long.
-function search(form){
-    var searchTerm = form.searchText.value;
-    httpGet('https://www.googleapis.com/books/v1/volumes?q=' + searchTerm + '&projection=lite&orderBy=relevance&langRestrict=en&maxResults=5', form);
+function search(){
+    var searchTerm = document.getElementById("book").value;
+    httpGet('https://www.googleapis.com/books/v1/volumes?q=' + searchTerm + '&projection=lite&orderBy=relevance&langRestrict=en&maxResults=5');
 }
 
-function httpGet(url, form){
+function httpGet(url){
     fetch(url)
         .then(
             function(response) {
@@ -17,7 +17,7 @@ function httpGet(url, form){
                 // Examine the text in the response
                 response.json().then(function(data) {
                     console.log(data);
-                    dropdown(data, form);
+                    dropdown(data);
                 });
             }
         )
@@ -26,7 +26,7 @@ function httpGet(url, form){
         });
 }
 
-function dropdown(data, form){
+function dropdown(data){
     var div = document.querySelector("#bookSearchBar"),
         frag = document.createDocumentFragment(),
         select = document.createElement("select");
@@ -38,7 +38,7 @@ function dropdown(data, form){
 
     select.onchange = function(){
         var selected = select.selectedIndex;
-        form.bookId.value = data.items[selected].id;
+        document.getElementById("bookId").value = data.items[selected].id;
     };
 
     var i;

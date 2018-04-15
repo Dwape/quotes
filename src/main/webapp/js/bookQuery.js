@@ -1,5 +1,4 @@
 //check if non used json can be removed after another search is done.
-//check why searches sometimes take too long.
 function search(){
     var searchTerm = document.getElementById("book").value;
     httpGet('https://www.googleapis.com/books/v1/volumes?q=' + searchTerm + '&projection=lite&orderBy=relevance&langRestrict=en&maxResults=5');
@@ -31,6 +30,9 @@ function dropdown(data){
         frag = document.createDocumentFragment(),
         select = document.createElement("select");
 
+    //bootstrap
+    select.setAttribute("class", "form-control form-control-sm");
+
     //removes previous options, if there are any.
     while(div.firstChild){
         div.removeChild(div.firstChild);
@@ -40,16 +42,29 @@ function dropdown(data){
         var selected = select.selectedIndex;
         document.getElementById("bookId").value = data.items[selected].id;
     };
+    //no results are found.
+    if (data.totalItems === 0) {
+        select.options.add(new Option('No books found'));
+    } else {
+        //default option, if book selection is not changed.
+        document.getElementById("bookId").value = data.items[0].id;
+    }
 
     var i;
-    for (i = 0; i < 5; i++){
-        var author = data.items[i].volumeInfo.authors[0];
+    for (i = 0; i < 5 && i < data.totalItems; i++){
+        var authors = data.items[i].volumeInfo.authors;
+        var author;
+        //some books don't have authors, they could also just be ignored.
+        if (authors === undefined){
+            author = 'Anonymous';
+        } else {
+            author = data.items[i].volumeInfo.authors[0];
+        }
         var title = data.items[i].volumeInfo.title;
         select.options.add( new Option(title + ' by ' + author));
     }
     frag.appendChild(select);
     div.appendChild(frag);
 }
-
 
 

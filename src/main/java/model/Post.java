@@ -1,8 +1,6 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -14,22 +12,26 @@ public class Post {
 
     private String description;
 
-    private String username;
+    @ManyToOne
+    @JoinColumn(name="username", nullable = false)
+    private User user;
 
     @Id
     @GeneratedValue
     private long id;
 
-    private String idBook;
+    @ManyToOne
+    @JoinColumn(name="idBook", nullable = false)
+    private Book book;
 
     public Post(){}
 
-    public Post(String quote, Date datePosted, String description, String idBook, String username) {
+    public Post(String quote, Date datePosted, String description, Book book, User user) {
         this.quote = quote;
         this.datePosted = datePosted;
         this.description = description;
-        this.idBook = idBook;
-        this.username = username;
+        this.book = book;
+        this.user = user;
     }
 
     public String getQuote() {
@@ -64,19 +66,19 @@ public class Post {
         this.id = id;
     }
 
-    public String getIdBook() {
-        return idBook;
+    public Book getBook() {
+        return book;
     }
 
-    public void setIdBook(String idBook) {
-        this.idBook = idBook;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
-    public String getUsername(){
-        return username;
-    }
+    public User getUser(){
+        return user;
+    } //check if it is necessary
 
-    public void setUsername(String username){
-        this.username = username;
-    }
+    public void setUser(User user){
+        this.user = user;
+    } //check if it is necessary
 }

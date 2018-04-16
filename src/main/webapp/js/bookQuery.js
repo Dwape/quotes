@@ -15,7 +15,7 @@ function httpGet(url){
                 }
                 // Examine the text in the response
                 response.json().then(function(data) {
-                    console.log(data);
+                    //console.log(data);
                     dropdown(data);
                 });
             }
@@ -38,31 +38,41 @@ function dropdown(data){
         div.removeChild(div.firstChild);
     }
 
+    //each book is represented as an array, with all books being stored in an array.
+    var books = [];
+
     select.onchange = function(){
         var selected = select.selectedIndex;
-        document.getElementById("bookId").value = data.items[selected].id;
+        document.getElementById("bookId").value = books[selected][0];
+        document.getElementById("bookTitle").value = books[selected][1];
+        document.getElementById("bookAuthor").value = books[selected][2];
     };
+
+    var i;
+    for (i = 0; i < 5 && i < data.totalItems; i++){
+        var book = [];
+        book[0] = data.items[i].id;
+        book[1] = data.items[i].volumeInfo.title;
+        //some books don't have authors, they could also just be ignored.
+        var authors = data.items[i].volumeInfo.authors;
+        if (authors === undefined){
+            book[2] = 'Anonymous';
+        } else {
+            book[2] = data.items[i].volumeInfo.authors[0];
+        }
+        books.push(book);
+        select.options.add( new Option(book[1] + ' by ' + book[2]));
+    }
     //no results are found.
     if (data.totalItems === 0) {
         select.options.add(new Option('No books found'));
     } else {
         //default option, if book selection is not changed.
-        document.getElementById("bookId").value = data.items[0].id;
+        document.getElementById("bookId").value = books[0][0];
+        document.getElementById("bookTitle").value = books[0][1];
+        document.getElementById("bookAuthor").value = books[0][2];
     }
 
-    var i;
-    for (i = 0; i < 5 && i < data.totalItems; i++){
-        var authors = data.items[i].volumeInfo.authors;
-        var author;
-        //some books don't have authors, they could also just be ignored.
-        if (authors === undefined){
-            author = 'Anonymous';
-        } else {
-            author = data.items[i].volumeInfo.authors[0];
-        }
-        var title = data.items[i].volumeInfo.title;
-        select.options.add( new Option(title + ' by ' + author));
-    }
     frag.appendChild(select);
     div.appendChild(frag);
 }

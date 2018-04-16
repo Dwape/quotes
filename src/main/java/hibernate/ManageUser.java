@@ -1,6 +1,7 @@
 package hibernate;
 
 import hibernate.HibernateFactory;
+import model.Post;
 import model.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -193,5 +194,16 @@ public class ManageUser {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * Adds a post to a user.
+     * @param user The user that wrote the post.
+     * @param post The post written by the user.
+     */
+    public static void addPost(User user, Post post){
+        //maybe we need to look for the user in the database here.
+        user.getPostArray().add(post);
+        updateUser(user);
     }
 }

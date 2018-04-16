@@ -1,7 +1,9 @@
 package servlet;
 
+import hibernate.ManageBook;
 import hibernate.ManagePost;
 import hibernate.ManageUser;
+import model.Book;
 import model.Post;
 import model.User;
 
@@ -37,14 +39,24 @@ public class WritePostServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        User user = ManageUser.retrieveUser(request.getRemoteUser());
+
         String quote = request.getParameter("quote");
         String postText = request.getParameter("text");
         String bookId = request.getParameter("bookId");
+        String bookTitle = request.getParameter("bookTitle");
+        String bookAuthor = request.getParameter("bookAuthor");
         Date datePosted = new Date();
         //String book = request.getParameter("book");
         //Book id should be provided by Google books api.
-        Post post = new Post(quote, datePosted, postText, bookId, request.getRemoteUser());
+        Book book = new Book(bookId, bookTitle, bookAuthor);
+        Post post = new Post(quote, datePosted, postText, book, user);
+
+        ManageBook.addBook(book); //adds the book to the database.
+
         ManagePost.addPost(post);
+        ManageUser.addPost(user, post);
+        ManageBook.addPost(book, post);
 
         response.sendRedirect("/home");
     }

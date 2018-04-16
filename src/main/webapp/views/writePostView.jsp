@@ -29,6 +29,8 @@
             </select>
         </div>
         <input type="hidden" id="bookId" name="bookId">
+        <input type="hidden" id="bookTitle" name="bookTitle">
+        <input type="hidden" id="bookAuthor" name="bookAuthor">
         <button type="submit" class="btn btn-danger">Post</button>
     </form>
 </div>

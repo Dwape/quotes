@@ -1,10 +1,10 @@
 package model;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Dwape on 3/26/18.
@@ -34,9 +34,9 @@ public class User {
     //@DateTimeFormat(pattern = "MM-dd-yyyy")
     private String dateOfBirth;
 
-    @OneToMany
-    @JoinTable(name="USER_POST_RELATION")
-    private Collection<Post> postArray = new ArrayList<>();
+    //look for a different way of doing this.
+    @OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
+    private Set<Post> postArray = new HashSet<>();
 
     public User() {}
 
@@ -97,11 +97,13 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Collection<Post> getPostArray() {
+    public Set<Post> getPostArray() {
         return postArray;
     }
 
+    /*
     public void setPostArray(Collection<Post> postArray) {
         this.postArray = postArray;
     }
+    */
 }

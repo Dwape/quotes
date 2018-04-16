@@ -70,6 +70,7 @@ public class ManageAccountServlet extends HttpServlet {
         ManageUser.changeName(username, name);
         ManageUser.changeSurname(username, surname);
         ManageUser.changeEmail(username, email);
+        ManageUser.changeDateOfBirth(username,dateOfBirth);
         String message = "Changes saved";
         request.setAttribute("message", message);
     }
@@ -80,7 +81,7 @@ public class ManageAccountServlet extends HttpServlet {
 
         String username = request.getRemoteUser();
 
-        User verify = ManageUser.verifyUser((String)request.getSession().getAttribute("username"), oldPassword);
+        User verify = ManageUser.verifyUser(username, oldPassword);
         if (verify == null){
             String errorMessage = "Incorrect password";
             request.setAttribute("errorMessage", errorMessage);

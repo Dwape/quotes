@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Write Post</title>
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
 </head>
 <body>

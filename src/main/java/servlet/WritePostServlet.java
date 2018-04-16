@@ -52,7 +52,12 @@ public class WritePostServlet extends HttpServlet {
         Book book = new Book(bookId, bookTitle, bookAuthor);
         Post post = new Post(quote, datePosted, postText, book, user);
 
-        ManageBook.addBook(book); //adds the book to the database.
+        try{
+            ManageBook.addBook(book); //adds the book to the database.
+        } catch(Exception e) {
+            //if the book can not be added, it is already in the database.
+            //we could check if the book is already in the database instead.
+        }
 
         ManagePost.addPost(post);
         ManageUser.addPost(user, post);

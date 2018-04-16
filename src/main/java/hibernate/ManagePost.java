@@ -54,4 +54,54 @@ public class ManagePost {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Retrieves a post from the database, by using its key (id).
+     * @param id The post's id, used as key in the database.
+     * @return The post.
+     */
+    public static Post retrievePost(long id){
+
+        Transaction tx = null;
+        Post post = null;
+
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            post = session.get(Post.class, id);
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return post;
+    }
+
+    /**
+     * Updates a post in the database, changing any attributes that are different between user provided as parameter
+     * and the post in the database.
+     * @param post The modified post.
+     */
+    private static void updatePost(Post post){
+
+        Transaction tx = null;
+
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            session.update(post);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Updates a post's text.
+     * @param id The post's id.
+     * @param text The new text.
+     */
+    public static void changeText(Long id, String text){
+        Post post = retrievePost(id);
+        post.setDescription(text);
+        updatePost(post);
+    }
 }

@@ -19,9 +19,12 @@
         <div class="card" style="width: 40rem;">
             <h5 class="card-header">"${post.quote}"</h5>
             <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted">from <a href="#" class="card-link">${post.book.author}</a> by<a href="#" class="card-link">${post.book.title}</a></h6>
+                <h6 class="card-subtitle mb-2 text-muted">from <a href="#" class="card-link">${post.book.title}</a> by<a href="#" class="card-link ml-1">${post.book.author}</a></h6>
                 <p class="card-text">${post.description}</p>
-                <footer class="blockquote-footer">posted by ${post.user.username} on ${post.datePosted}</footer>
+                <div style="display: inline-flex">
+                    <footer class="blockquote-footer">posted by ${post.user.username} on ${post.datePosted}</footer>
+                    <a href="${pageContext.request.contextPath}/editPost?id=${post.id}" class="card-link ml-1 float-right">Edit</a>
+                </div>
             </div>
         </div>
         <br>

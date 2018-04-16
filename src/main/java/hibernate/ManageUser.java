@@ -206,4 +206,15 @@ public class ManageUser {
         user.getPostArray().add(post);
         updateUser(user);
     }
+
+    /**
+     * Removes a post from a user.
+     * @param user The user that wrote the post.
+     * @param post The post written by the user.
+     */
+    public static void removePost(User user, Post post){
+        //maybe we need to look for the user in the database here.
+        user.getPostArray().remove(post);
+        updateUser(user);
+    }
 }

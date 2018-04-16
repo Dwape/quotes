@@ -40,6 +40,17 @@ public class ManageBook {
     }
 
     /**
+     * Removes a post from a book.
+     * @param book The book quoted.
+     * @param post The post written by the user.
+     */
+    public static void removePost(Book book, Post post){
+        //maybe we need to look for the user in the database here.
+        book.getPostArray().remove(post);
+        updateBook(book);
+    }
+
+    /**
      * Updates a book in the database, changing any attributes that are different between user provided as parameter
      * and the book in the database.
      * @param book The modified book.

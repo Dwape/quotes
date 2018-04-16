@@ -12,15 +12,13 @@
 <div style="width: 30%" class="container bg-primary text-white p-3 rounded">
     <form method="POST" action="${pageContext.request.contextPath}/editPost">
         <div class="form-group">
-            <label for="exampleInputUsername">Quote</label>
-            <input type="text" name="quote" class="form-control form-control-sm" id="exampleInputUsername" aria-describedby="usernameHelp" value="${quote}" readonly>
+            <h5 id="quote">"${quote}"</h5>
         </div>
         <div class="form-group">
-            <label for="postText">Additional text</label>
+            <label for="postText">Edit text</label>
             <textarea class="form-control" id="postText" rows="5" name="text">${text}</textarea>
         </div>
         <div class="form-group">
-            <label for="book">Book</label>
             <h6 id="book">${bookTitle} by ${bookAuthor}</h6>
         </div>
         <input type="hidden" id="postId" name="postId" value="${id}">

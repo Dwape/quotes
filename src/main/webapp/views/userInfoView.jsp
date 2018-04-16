@@ -24,6 +24,7 @@
                 <div style="display: inline-flex">
                     <footer class="blockquote-footer">posted by ${post.user.username} on ${post.datePosted}</footer>
                     <a href="${pageContext.request.contextPath}/editPost?id=${post.id}" class="card-link ml-1 float-right">Edit</a>
+                    <a href="${pageContext.request.contextPath}/deletePost?id=${post.id}" class="card-link ml-1 float-right" style="color:red">Delete</a>
                 </div>
             </div>
         </div>

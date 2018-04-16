@@ -70,7 +70,7 @@ public class ManageAccountServlet extends HttpServlet {
         ManageUser.changeName(username, name);
         ManageUser.changeSurname(username, surname);
         ManageUser.changeEmail(username, email);
-        ManageUser.changeDateOfBirth(username, dateOfBirth);
+        ManageUser.changeDateOfBirth(username,dateOfBirth);
         String message = "Changes saved";
         request.setAttribute("message", message);
     }

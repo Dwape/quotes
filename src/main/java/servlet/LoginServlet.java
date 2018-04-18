@@ -30,6 +30,7 @@ public class LoginServlet extends HttpServlet {
                 = this.getServletContext().getRequestDispatcher("/views/loginView.jsp");
 
         dispatcher.forward(request, response);
+
     }
 
     @Override

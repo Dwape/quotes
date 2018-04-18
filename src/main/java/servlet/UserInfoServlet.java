@@ -29,7 +29,7 @@ public class UserInfoServlet extends HttpServlet {
         User user = ManageUser.retrieveUser(request.getRemoteUser());
         List<Post> posts = new ArrayList<>(user.getPostArray());
         request.setAttribute("posts", posts);
-        System.out.println(posts.get(0).getQuote());
+        //System.out.println(posts.get(0).getQuote());
 
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/views/userInfoView.jsp");

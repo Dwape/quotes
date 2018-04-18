@@ -1,12 +1,16 @@
 package hibernate;
 //java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:hsqldb/hemrajdb --dbname.0 testdb
 import model.Post;
+import org.apache.lucene.search.FuzzyQuery;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 
-import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ManagePost {
@@ -104,4 +108,89 @@ public class ManagePost {
         post.setDescription(text);
         updatePost(post);
     }
+
+    /*
+    public static List<Post> searchPosts(String searchTerm) {
+
+
+        EntityManager em = entityManagerFactory.createEntityManager();
+        FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+        em.getTransaction().begin();
+
+// create native Lucene query unsing the query DSL
+// alternatively you can write the Lucene query using the Lucene query parser
+// or the Lucene programmatic API. The Hibernate Search DSL is recommended though
+        QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
+        org.apache.lucene.search.Query luceneQuery = qb
+                .keyword()
+                .onFields("title", "subtitle", "authors.name")
+                .matching("Java rocks!")
+                .createQuery();
+
+// wrap Lucene query in a javax.persistence.Query
+        javax.persistence.Query jpaQuery =
+                fullTextEntityManager.createFullTextQuery(luceneQuery, Book.class);
+
+// execute search
+        List result = jpaQuery.getResultList();
+
+        em.getTransaction().commit();
+        em.close();
+
+    }
+    */
+
+    public static List<Post> searchPosts(String searchTerm) {
+        Transaction tx = null;
+        List<Post> result = new ArrayList<>();
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            FullTextSession fullTextSession = Search.getFullTextSession(session);
+            tx = fullTextSession.beginTransaction();
+            //fullTextSession.createIndexer().startAndWait(); //check if it is necessary.
+            QueryBuilder qb = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Post.class).get();
+
+            /*
+            org.apache.lucene.search.Query query = qb
+                    .keyword()
+                    .onFields("quote")
+                    .matching(searchTerm)
+                    .createQuery();
+                    */
+            org.apache.lucene.search.Query query = qb
+                    .keyword()
+                    .fuzzy()
+                    .withPrefixLength( 0 )
+                    .onField("quote")
+                    .matching(searchTerm)
+                    .createQuery();
+            /*
+            org.apache.lucene.search.Query query = qb
+                    .bool()
+                        .must(qb
+                                .keyword()
+                                .fuzzy()
+                                .withPrefixLength( 0 )
+                                .onField("quote")
+                                .matching(searchTerm)
+                                .createQuery())
+                        .should(qb
+                                .phrase()
+                                .withSlop(4)
+                                .onField("quote")
+                                .sentence(searchTerm)
+                                .createQuery())
+                    .createQuery();
+            */
+            // wrap Lucene query in a org.hibernate.Query
+            Query hibQuery = fullTextSession.createFullTextQuery(query, Post.class);
+            result = hibQuery.list(); //check if cast works
+            tx.commit();
+            //session.close(); //may be necessary.
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
+

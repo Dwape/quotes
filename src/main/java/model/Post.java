@@ -1,11 +1,28 @@
 package model;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Parameter;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Indexed
+@AnalyzerDef(name = "customAnalyzer",
+        tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+        filters = {
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "English")
+                })
+        })
 public class Post {
 
+    @Field(index=Index.YES, analyze=Analyze.NO, store=Store.YES)
+    @Analyzer(definition = "customAnalyzer")
     private String quote;
 
     private Date datePosted;
@@ -18,6 +35,7 @@ public class Post {
 
     @Id
     @GeneratedValue
+    @DocumentId
     private long id;
 
     @ManyToOne

@@ -17,6 +17,12 @@
         </c:otherwise>
     </c:choose>
     <h3 class="home-page">Home Page</h3>
+    <div style="width: 30%" class="container bg-primary text-white p-3 mb-5 rounded">
+        <form method="POST" action="${pageContext.request.contextPath}/home">
+            <input type="text" name="searchTerm" placeholder="Search for posts"/>
+            <button type="submit" id="sumbit-button" class="btn btn-danger">Search</button>
+        </form>
+    </div>
     <jsp:include page="bootstrapBody.jsp"></jsp:include>
 </body>
 </html>

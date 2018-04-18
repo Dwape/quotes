@@ -1,5 +1,8 @@
 package servlet;
 
+import hibernate.ManagePost;
+import model.Post;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,12 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
-@WebServlet({"/index", "/home"}) //should remove index
-public class HomeServlet extends HttpServlet {
+@WebServlet("/posts")
+public class ResultServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public HomeServlet() {
+    public ResultServlet() {
         super();
     }
 
@@ -20,8 +24,12 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String searchTerm = request.getParameter("q");
+        List<Post> results = ManagePost.searchPosts(searchTerm);
+        request.setAttribute("posts", results);
+
         RequestDispatcher dispatcher //
-                = this.getServletContext().getRequestDispatcher("/views/homeView.jsp");
+                = this.getServletContext().getRequestDispatcher("/views/resultView.jsp");
 
         dispatcher.forward(request, response);
     }
@@ -29,7 +37,5 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String searchTerm = request.getParameter("searchTerm");
-        response.sendRedirect("/posts?q=" + searchTerm);
     }
 }

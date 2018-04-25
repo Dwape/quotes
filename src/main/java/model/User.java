@@ -1,5 +1,7 @@
 package model;
 
+import org.hibernate.search.annotations.Indexed;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,6 +13,7 @@ import java.util.Set;
  */
 
 @Entity
+@Indexed
 @Table(name = "user")
 public class User {
 

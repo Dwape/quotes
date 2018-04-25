@@ -1,7 +1,13 @@
 package model;
+import org.apache.lucene.analysis.commongrams.CommonGramsFilterFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.LowerCaseTokenizerFactory;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.analysis.shingle.ShingleFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.apache.lucene.analysis.synonym.SynonymFilterFactory;
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Parameter;
@@ -17,12 +23,16 @@ import java.util.Date;
                 @TokenFilterDef(factory = LowerCaseFilterFactory.class),
                 @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
                         @Parameter(name = "language", value = "English")
+                }),
+                @TokenFilterDef(factory= ShingleFilterFactory.class, params = {
+                        @Parameter(name = "maxShingleSize", value = "10")
                 })
         })
 public class Post {
 
-    @Field(index=Index.YES, analyze=Analyze.NO, store=Store.YES)
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.YES)
     @Analyzer(definition = "customAnalyzer")
+    //@Analyzer(impl = StandardAnalyzer.class)
     private String quote;
 
     private Date datePosted;

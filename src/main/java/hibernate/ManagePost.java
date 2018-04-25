@@ -1,6 +1,11 @@
 package hibernate;
 //java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:hsqldb/hemrajdb --dbname.0 testdb
 import model.Post;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.FuzzyQuery;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -140,7 +145,7 @@ public class ManagePost {
     }
     */
 
-    public static List<Post> searchPosts(String searchTerm) {
+    public static List<Post> searchPosts(String searchTerm){
         Transaction tx = null;
         List<Post> result = new ArrayList<>();
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
@@ -156,34 +161,52 @@ public class ManagePost {
                     .matching(searchTerm)
                     .createQuery();
                     */
+
+            /*
+            String[] terms = searchTerm.split("\\s+");
+            org.apache.lucene.search.Query query = qb.bool().createQuery();
+            for (String term : terms) {
+            }
+            */
+            /*
+            Analyzer analyzer = new StandardAnalyzer();
+            QueryParser queryParser = new QueryParser("quote", analyzer);
+            queryParser.setDefaultOperator(QueryParser.Operator.OR);
+
+            org.apache.lucene.search.Query query = qb.keyword().onField("quote").matching(searchTerm).createQuery();
+            try {
+                query = queryParser.parse(searchTerm);
+            } catch (ParseException e) {
+
+            }
+            */
+            /*
+            org.apache.lucene.search.Query query2 = qb
+                    .phrase()
+                    .withSlop(5)
+                    .onField("quote")
+                    .sentence(searchTerm)
+                    .createQuery();
+            */
             org.apache.lucene.search.Query query = qb
                     .keyword()
                     .fuzzy()
                     .withPrefixLength( 0 )
                     .onField("quote")
-                    .matching(searchTerm)
+                    .matching("\"" + searchTerm + "\"" + "*")
                     .createQuery();
-            /*
-            org.apache.lucene.search.Query query = qb
+
+            org.apache.lucene.search.Query query4 = qb
                     .bool()
-                        .must(qb
-                                .keyword()
-                                .fuzzy()
-                                .withPrefixLength( 0 )
-                                .onField("quote")
-                                .matching(searchTerm)
-                                .createQuery())
-                        .should(qb
-                                .phrase()
-                                .withSlop(4)
-                                .onField("quote")
-                                .sentence(searchTerm)
-                                .createQuery())
+                    //.should(query2)
+                    .should(query)
                     .createQuery();
-            */
+
             // wrap Lucene query in a org.hibernate.Query
-            Query hibQuery = fullTextSession.createFullTextQuery(query, Post.class);
-            result = hibQuery.list(); //check if cast works
+            //Query hibQuery = fullTextSession.createFullTextQuery(query, Post.class);
+            Query hibQuery2 = fullTextSession.createFullTextQuery(query4, Post.class);
+            //result = hibQuery.list(); //check if cast works
+            result = hibQuery2.list(); //check if cast works
             tx.commit();
             //session.close(); //may be necessary.
         } catch (HibernateException e) {

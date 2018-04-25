@@ -15,7 +15,7 @@ function httpGet(url){
                 }
                 // Examine the text in the response
                 response.json().then(function(data) {
-                    //console.log(data);
+                    console.log(data);
                     dropdown(data);
                 });
             }

@@ -1,10 +1,13 @@
 package model;
 
+import org.hibernate.search.annotations.Indexed;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Indexed
 public class Book {
 
     @Column(name = "title")

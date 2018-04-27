@@ -24,20 +24,8 @@
             </div>
 
     <!-- Sidebar Links -->
-    <ul class="list-unstyled components">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-
-        <li><!-- Link with dropdown items -->
-            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-            <ul class="collapse list-unstyled" id="homeSubmenu">
-                <li><a href="#">Page</a></li>
-                <li><a href="#">Page</a></li>
-                <li><a href="#">Page</a></li>
-            </ul>
-
-        <li><a href="#">Portfolio</a></li>
-        <li><a href="#">Contact</a></li>
+    <ul class="authorList" id="authorList" style="list-style-type: none">
+        <li class="authorHead"><h6>Authors</h6></li>
     </ul>
     </nav>
 
@@ -54,9 +42,12 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="bookTitle" class="title" name="bookTitle" value="${post.book.title}">
+        <input type="hidden" id="bookAuthor" class="author" name="bookAuthor" value="${post.book.author}">
         <br>
     </c:forEach>
 
 <jsp:include page="bootstrapBody.jsp"></jsp:include>
+<script src="../js/searchResult.js"></script>
 </body>
 </html>

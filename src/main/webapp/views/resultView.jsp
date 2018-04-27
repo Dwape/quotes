@@ -20,12 +20,12 @@
         <nav id="sidebar" style="min-width: 250px; max-width: 250px">
             <!-- Sidebar Header -->
             <div class="sidebar-header">
-                <h3>Collapsible Sidebar</h3>
+                <h4>Filters</h4>
             </div>
 
     <!-- Sidebar Links -->
     <ul class="authorList" id="authorList" style="list-style-type: none">
-        <li class="authorHead"><h6>Authors</h6></li>
+        <li id="authorHead" style="font-weight:bold"><h5>Authors</h5></li>
     </ul>
     </nav>
 

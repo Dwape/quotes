@@ -25,8 +25,7 @@
         <button type="submit" class="btn btn-danger">Post</button>
     </form>
 </div>
-<script src="../js/bookQuery.js"></script>
-
 <jsp:include page="bootstrapBody.jsp"></jsp:include>
+<script src="../js/writePost.js"></script>
 </body>
 </html>

@@ -15,25 +15,26 @@
         </c:otherwise>
     </c:choose>
 
-    <div class="wrapper" style="display: flex; align-items: stretch">
-
-        <nav id="sidebar" style="min-width: 250px; max-width: 250px">
+    <div class="wrapper" id="wrapper">
+        <nav id="sidebar">
             <!-- Sidebar Header -->
             <div class="sidebar-header">
-                <h4>Filters</h4>
+                <h5 style="font-weight:bold">Filter results</h5>
             </div>
-
     <!-- Sidebar Links -->
-    <ul class="authorList" id="authorList" style="list-style-type: none">
-        <li id="authorHead" style="font-weight:bold"><h5>Authors</h5></li>
-    </ul>
-    <ul class="titleList" id="titleList" style="list-style-type: none">
-        <li id="titleHead" style="font-weight:bold"><h5>Books</h5></li>
-    </ul>
-    </nav>
+        <ul class="authorList" id="authorList" style="list-style-type: none">
+            <li id="authorHead" style="font-weight:bold"><h5>Authors</h5></li>
+        </ul>
+        <ul class="titleList" id="titleList" style="list-style-type: none">
+            <li id="titleHead" style="font-weight:bold"><h5>Books</h5></li>
+        </ul>
+        </nav>
 
     </div>
 
+    <div>
+        <h3>Search results for: "${q}"</h3>
+        <h4 id="noResult" style="display: none">No posts found</h4>
     <c:forEach items="${posts}" var="post">
         <div class="card" id="post" style="width: 40rem;">
             <h5 class="card-header">"${post.quote}"</h5>
@@ -49,6 +50,7 @@
         <input type="hidden" id="bookAuthor" class="author" name="bookAuthor" value="${post.book.author}">
         <br>
     </c:forEach>
+    </div>
 
 <jsp:include page="bootstrapBody.jsp"></jsp:include>
 <script src="../js/searchResult.js"></script>

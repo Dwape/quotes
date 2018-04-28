@@ -27,6 +27,7 @@ public class ResultServlet extends HttpServlet {
         String searchTerm = request.getParameter("q");
         List<Post> results = ManagePost.searchPosts(searchTerm);
         request.setAttribute("posts", results);
+        request.setAttribute("q", searchTerm);
 
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/views/resultView.jsp");

@@ -1,10 +1,12 @@
 var filters = [["author", "", 0], ["title", "", 0]]; //maybe the active option could be saved here directly.
 
 $(document).ready(function() {
-    addCategory("author");
-    addCategory("title");
-    addOptions("author", "#authorList");
-    addOptions("title", "#titleList");
+    if (!noResult()){
+        addCategory("author");
+        addCategory("title");
+        addOptions("author", "#authorList");
+        addOptions("title", "#titleList");
+    }
 });
 
 function addCategory(type){
@@ -91,4 +93,13 @@ function typeToIndex(type){
             return i;
         }
     }
+}
+
+function noResult(){
+    var posts = document.getElementsByClassName("card");
+    if (posts.length < 1){
+        var alert = document.getElementById("noResult");
+        alert.style.display = "block";
+    }
+    return posts.length < 1;
 }

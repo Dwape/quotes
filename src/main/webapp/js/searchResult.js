@@ -1,44 +1,48 @@
+var filters = [["author", 0], ["title", 0]]; //maybe the active option could be saved here directly.
+
 $(document).ready(function() {
-    addCategory();
-    addOptions();
+    addCategory("author");
+    addCategory("title");
+    addOptions("author", "#authorList");
+    addOptions("title", "#titleList");
 });
 
-function addCategory(){
-    var title = document.getElementById("authorHead");
+function addCategory(type){
+    var title = document.getElementById(type + "Head");
+    title.setAttribute("type", type);
     title.onclick = function(){
         showAll();
-        unbold();
+        unbold(title.type);
     }
 }
 
-function addOptions(){
-    var authors = authorsList();
-    var div = document.querySelector("#authorList");
-    for (var i=0; i<authors.length; i++){
-        var option = document.createElement("li"); //changed from li
-        option.setAttribute("class", "authorOption");
-        option.innerHTML = authors[i];
+function addOptions(type, selector){
+    var list = buildList(type);
+    var div = document.querySelector(selector);
+    for (var i=0; i<list.length; i++){
+        var option = document.createElement("li");
+        option.setAttribute("class", type + "Option");
+        option.innerHTML = list[i];
         //a different option needs to be created for each option.
         option.onclick = function(){
-            hide(this.innerHTML);
-            unbold();
+            //hide options that don't fulfill the condition
+            hide(this.innerHTML, type);
+            unbold(type);
             this.setAttribute("style", "font-weight:bold");
-            //un-mark every active option
-            //mark the active option
         };
         div.appendChild(option);
-
     }
 }
-
-function hide(author){
-    //console.log("it is kinda working");
+//we could save the filtered value so that
+function hide(option, type){
+    var title = document.getElementById(type + "Head"); //the title of the filter type that is being used
+    title.setAttribute("active", option); //sets "active" to the selected option
     var posts = document.getElementsByClassName("card");
-    var authors = document.getElementsByClassName("author");
+    var list = document.getElementsByClassName(type);
     for (var i=0; i<posts.length; i++){
-        if (authors[i].value !== author){
+        if (list[i].value !== option){
             posts[i].style.display = "none";
-        } else {
+        } else { //we should check if it fulfills conditions of other filters.
             posts[i].style.display = "block";
         }
     }
@@ -51,20 +55,20 @@ function showAll(){
     }
 }
 
-function authorsList(){
-    var authorsRepeated = document.getElementsByClassName("author");
-    var authors = [];
-    for (var i=0; i<authorsRepeated.length; i++){
-        if (!authors.includes(authorsRepeated[i].value)){
-            authors.push(authorsRepeated[i].value)
+function buildList(type){
+    var listRepeated = document.getElementsByClassName(type);
+    var list = [];
+    for (var i=0; i<listRepeated.length; i++){
+        if (!list.includes(listRepeated[i].value)){
+            list.push(listRepeated[i].value)
         }
     }
-    return authors;
+    return list;
 }
 
-function unbold(){
-    var authors = document.getElementsByClassName("authorOption");
-    for (var i=0; i<authors.length; i++){
-        authors[i].setAttribute("style", "font-weight:normal");
+function unbold(type){
+    var list = document.getElementsByClassName(type + "Option");
+    for (var i=0; i<list.length; i++){
+        list[i].setAttribute("style", "font-weight:normal");
     }
 }

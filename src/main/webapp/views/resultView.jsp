@@ -27,6 +27,9 @@
     <ul class="authorList" id="authorList" style="list-style-type: none">
         <li id="authorHead" style="font-weight:bold"><h5>Authors</h5></li>
     </ul>
+    <ul class="titleList" id="titleList" style="list-style-type: none">
+        <li id="titleHead" style="font-weight:bold"><h5>Books</h5></li>
+    </ul>
     </nav>
 
     </div>

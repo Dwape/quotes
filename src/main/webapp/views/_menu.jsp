@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-light bg-light mb-5">
+<nav class="navbar navbar-expand navbar-dark bg-dark mb-5" style="background-color: #212020;">
     <a class="navbar-brand" href="${pageContext.request.contextPath}/index">
         <%--<img src="${pageContext.request.contextPath}/assets/images/logoTemp.jpg" width="30" height="30" class="d-inline-block align-top" alt="">--%>
         <i class="fas fa-book mr-2"></i>
@@ -31,7 +31,8 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>
         </ul>--%>
-        <a class="btn btn-outline-info mr-2 my-2 my-sm-0" href="${pageContext.request.contextPath}/login" role="button">Login</a>
-        <a class="btn btn-outline-info my-2 my-sm-0" href="${pageContext.request.contextPath}/register" role="button">Sign up</a>
+        <a class="btn btn-outline-light my-2 my-sm-0" href="${pageContext.request.contextPath}/login" role="button">Login</a>
+        <span class="mx-2" style="color: white">or</span>
+        <a class="btn btn-outline-light my-2 my-sm-0" href="${pageContext.request.contextPath}/register" role="button">Sign up</a>
     </div>
 </nav>

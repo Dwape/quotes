@@ -15,41 +15,45 @@
         </c:otherwise>
     </c:choose>
 
-    <div class="wrapper" id="wrapper">
-        <nav id="sidebar">
-            <!-- Sidebar Header -->
-            <div class="sidebar-header">
-                <h5 style="font-weight:bold">Filter results</h5>
+    <div class="container">
+        <div class="row">
+            <div class="col-3 wrapper" id="wrapper">
+                <nav id="sidebar">
+                    <!-- Sidebar Header -->
+                    <div class="sidebar-header">
+                        <h5 style="font-weight:bold">Filter results</h5>
+                    </div>
+            <!-- Sidebar Links -->
+                <ul class="authorList" id="authorList" style="list-style-type: none">
+                    <li id="authorHead" style="font-weight:bold"><h5>Authors</h5></li>
+                </ul>
+                <ul class="titleList" id="titleList" style="list-style-type: none">
+                    <li id="titleHead" style="font-weight:bold"><h5>Books</h5></li>
+                </ul>
+                </nav>
+
             </div>
-    <!-- Sidebar Links -->
-        <ul class="authorList" id="authorList" style="list-style-type: none">
-            <li id="authorHead" style="font-weight:bold"><h5>Authors</h5></li>
-        </ul>
-        <ul class="titleList" id="titleList" style="list-style-type: none">
-            <li id="titleHead" style="font-weight:bold"><h5>Books</h5></li>
-        </ul>
-        </nav>
 
-    </div>
-
-    <div>
-        <h3>Search results for: "${q}"</h3>
-        <h4 id="noResult" style="display: none">No posts found</h4>
-    <c:forEach items="${posts}" var="post">
-        <div class="card" id="post" style="width: 40rem;">
-            <h5 class="card-header">"${post.quote}"</h5>
-            <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted">from <a href="#" class="card-link">${post.book.title}</a> by<a href="#" class="card-link ml-1">${post.book.author}</a></h6>
-                <p class="card-text">${post.description}</p>
-                <div style="display: inline-flex">
-                    <footer class="blockquote-footer">posted by ${post.user.username} on ${post.datePosted}</footer>
-                </div>
+            <div class="col-9">
+                <h3>Search results for: "${q}"</h3>
+                <h4 id="noResult" style="display: none">No posts found</h4>
+                <c:forEach items="${posts}" var="post">
+                    <div class="card" id="post" style="width: 40rem;">
+                        <h5 class="card-header">"${post.quote}"</h5>
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">from <a href="#" class="card-link">${post.book.title}</a> by<a href="#" class="card-link ml-1">${post.book.author}</a></h6>
+                            <p class="card-text">${post.description}</p>
+                            <div style="display: inline-flex">
+                                <footer class="blockquote-footer">posted by ${post.user.username} on ${post.datePosted}</footer>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="bookTitle" class="title" name="bookTitle" value="${post.book.title}">
+                    <input type="hidden" id="bookAuthor" class="author" name="bookAuthor" value="${post.book.author}">
+                    <br>
+                </c:forEach>
             </div>
         </div>
-        <input type="hidden" id="bookTitle" class="title" name="bookTitle" value="${post.book.title}">
-        <input type="hidden" id="bookAuthor" class="author" name="bookAuthor" value="${post.book.author}">
-        <br>
-    </c:forEach>
     </div>
 
 <jsp:include page="bootstrapBody.jsp"></jsp:include>

@@ -16,7 +16,7 @@
     <br />
     <%--Gender: ${loginedUser.gender } <br />--%>
     <c:forEach items="${posts}" var="post">
-        <div class="card" style="width: 40rem;">
+        <div class="card mb-4" style="width: 40rem;">
             <h5 class="card-header">"${post.quote}"</h5>
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-muted">from <a href="#" class="card-link">${post.book.title}</a> by<a href="#" class="card-link ml-1">${post.book.author}</a></h6>
@@ -28,7 +28,6 @@
                 </div>
             </div>
         </div>
-        <br>
     </c:forEach>
 
     <jsp:include page="bootstrapBody.jsp"></jsp:include>

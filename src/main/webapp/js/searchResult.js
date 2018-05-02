@@ -6,6 +6,7 @@ $(document).ready(function() {
         addCategory("title");
         addOptions("author", "#authorList");
         addOptions("title", "#titleList");
+        showResultCount();
     }
 });
 
@@ -25,13 +26,14 @@ function addOptions(type, selector){
     var div = document.querySelector(selector);
     for (var i=0; i<list.length; i++){
         var option = document.createElement("li");
-        option.setAttribute("class", type + "Option");
+        option.setAttribute("class", type + "Option clickable");
         option.innerHTML = list[i];
+        option.setAttribute("type", list[i]);
         //a different option needs to be created for each option.
         option.onclick = function(){
             //hide options that don't fulfill the condition
-            filters[typeToIndex(type)][1] = this.innerHTML; //FIX
-            filters[typeToIndex(type)][2] = 1; //FIX
+            filters[typeToIndex(type)][1] = this.type; //FIX
+            filters[typeToIndex(type)][2] = 1;
             showAll();
             checkCondition();
             unbold(type);
@@ -102,4 +104,24 @@ function noResult(){
         alert.style.display = "block";
     }
     return posts.length < 1;
+}
+
+function showResultCount(){
+    for (var i=0; i < filters.length; i++){
+        var type = filters[i][0];
+        var list = document.getElementsByClassName(type); //check if the post is hidden to add it to the list?
+        var options = document.getElementsByClassName(type + "Option clickable");
+        for (var j=0; j < options.length; j++){
+            var number = 0;
+            for (var k=0; k < list.length; k++){
+                if (list[k].value === options[j].innerHTML){
+                    number++;
+                }
+            }
+            //options[j].innerHTML = options[j].innerHTML + " (" + number + ")";
+            var span = document.createElement("span");
+            span.innerHTML = " (" + number + ")";
+            options[j].appendChild(span);
+        }
+    }
 }

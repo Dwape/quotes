@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Results</title>
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
+    <link rel="stylesheet" href="../css/resultView.css">
 </head>
 <body>
     <c:choose>
@@ -25,20 +26,20 @@
                     </div>
             <!-- Sidebar Links -->
                 <ul class="authorList" id="authorList" style="list-style-type: none">
-                    <li id="authorHead" style="font-weight:bold"><h5>Authors</h5></li>
+                    <li id="authorHead" class="clickable" style="font-weight:bold"><h5>Authors</h5></li>
                 </ul>
                 <ul class="titleList" id="titleList" style="list-style-type: none">
-                    <li id="titleHead" style="font-weight:bold"><h5>Books</h5></li>
+                    <li id="titleHead" class="clickable" style="font-weight:bold"><h5>Books</h5></li>
                 </ul>
                 </nav>
 
             </div>
 
-            <div class="col-9">
-                <h3>Search results for: "${q}"</h3>
+            <div class="col-9" >
+                <h3 class="mb-4">Search results for: "${q}"</h3>
                 <h4 id="noResult" style="display: none">No posts found</h4>
                 <c:forEach items="${posts}" var="post">
-                    <div class="card" id="post" style="width: 40rem;">
+                    <div class="card mb-4" id="post" style="width: 40rem;">
                         <h5 class="card-header">"${post.quote}"</h5>
                         <div class="card-body">
                             <h6 class="card-subtitle mb-2 text-muted">from <a href="#" class="card-link">${post.book.title}</a> by<a href="#" class="card-link ml-1">${post.book.author}</a></h6>
@@ -50,7 +51,6 @@
                     </div>
                     <input type="hidden" id="bookTitle" class="title" name="bookTitle" value="${post.book.title}">
                     <input type="hidden" id="bookAuthor" class="author" name="bookAuthor" value="${post.book.author}">
-                    <br>
                 </c:forEach>
             </div>
         </div>

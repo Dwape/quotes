@@ -23,6 +23,7 @@
                     <!-- Sidebar Header -->
                     <div class="sidebar-header">
                         <h5 style="font-weight:bold">Filter results</h5>
+                        <a onclick="clearFilters();" style="cursor: pointer">clear filters</a>
                     </div>
             <!-- Sidebar Links -->
                 <ul class="authorList" id="authorList" style="list-style-type: none">
@@ -49,8 +50,8 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" id="bookTitle" class="title" name="bookTitle" value="${post.book.title}">
-                    <input type="hidden" id="bookAuthor" class="author" name="bookAuthor" value="${post.book.author}">
+                    <input type="shown" style="display: none" id="bookTitle" class="title" name="bookTitle" value="${post.book.title}">
+                    <input type="shown" style="display: none" id="bookAuthor" class="author" name="bookAuthor" value="${post.book.author}">
                 </c:forEach>
             </div>
         </div>

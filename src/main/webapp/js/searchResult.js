@@ -63,16 +63,30 @@ function hide(option, type){
     title.setAttribute("active", option); //sets "active" to the selected option
     var posts = document.getElementsByClassName("card");
     var list = document.getElementsByClassName(type);
+
+    //new filters need to be added here
+    var authorList = document.getElementsByClassName("author");
+    var titleList = document.getElementsByClassName("title");
+
+
     for (var i=0; i<posts.length; i++){
         if (list[i].value !== option){
             posts[i].style.display = "none";
+            authorList[i].type = "hidden"; //check
+            titleList[i].type = "hidden"; //check
         }
     }
 }
 
 function showAll(){
     var posts = document.getElementsByClassName("card");
-    for (var i=0; i<posts.length; i++){
+    for (var i=0; i < filters.length; i++){
+        var list = document.getElementsByClassName(filters[i][0]);
+        for (var j=0; j < list.length; j++){
+            list[j].type = "shown";
+        }
+    }
+    for (i=0; i<posts.length; i++){
         posts[i].style.display = "block";
     }
 }
@@ -115,23 +129,12 @@ function noResult(){
 function showResultCount(){
     for (var i=0; i < filters.length; i++){
         var type = filters[i][0];
-
-        /*
-        var posts = document.getElementsByClassName("card");
-        var list = [];
-        for (var h=0; h < posts.length; h++){
-            if (posts.style === "block"){
-                list.push(posts[h].getElementsByClassName(type)[0]);
-            }
-        }
-        */
-
         var list = document.getElementsByClassName(type); //check if the post is hidden to add it to the list?
         var options = document.getElementsByClassName(type + "Option clickable");
         for (var j=0; j < options.length; j++){
             var number = 0;
             for (var k=0; k < list.length; k++){
-                if (list[k].value === options[j].type){
+                if (list[k].value === options[j].type && list[k].type !== "hidden"){
                     number++;
                 }
             }
@@ -139,4 +142,13 @@ function showResultCount(){
             numberSpan[0].innerHTML = " (" + number + ")";
         }
     }
+}
+
+function clearFilters(){
+    showAll();
+    for (var i=0; i < filters.length; i++){
+        unbold(filters[i][0]);
+        filters[i][2] = 0;
+    }
+    showResultCount();
 }

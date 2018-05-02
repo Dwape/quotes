@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Results</title>
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
+    <link rel="stylesheet" href="../css/searchResult.css">
 </head>
 <body>
     <c:choose>
@@ -38,15 +39,16 @@
                 <h3>Search results for: "${q}"</h3>
                 <h4 id="noResult" style="display: none">No posts found</h4>
                 <c:forEach items="${posts}" var="post">
-                    <div class="card" id="post" style="width: 40rem;">
+                    <div class="card boxx" id="post" style="width: 40rem;">
                         <h5 class="card-header">"${post.quote}"</h5>
                         <div class="card-body">
                             <h6 class="card-subtitle mb-2 text-muted">from <a href="#" class="card-link">${post.book.title}</a> by<a href="#" class="card-link ml-1">${post.book.author}</a></h6>
                             <p class="card-text">${post.description}</p>
                             <div style="display: inline-flex">
-                                <footer class="blockquote-footer">posted by ${post.user.username} on ${post.datePosted}</footer>
+                                <footer class="blockquote-footer">posted by ${post.user.username} on ${post.datePosted.toLocaleString()}</footer>
                             </div>
                         </div>
+                        <a class="divLink" type="hidden" href="${pageContext.request.contextPath}/postDetails?id=${post.id}"></a>
                     </div>
                     <input type="hidden" id="bookTitle" class="title" name="bookTitle" value="${post.book.title}">
                     <input type="hidden" id="bookAuthor" class="author" name="bookAuthor" value="${post.book.author}">

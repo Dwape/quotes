@@ -103,3 +103,9 @@ function noResult(){
     }
     return posts.length < 1;
 }
+/*
+
+$("#post").click(function() {
+    window.location = $(this).find("a").attr("href");
+    return false;
+});*/

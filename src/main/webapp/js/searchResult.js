@@ -18,6 +18,7 @@ function addCategory(type){
         showAll();
         checkCondition();
         unbold(title.type);
+        showResultCount();
     }
 }
 
@@ -29,6 +30,10 @@ function addOptions(type, selector){
         option.setAttribute("class", type + "Option clickable");
         option.innerHTML = list[i];
         option.setAttribute("type", list[i]);
+        var span = document.createElement("span");
+        span.innerHTML = " (" + 0 + ")";
+        span.setAttribute("class", "number");
+        option.appendChild(span);
         //a different option needs to be created for each option.
         option.onclick = function(){
             //hide options that don't fulfill the condition
@@ -37,6 +42,7 @@ function addOptions(type, selector){
             showAll();
             checkCondition();
             unbold(type);
+            showResultCount();
             this.setAttribute("style", "font-weight:bold");
         };
         div.appendChild(option);
@@ -109,19 +115,28 @@ function noResult(){
 function showResultCount(){
     for (var i=0; i < filters.length; i++){
         var type = filters[i][0];
+
+        /*
+        var posts = document.getElementsByClassName("card");
+        var list = [];
+        for (var h=0; h < posts.length; h++){
+            if (posts.style === "block"){
+                list.push(posts[h].getElementsByClassName(type)[0]);
+            }
+        }
+        */
+
         var list = document.getElementsByClassName(type); //check if the post is hidden to add it to the list?
         var options = document.getElementsByClassName(type + "Option clickable");
         for (var j=0; j < options.length; j++){
             var number = 0;
             for (var k=0; k < list.length; k++){
-                if (list[k].value === options[j].innerHTML){
+                if (list[k].value === options[j].type){
                     number++;
                 }
             }
-            //options[j].innerHTML = options[j].innerHTML + " (" + number + ")";
-            var span = document.createElement("span");
-            span.innerHTML = " (" + number + ")";
-            options[j].appendChild(span);
+            var numberSpan = options[j].getElementsByClassName("number");
+            numberSpan[0].innerHTML = " (" + number + ")";
         }
     }
 }

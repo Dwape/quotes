@@ -39,7 +39,7 @@
                     </div>
                     <!--end of col-->
                     <div class="col-auto">
-                        <button class="btn btn-lg btn-success" id="sumbit-button" type="submit">Search</button>
+                        <button class="btn btn-lg btn-primary" id="sumbit-button" type="submit">Search</button>
                     </div>
                     <!--end of col-->
                 </div>

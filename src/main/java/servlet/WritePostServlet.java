@@ -60,8 +60,6 @@ public class WritePostServlet extends HttpServlet {
         }
 
         ManagePost.addPost(post);
-        ManageUser.addPost(user, post);
-        ManageBook.addPost(book, post);
 
         response.sendRedirect("/home");
     }

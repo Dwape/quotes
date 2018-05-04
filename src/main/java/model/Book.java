@@ -8,6 +8,7 @@ import java.util.Set;
 
 @Entity
 @Indexed
+@Table(name = "book")
 public class Book {
 
     @Column(name = "title")

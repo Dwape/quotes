@@ -27,8 +27,6 @@ public class DeletePostServlet extends HttpServlet {
 
         long id = Long.parseLong(request.getParameter("id"));
         Post post = ManagePost.retrievePost(id);
-        ManageUser.removePost(post.getUser(), post);
-        ManageBook.removePost(post.getBook(), post);
         ManagePost.deletePost(id);
 
         response.sendRedirect("/home");

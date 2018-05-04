@@ -1,6 +1,7 @@
 package hibernate;
 
 import hibernate.HibernateFactory;
+import model.Comment;
 import model.Post;
 import model.User;
 import org.hibernate.HibernateException;
@@ -215,6 +216,18 @@ public class ManageUser {
     public static void removePost(User user, Post post){
         //maybe we need to look for the user in the database here.
         user.getPostArray().remove(post);
+        updateUser(user);
+    }
+
+    public static void addComment(User user, Comment comment){
+        //maybe we need to look for the user in the database here.
+        user.getCommentArray().add(comment);
+        updateUser(user);
+    }
+
+    public static void removePost(User user, Comment comment){
+        //maybe we need to look for the user in the database here.
+        user.getCommentArray().remove(comment);
         updateUser(user);
     }
 }

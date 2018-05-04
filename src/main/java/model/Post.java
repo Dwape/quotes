@@ -14,9 +14,12 @@ import org.hibernate.search.annotations.Parameter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Indexed
+@Table(name = "post")
 @AnalyzerDef(name = "customAnalyzer",
         tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
         filters = {
@@ -46,11 +49,16 @@ public class Post {
     @Id
     @GeneratedValue
     @DocumentId
+    @Column(name = "idPost")
     private long id;
 
     @ManyToOne
     @JoinColumn(name="idBook", nullable = false)
     private Book book;
+
+    //comments with no parents
+    @OneToMany(mappedBy = "post", fetch=FetchType.EAGER)
+    private Set<Comment> commentArray = new HashSet<>();
 
     public Post(){}
 
@@ -109,4 +117,8 @@ public class Post {
     public void setUser(User user){
         this.user = user;
     } //check if it is necessary
+
+    public Set<Comment> getCommentArray() {
+        return commentArray;
+    }
 }

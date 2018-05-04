@@ -1,6 +1,9 @@
 package hibernate;
 //java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:hsqldb/hemrajdb --dbname.0 testdb
+import model.Book;
+import model.Comment;
 import model.Post;
+import model.User;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -42,6 +45,8 @@ public class ManagePost {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
+        ManageUser.addPost(newPost.getUser(), newPost);
+        ManageBook.addPost(newPost.getBook(), newPost);
         return postID;
     }
 
@@ -56,6 +61,11 @@ public class ManagePost {
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
             Post post = session.get(Post.class, postID);
+
+            //could break everything
+            ManageUser.removePost(post.getUser(), post);
+            ManageBook.removePost(post.getBook(), post);
+
             session.delete(post);
             tx.commit();
         } catch (HibernateException e) {
@@ -214,6 +224,12 @@ public class ManagePost {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static void addComment(Post post, Comment comment){
+        //maybe we need to look for the user in the database here.
+        post.getCommentArray().add(comment);
+        updatePost(post);
     }
 }
 

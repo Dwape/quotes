@@ -59,8 +59,8 @@ public class PostDetailsServlet extends HttpServlet{
         String commentText = request.getParameter("text");
         Date datePosted = new Date();
 
-        long id = Long.parseLong(request.getParameter("id"));
-        Post post = ManagePost.retrievePost(id);
+        long idPost = Long.parseLong(request.getParameter("idPost"));
+        Post post = ManagePost.retrievePost(idPost);
 
         Comment comment = new Comment(user, post, null, datePosted, commentText);
 
@@ -68,6 +68,6 @@ public class PostDetailsServlet extends HttpServlet{
 
         ManageComment.addComment(comment);
 
-        response.sendRedirect("/postDetails?id=" + id);
+        response.sendRedirect("/postDetails?id=" + idPost);
     }
 }

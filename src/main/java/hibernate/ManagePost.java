@@ -3,13 +3,6 @@ package hibernate;
 import model.Book;
 import model.Comment;
 import model.Post;
-import model.User;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.queryparser.classic.ParseException;
-import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.FuzzyQuery;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -124,37 +117,6 @@ public class ManagePost {
         updatePost(post);
     }
 
-    /*
-    public static List<Post> searchPosts(String searchTerm) {
-
-
-        EntityManager em = entityManagerFactory.createEntityManager();
-        FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
-        em.getTransaction().begin();
-
-// create native Lucene query unsing the query DSL
-// alternatively you can write the Lucene query using the Lucene query parser
-// or the Lucene programmatic API. The Hibernate Search DSL is recommended though
-        QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
-        org.apache.lucene.search.Query luceneQuery = qb
-                .keyword()
-                .onFields("title", "subtitle", "authors.name")
-                .matching("Java rocks!")
-                .createQuery();
-
-// wrap Lucene query in a javax.persistence.Query
-        javax.persistence.Query jpaQuery =
-                fullTextEntityManager.createFullTextQuery(luceneQuery, Book.class);
-
-// execute search
-        List result = jpaQuery.getResultList();
-
-        em.getTransaction().commit();
-        em.close();
-
-    }
-    */
-
     public static List<Post> searchPosts(String searchTerm){
         Transaction tx = null;
         List<Post> result = new ArrayList<>();
@@ -164,40 +126,6 @@ public class ManagePost {
             //fullTextSession.createIndexer().startAndWait(); //check if it is necessary.
             QueryBuilder qb = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Post.class).get();
 
-            /*
-            org.apache.lucene.search.Query query = qb
-                    .keyword()
-                    .onFields("quote")
-                    .matching(searchTerm)
-                    .createQuery();
-                    */
-
-            /*
-            String[] terms = searchTerm.split("\\s+");
-            org.apache.lucene.search.Query query = qb.bool().createQuery();
-            for (String term : terms) {
-            }
-            */
-            /*
-            Analyzer analyzer = new StandardAnalyzer();
-            QueryParser queryParser = new QueryParser("quote", analyzer);
-            queryParser.setDefaultOperator(QueryParser.Operator.OR);
-
-            org.apache.lucene.search.Query query = qb.keyword().onField("quote").matching(searchTerm).createQuery();
-            try {
-                query = queryParser.parse(searchTerm);
-            } catch (ParseException e) {
-
-            }
-            */
-            /*
-            org.apache.lucene.search.Query query2 = qb
-                    .phrase()
-                    .withSlop(5)
-                    .onField("quote")
-                    .sentence(searchTerm)
-                    .createQuery();
-            */
             org.apache.lucene.search.Query query = qb
                     .keyword()
                     .fuzzy()

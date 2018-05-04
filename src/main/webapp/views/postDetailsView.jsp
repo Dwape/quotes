@@ -33,7 +33,7 @@
                 <label for="postText">Write a comment</label>
                 <textarea class="form-control" id="postText" rows="5" name="text"></textarea>
             </div>
-            <input type="hidden" name="id" value="${id}">
+            <input type="hidden" name="idPost" value="${id}">
             <button type="submit" class="btn btn-danger">Submit</button>
         </form>
     </c:when>

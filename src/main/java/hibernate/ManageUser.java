@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Dwape on 3/27/18.
  */
-public class ManageUser {
+public class ManageUser{
 
     public ManageUser(){}
 

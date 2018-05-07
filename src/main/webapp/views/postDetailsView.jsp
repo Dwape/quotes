@@ -50,6 +50,15 @@
         </div>
     </div>
 </div>
+    <form method="POST" autocomplete="off" action="${pageContext.request.contextPath}/postDetails">
+        <div class="form-group mt-4">
+            <label for="commentText">Reply to the comment</label>
+            <textarea class="form-control" id="commentText" rows="3" name="text"></textarea>
+        </div>
+        <input type="hidden" name="idPost" value="${id}">
+        <input type="hidden" name="idParent" id="idParent" value="${comment.id}">
+        <button type="submit" class="btn btn-danger">Submit</button>
+    </form>
 </div>
 
 <jsp:include page="bootstrapBody.jsp"></jsp:include>

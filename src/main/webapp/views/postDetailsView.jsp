@@ -40,6 +40,18 @@
 </c:choose>
 <span style="display: none" id="commentsJson">${commentsJson}</span>
 <div id="comments"></div>
+
+<div id="genericComment" style="display: none;">
+<div class="card boxx mb-4" style="width: 40rem;">
+    <div class="card-body">
+        <p class="card-text" id="description">${comment.description}</p>
+        <div style="display: inline-flex">
+            <footer class="blockquote-footer" id="footer">posted by ${comment.user.username} on ${comment.datePosted.toLocaleString()}</footer>
+        </div>
+    </div>
+</div>
+</div>
+
 <jsp:include page="bootstrapBody.jsp"></jsp:include>
 <script src="../js/postDetails.js"></script>
 </body>

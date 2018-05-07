@@ -1,4 +1,5 @@
 package model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.lucene.analysis.commongrams.CommonGramsFilterFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.LowerCaseTokenizerFactory;
@@ -56,6 +57,7 @@ public class Post {
     @JoinColumn(name="idBook", nullable = false)
     private Book book;
 
+    @JsonIgnore
     //comments with no parents
     @OneToMany(mappedBy = "post", fetch=FetchType.EAGER)
     private Set<Comment> commentArray = new HashSet<>();

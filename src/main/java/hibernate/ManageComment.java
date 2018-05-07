@@ -1,7 +1,6 @@
 package hibernate;
 
 import model.Comment;
-import model.Post;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,13 +15,16 @@ public class ManageComment {
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
             commentID = (Long) session.save(newComment);
-            newComment.setId(commentID); //sets the user's id to the generated one.
+            newComment.setId(commentID); //sets the comment's id to the generated one.
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
 
+        //The comment may be added automatically to the sets of all objects that have a one to many relationship with it.
+
+        /*
         if (newComment.getParent() == null) {
             ManagePost.addComment(newComment.getPost(), newComment);
         } else {
@@ -30,6 +32,7 @@ public class ManageComment {
         }
 
         ManageUser.addComment(newComment.getUser(), newComment);
+        */
         return commentID;
     }
 
@@ -45,6 +48,21 @@ public class ManageComment {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
+    }
+
+    public static Comment retrieveComment(long id){
+
+        Transaction tx = null;
+        Comment comment = null;
+
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            comment = session.get(Comment.class, id);
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return comment;
     }
 
     public static void addChild(Comment parent, Comment child){

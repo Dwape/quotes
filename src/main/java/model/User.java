@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
@@ -24,23 +25,29 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 
+    @JsonIgnore
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @Column(name = "surname")
     private String surname;
 
+    @JsonIgnore
     @Column(name = "date_of_birth")
     //@DateTimeFormat(pattern = "MM-dd-yyyy")
     private String dateOfBirth;
 
+    @JsonIgnore
     //look for a different way of doing this.
     @OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
     private Set<Post> postArray = new HashSet<>();
 
+    @JsonIgnore
     //comments written by the user
     @OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
     private Set<Comment> commentArray = new HashSet<>();

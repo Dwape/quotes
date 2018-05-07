@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Book {
     @Column(name = "idBook")
     private String idBook;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "book", fetch=FetchType.EAGER)
     private Set<Post> postArray = new HashSet<>();
 

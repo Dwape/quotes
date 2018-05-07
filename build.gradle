@@ -27,4 +27,5 @@ dependencies {
     // https://mvnrepository.com/artifact/securityfilter/securityfilter
     compile group: 'securityfilter', name: 'securityfilter', version: '2.0'
     compile group: 'org.hibernate', name: 'hibernate-search-orm', version: '5.9.1.Final'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
 }

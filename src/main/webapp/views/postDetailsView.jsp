@@ -44,13 +44,17 @@
 <div id="genericComment" style="display: none;">
 <div class="card boxx mb-4" style="width: 40rem;">
     <div class="card-body">
-        <p class="card-text" id="description">${comment.description}</p>
-        <div style="display: inline-flex">
-            <footer class="blockquote-footer" id="footer">posted by ${comment.user.username} on ${comment.datePosted.toLocaleString()}</footer>
+        <p class="card-text" id="description"></p>
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-6 p-0" style="height: 20px"><footer class="blockquote-footer" id="footer"></footer></div>
+                <div class="col-1 p-0"><a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-    <form method="POST" autocomplete="off" action="${pageContext.request.contextPath}/postDetails">
+    <form method="POST" id="replyForm" style="display: none" autocomplete="off" action="${pageContext.request.contextPath}/postDetails">
         <div class="form-group mt-4">
             <label for="commentText">Reply to the comment</label>
             <textarea class="form-control" id="commentText" rows="3" name="text"></textarea>

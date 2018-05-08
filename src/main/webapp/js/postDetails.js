@@ -35,7 +35,11 @@ function createComment(comment, level){
     commentStructure.querySelector("#footer").innerText = "posted by " + comment.user.username + " on " + date.toLocaleString(); //date need to be parsed.
     commentStructure.querySelector("#idParent").value = comment.id;
     commentStructure.querySelector("#replyForm").setAttribute("id", "form" + comment.id);
-    commentStructure.querySelector("#replyLink").setAttribute("onclick", "showReplyWindow(" + comment.id + ");");
+    if (document.getElementById("user").innerText !== "null") {
+        commentStructure.querySelector("#replyLink").setAttribute("onclick", "showReplyWindow(" + comment.id + ");");
+    } else {
+        commentStructure.querySelector("#replyLink").setAttribute("style", "display: none");
+    }
     return commentStructure;
 }
 

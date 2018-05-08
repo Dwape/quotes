@@ -17,6 +17,7 @@
     </c:otherwise>
 </c:choose>
 
+<p style="display: none" id="user"><%=request.getRemoteUser()%></p>
 <div class="card mb-4" style="width: 40rem;">
     <h5 class="card-header">"${quote}"</h5>
     <div class="card-body pb-2">

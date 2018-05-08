@@ -1,6 +1,8 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import jackson.CommentSerializer;
 import org.hibernate.search.annotations.DocumentId;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "comment")
+@JsonSerialize(using = CommentSerializer.class)
 public class Comment {
 
     @Id
@@ -21,12 +24,10 @@ public class Comment {
     @JoinColumn(name="username", nullable = false)
     private User user;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="idPost", nullable = false)
     private Post post;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="parent")
     private Comment parent;
@@ -39,9 +40,6 @@ public class Comment {
 
     private String description;
 
-    @Column(name = "hasParent")
-    private boolean hasParent;
-
     public Comment(){}
 
     public Comment(User user, Post post, Comment parent, Date datePosted, String description){
@@ -50,7 +48,6 @@ public class Comment {
         this.parent = parent;
         this.datePosted = datePosted;
         this.description = description;
-        this.hasParent = (parent != null);
     }
 
     public Post getPost() {
@@ -107,13 +104,5 @@ public class Comment {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public boolean isHasParent() {
-        return hasParent;
-    }
-
-    public void setHasParent(boolean hasParent) {
-        this.hasParent = hasParent;
     }
 }

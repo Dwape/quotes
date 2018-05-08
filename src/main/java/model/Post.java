@@ -57,8 +57,6 @@ public class Post {
     @JoinColumn(name="idBook", nullable = false)
     private Book book;
 
-    @JsonIgnore
-    //comments with no parents
     @OneToMany(mappedBy = "post", fetch=FetchType.EAGER)
     private Set<Comment> commentArray = new HashSet<>();
 

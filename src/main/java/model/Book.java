@@ -22,7 +22,6 @@ public class Book {
     @Column(name = "idBook")
     private String idBook;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "book", fetch=FetchType.EAGER)
     private Set<Post> postArray = new HashSet<>();
 

@@ -10,7 +10,7 @@ function getCommentArray(){
 function displayIndependentComments(json){
     for(var i=0; i < json.length; i++){
         if(!json[i].hasParent){
-            var comment = createComment(json[i], 0); //check if the last parameter is necessary
+            var comment = createComment(json[i]); //check if the last parameter is necessary
             displayComments(json[i], comment);
             document.getElementById("comments").appendChild(comment);
         }
@@ -20,23 +20,25 @@ function displayIndependentComments(json){
 function displayComments(json, parent){
     if (json.commentArray.length === 0) return;
     for (var i=0; i < json.commentArray.length; i++){
-        var comment = createComment(json.commentArray[i], 1); //check if level can be omitted in this method call
+        var comment = createComment(json.commentArray[i]);
         parent.appendChild(comment);
         displayComments(json.commentArray[i], comment);
     }
 }
 
-function createComment(comment, level){
+function createComment(comment){
     var commentStructure = document.getElementById("genericComment").cloneNode(true);
     commentStructure.setAttribute("id", "actualComment");
+    var level = 0;
+    if (comment.hasParent) level = 1;
     commentStructure.setAttribute("style", "display: block; margin-left: " + level*50 + "px;");
     commentStructure.querySelector("#description").innerText = comment.description;
     var date = new Date(comment.datePosted); //check how to correct date format.
-    commentStructure.querySelector("#footer").innerText = "posted by " + comment.user.username + " on " + date.toLocaleString(); //date need to be parsed.
+    commentStructure.querySelector("#footer").innerText = "posted by " + comment.username + " on " + date.toLocaleString(); //date need to be parsed.
     commentStructure.querySelector("#idParent").value = comment.id;
     commentStructure.querySelector("#replyForm").setAttribute("id", "form" + comment.id);
     if (document.getElementById("user").innerText !== "null") {
-        commentStructure.querySelector("#replyLink").setAttribute("onclick", "showReplyWindow(" + comment.id + ");");
+        commentStructure.querySelector("#replyLink").setAttribute("onclick", "showReplyWindow(" + comment.id + ");"); //check if we can set onclick with js
     } else {
         commentStructure.querySelector("#replyLink").setAttribute("style", "display: none");
     }

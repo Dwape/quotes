@@ -32,7 +32,7 @@
         <form method="POST" autocomplete="off" action="${pageContext.request.contextPath}/postDetails">
             <div class="form-group mt-4">
                 <label for="postText">Write a comment</label>
-                <textarea class="form-control" id="postText" rows="3" name="text"></textarea>
+                <textarea class="form-control" id="postText" rows="3" style="width: 40rem;" name="text"></textarea>
             </div>
             <input type="hidden" name="idPost" value="${id}">
             <button type="submit" class="btn btn-danger">Submit</button>
@@ -58,7 +58,7 @@
     <form method="POST" id="replyForm" style="display: none" autocomplete="off" action="${pageContext.request.contextPath}/postDetails">
         <div class="form-group mt-4">
             <label for="commentText">Reply to the comment</label>
-            <textarea class="form-control" id="commentText" rows="3" name="text"></textarea>
+            <textarea class="form-control" id="commentText" rows="3" style="width: 40rem;" name="text"></textarea>
         </div>
         <input type="hidden" name="idPost" value="${id}">
         <input type="hidden" name="idParent" id="idParent" value="${comment.id}">

@@ -1,3 +1,5 @@
+var replyIdOpen;
+
 function getCommentArray(){
     var comments = document.getElementById("commentsJson");
     var commentsString = comments.innerHTML; //innerText?
@@ -38,6 +40,17 @@ function createComment(comment, level){
 }
 
 function showReplyWindow(id){
-    var form = document.getElementById("form" + id);
+    if (replyIdOpen === id){
+        var form = document.getElementById("form" + replyIdOpen);
+        form.setAttribute("style", "display: none;");
+        replyIdOpen = undefined;
+        return;
+    }
+    if (replyIdOpen !== undefined){
+        var oldForm = document.getElementById("form" + replyIdOpen);
+        oldForm.setAttribute("style", "display: none;");
+    }
+    form = document.getElementById("form" + id);
     form.setAttribute("style", "display: block;");
+    replyIdOpen = id;
 }

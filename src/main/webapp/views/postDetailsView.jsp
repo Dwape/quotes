@@ -25,6 +25,7 @@
         <p class="card-text">${text}</p>
 
         <footer class="blockquote-footer">posted by ${postedBy} on ${datePosted.toLocaleString()}</footer>
+        <input type="hidden" name="idPost" id="idPost" value="${id}">
     </div>
 </div>
 <c:choose>
@@ -39,7 +40,6 @@
         </form>
     </c:when>
 </c:choose>
-<span style="display: none" id="commentsJson">${commentsJson}</span>
 <div id="comments"></div>
 
 <div id="genericComment" style="display: none;">
@@ -68,5 +68,6 @@
 
 <jsp:include page="bootstrapBody.jsp"></jsp:include>
 <script src="../js/postDetails.js"></script>
+<script src="../js/jquery/jquery-3.3.1.min.js"></script>
 </body>
 </html>

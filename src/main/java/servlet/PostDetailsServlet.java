@@ -1,6 +1,5 @@
 package servlet;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import hibernate.ManageComment;
 import hibernate.ManagePost;
 import hibernate.ManageUser;
@@ -15,9 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @WebServlet("/postDetails")
 public class PostDetailsServlet extends HttpServlet{
@@ -30,8 +27,6 @@ public class PostDetailsServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        ObjectMapper mapper = new ObjectMapper();
 
         long id = Long.parseLong(request.getParameter("id"));
         Post post = ManagePost.retrievePost(id);
@@ -47,9 +42,6 @@ public class PostDetailsServlet extends HttpServlet{
 
         //String commentsJson = new Gson().toJson(post.getCommentArray());
         //request.setAttribute("commentsJson", commentsJson);
-
-        String commentsJson = mapper.writeValueAsString(post.getCommentArray());
-        request.setAttribute("commentsJson", commentsJson);
 
         request.setAttribute("id", id);
 

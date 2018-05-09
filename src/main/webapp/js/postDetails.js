@@ -1,10 +1,20 @@
 var replyIdOpen;
 
 function getCommentArray(){
-    var comments = document.getElementById("commentsJson");
-    var commentsString = comments.innerHTML; //innerText?
-    var commentsJson = JSON.parse(commentsString);
-    displayIndependentComments(commentsJson)
+    //var comments = document.getElementById("commentsJson");
+    //var commentsString = comments.innerHTML; //innerText?
+    //var commentsJson = JSON.parse(commentsString);
+    var idPost = document.getElementById("idPost").value;
+    //$.get("/postJson", postId, displayIndependentComments(data));
+    $.ajax({
+        url: "/comments?id=" + idPost,
+        success: function(result){
+            displayIndependentComments(result);
+        }
+    });
+    //console.log(response.responseText);
+    //console.log('<%= Session["UserName"] %>');
+    //displayIndependentComments(commentsJson)
 }
 
 function displayIndependentComments(json){

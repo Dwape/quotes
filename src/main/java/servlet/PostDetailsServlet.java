@@ -1,5 +1,6 @@
 package servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hibernate.ManageComment;
 import hibernate.ManagePost;
 import hibernate.ManageUser;
@@ -13,8 +14,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
 
 @WebServlet("/postDetails")
 public class PostDetailsServlet extends HttpServlet{
@@ -40,9 +43,6 @@ public class PostDetailsServlet extends HttpServlet{
         request.setAttribute("postedBy", post.getUser().getUsername());
         request.setAttribute("datePosted", post.getDatePosted());
 
-        //String commentsJson = new Gson().toJson(post.getCommentArray());
-        //request.setAttribute("commentsJson", commentsJson);
-
         request.setAttribute("id", id);
 
         RequestDispatcher dispatcher //
@@ -55,33 +55,23 @@ public class PostDetailsServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        Map<String, String[]> parameters = request.getParameterMap();
+        String replyText = parameters.get("replyText")[0];
+
         User user = ManageUser.retrieveUser(request.getRemoteUser());
-
-        String commentText = request.getParameter("text");
         Date datePosted = new Date();
-
-        //Maybe only independent comments should have the post id
-        long idPost = Long.parseLong(request.getParameter("idPost"));
+        long idPost = Long.parseLong(parameters.get("idPost")[0]);
         Post post = ManagePost.retrievePost(idPost);
 
-        //we need to add the parent comment if it had one
-        //request.getParameter("idParent")
-        //it should be null if it is a reply to the post directly.
-
         Comment parent = null;
-        String idParentString = request.getParameter("idParent");
-        if (idParentString != null){
+        if (parameters.size() == 3){ //this means that the comment has a parent, as the parent id is passed as a value.
+            String idParentString = parameters.get("idParent")[0];
             long idParent = Long.parseLong(idParentString);
             parent = ManageComment.retrieveComment(idParent);
         }
 
-        //A query could be done where we take into account which post the parent comment belongs to, so as not to
-        //look for the comment among all other comments
-
-        Comment comment = new Comment(user, post, parent, datePosted, commentText);
+        Comment comment = new Comment(user, post, parent, datePosted, replyText);
 
         ManageComment.addComment(comment);
-
-        response.sendRedirect("/postDetails?id=" + idPost);
     }
 }

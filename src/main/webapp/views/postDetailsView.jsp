@@ -25,19 +25,17 @@
         <p class="card-text">${text}</p>
 
         <footer class="blockquote-footer">posted by ${postedBy} on ${datePosted.toLocaleString()}</footer>
-        <input type="hidden" name="idPost" id="idPost" value="${id}">
+        <input type="hidden" name="idPost" value="${id}">
     </div>
 </div>
 <c:choose>
     <c:when test="<%=request.getRemoteUser() != null%>">
-        <form method="POST" autocomplete="off" action="${pageContext.request.contextPath}/postDetails">
-            <div class="form-group mt-4">
-                <label for="postText">Write a comment</label>
-                <textarea class="form-control" id="postText" rows="3" style="width: 40rem;" name="text"></textarea>
-            </div>
-            <input type="hidden" name="idPost" value="${id}">
-            <button type="submit" class="btn btn-danger">Submit</button>
-        </form>
+        <div class="form-group mt-4">
+            <label for="replyText">Write a comment</label>
+            <textarea class="form-control" id="replyText" rows="3" style="width: 40rem;" name="text"></textarea>
+        </div>
+        <input type="hidden" name="idPost" id="replyPostId" value="${id}">
+        <button type="submit" id="submitPostReply" class="btn btn-danger">Submit</button>
     </c:when>
 </c:choose>
 <div id="comments"></div>
@@ -55,15 +53,15 @@
         </div>
     </div>
 </div>
-    <form method="POST" id="replyForm" style="display: none" autocomplete="off" action="${pageContext.request.contextPath}/postDetails">
+    <div id="replyForm" style="display: none">
         <div class="form-group mt-4">
             <label for="commentText">Reply to the comment</label>
             <textarea class="form-control" id="commentText" rows="3" style="width: 40rem;" name="text"></textarea>
         </div>
-        <input type="hidden" name="idPost" value="${id}">
+        <input type="hidden" name="idPost" id="idPost" value="${id}">
         <input type="hidden" name="idParent" id="idParent" value="${comment.id}">
-        <button type="submit" class="btn btn-danger">Submit</button>
-    </form>
+        <button type="submit" id="submitReply" class="btn btn-danger">Submit</button>
+    </div>
 </div>
 
 <jsp:include page="bootstrapBody.jsp"></jsp:include>

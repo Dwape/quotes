@@ -106,10 +106,13 @@ function writeReply(idParent, idPost, replyText){
 //the newest node could be shown at the top and it could change color to show it is new.
 function addNewComment(comment){
     var idParent = comment.querySelector("#idParent").value;
+    var parent;
     if (idParent !== "undefined"){
-        var parent = document.getElementById("comment" + idParent);
-        parent.appendChild(comment);
+        parent = document.getElementById("comment" + idParent); //may be incorrect
+        //weird workaround (the comment has some children which are the comment in itself)
+        parent.insertBefore(comment, parent.childNodes[4]);
     } else {
-        document.getElementById("comments").appendChild(comment);
+        parent = document.getElementById("comments");
+        parent.insertBefore(comment, parent.firstChild);
     }
 }

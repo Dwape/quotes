@@ -41,18 +41,18 @@
 <div id="comments"></div>
 
 <div id="genericComment" style="display: none;">
-<div class="card boxx mb-4" style="width: 40rem;">
-    <div class="card-body">
-        <p class="card-text" id="description"></p>
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-6 p-0" style="height: 20px"><footer class="blockquote-footer" id="footer"></footer></div>
-                <div class="col-1 p-0"><a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
+    <div class="card boxx mb-4" style="width: 40rem;">
+        <div class="card-body">
+            <p class="card-text" id="description"></p>
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-6 p-0" style="height: 20px"><footer class="blockquote-footer" id="footer"></footer></div>
+                    <div class="col-1 p-0"><a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <div id="replyForm" style="display: none">
         <div class="form-group mt-4">
             <label for="commentText">Reply to the comment</label>

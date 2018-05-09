@@ -36,13 +36,13 @@ function displayIndependentComments(json){
 function displayComments(json, parent){
     if (json.commentArray.length === 0) return;
     for (var i=0; i < json.commentArray.length; i++){
-        var comment = createComment(json.commentArray[i]);
+        var comment = createComment(json.commentArray[i], json.id);
         parent.appendChild(comment);
         displayComments(json.commentArray[i], comment);
     }
 }
 
-function createComment(comment){
+function createComment(comment, idParent){
     var commentStructure = document.getElementById("genericComment").cloneNode(true);
     commentStructure.setAttribute("id", "comment" + comment.id); //check if it is ok
     var level = 0;
@@ -51,7 +51,7 @@ function createComment(comment){
     commentStructure.querySelector("#description").innerText = comment.description;
     var date = new Date(comment.datePosted); //check how to correct date format.
     commentStructure.querySelector("#footer").innerText = "posted by " + comment.username + " on " + date.toLocaleString(); //date need to be parsed.
-    commentStructure.querySelector("#idParent").value = comment.id; //is this necessary
+    commentStructure.querySelector("#idParent").value = idParent; //is this necessary
     commentStructure.querySelector("#replyForm").setAttribute("id", "form" + comment.id);
     if (document.getElementById("user").innerText !== "null") {
         var replyLink = commentStructure.querySelector("#replyLink");
@@ -94,8 +94,22 @@ function writeReply(idParent, idPost, replyText){
         url: "/postDetails",
         data: { replyText: replyText, idPost: idPost, idParent: idParent },
         success: function(result){
-            displayIndependentComments(result);
+            var comment = createComment(result, idParent);
+            addNewComment(comment);
         }
     });
     //show the new comment that was added.
+}
+
+//when added comments will not be sorted by votes
+//this can be fixed if we get all the children of the parent node and compare their score.
+//the newest node could be shown at the top and it could change color to show it is new.
+function addNewComment(comment){
+    var idParent = comment.querySelector("#idParent").value;
+    if (idParent !== "undefined"){
+        var parent = document.getElementById("comment" + idParent);
+        parent.appendChild(comment);
+    } else {
+        document.getElementById("comments").appendChild(comment);
+    }
 }

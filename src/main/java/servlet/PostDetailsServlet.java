@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Map;
 
@@ -73,5 +74,15 @@ public class PostDetailsServlet extends HttpServlet{
         Comment comment = new Comment(user, post, parent, datePosted, replyText);
 
         ManageComment.addComment(comment);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        String commentJson = mapper.writeValueAsString(comment);
+        PrintWriter out = response.getWriter();
+        out.print(commentJson);
+        out.flush();
     }
 }

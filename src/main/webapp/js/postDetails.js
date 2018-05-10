@@ -62,9 +62,11 @@ function createComment(comment, idParent){
         replyButton.onclick = function(){
             var replyText = commentStructure.querySelector("#commentText");
             var idPost = commentStructure.querySelector("#idPost");
-            writeReply(comment.id, idPost.value, replyText.value);
-            showReplyWindow(replyIdOpen); //hides reply text-box
-            replyText.value = "";
+            if (replyText.value !== ""){
+                writeReply(comment.id, idPost.value, replyText.value);
+                showReplyWindow(replyIdOpen); //hides reply text-box
+                replyText.value = "";
+            }
         }
     } else {
         commentStructure.querySelector("#replyLink").setAttribute("style", "display: none");
@@ -98,7 +100,6 @@ function writeReply(idParent, idPost, replyText){
             addNewComment(comment);
         }
     });
-    //show the new comment that was added.
 }
 
 //when added comments will not be sorted by votes
@@ -107,12 +108,28 @@ function writeReply(idParent, idPost, replyText){
 function addNewComment(comment){
     var idParent = comment.querySelector("#idParent").value;
     var parent;
+    var commentHighlight = comment.cloneNode(true);
+    var card = commentHighlight.querySelector("#cardComment");
+    comment.setAttribute("style", "margin-left: " + comment.style.marginLeft + "; position: absolute;");
+    card.setAttribute("class", "card boxx mb-4 bg-dark text-white");
     if (idParent !== "undefined"){
-        parent = document.getElementById("comment" + idParent); //may be incorrect
+        parent = document.getElementById("comment" + idParent);
         //weird workaround (the comment has some children which are the comment in itself)
+        parent.insertBefore(commentHighlight, parent.childNodes[4]);
         parent.insertBefore(comment, parent.childNodes[4]);
     } else {
         parent = document.getElementById("comments");
+        parent.insertBefore(commentHighlight, parent.firstChild);
         parent.insertBefore(comment, parent.firstChild);
     }
+    changeColor(comment, commentHighlight); //experimental
+}
+
+//Changes the color of a comment to show it is the latest one.
+//Fades to the original color after the specified time in millis.
+function changeColor(comment, commentHighlight){
+    $(commentHighlight).fadeTo(10000, 0).queue(function(){
+        comment.setAttribute("style", "margin-left: " + comment.style.marginLeft);
+        $(commentHighlight).hide()
+    });
 }

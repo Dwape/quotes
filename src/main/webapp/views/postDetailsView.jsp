@@ -39,14 +39,16 @@
 </c:choose>
 <div id="comments"></div>
 
-<div id="genericComment" style="display: none;">
+<div id="genericComment" class="comment" style="display: none;">
     <div class="card boxx mb-4" style="width: 40rem;" id="cardComment">
         <div class="card-body">
             <p class="card-text" id="description"></p>
             <div class="container" id="commentContainer">
                 <div class="row justify-content-between">
                     <div class="col-6 p-0" style="height: 20px"><footer class="blockquote-footer" id="footer"></footer></div>
-                    <div class="col-1 p-0"><a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
+                    <div class="col-2 p-0">
+                        <a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
+                        <i id="collapse" style="cursor: pointer" class="fas fa-angle-up"></i>
                     </div>
                 </div>
             </div>
@@ -59,6 +61,21 @@
         <input type="hidden" name="idPost" id="idPost" value="${id}">
         <input type="hidden" name="idParent" id="idParent" value="${comment.id}">
         <button type="submit" id="submitReply" class="btn btn-danger">Submit</button>
+    </div>
+</div>
+
+<div id="genericBanner" class="banner" style="display: none">
+    <div class="card boxx mb-4" style="width: 40rem;" id="cardBanner">
+        <div class="card-body">
+            <div class="container" id="bannerContainer">
+                <div class="row justify-content-between">
+                    <div class="col-7 p-0" style="height: 20px"><footer class="blockquote-footer" id="bannerFooter"></footer></div>
+                    <div class="col-1 p-0">
+                        <i id="expand" style="cursor: pointer" class="fas fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

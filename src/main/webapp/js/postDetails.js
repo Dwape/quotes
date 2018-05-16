@@ -71,6 +71,12 @@ function createComment(comment, idParent){
     } else {
         commentStructure.querySelector("#replyLink").setAttribute("style", "display: none");
     }
+    //add hideComment to collapse button.
+    var collapse = commentStructure.querySelector("#collapse");
+    collapse.onclick = function(){
+        collapseComment(comment.id);
+        //this.setAttribute("class", "fas fa-plus");
+    };
     return commentStructure;
 }
 
@@ -128,8 +134,35 @@ function addNewComment(comment){
 //Changes the color of a comment to show it is the latest one.
 //Fades to the original color after the specified time in millis.
 function changeColor(comment, commentHighlight){
-    $(commentHighlight).fadeTo(10000, 0).queue(function(){
+    $(commentHighlight).fadeTo(5000, 0).queue(function(){
         comment.setAttribute("style", "margin-left: " + comment.style.marginLeft);
-        $(commentHighlight).hide()
+        $(commentHighlight).remove() //should delete it
     });
+}
+
+function collapseComment(id){
+    var comment = document.getElementById("comment" + id);
+    var parent = comment.parentElement;
+    var commentBanner = document.getElementById("genericBanner").cloneNode(true);
+    var bannerText = comment.querySelector("#footer").innerText;
+    commentBanner.setAttribute("id", "banner" + id);
+    commentBanner.querySelector("#bannerFooter").innerText = "Comment " + bannerText;
+    parent.insertBefore(commentBanner, comment);
+    if (parent.id === "comments"){
+        commentBanner.setAttribute("style", "display: block;");
+    } else {
+        commentBanner.setAttribute("style", "display: block; margin-left: " + 50 + "px;");
+    }
+    var expand = commentBanner.querySelector("#expand");
+    expand.onclick = function(){
+        expandComment(id);
+    };
+    $(comment).hide();
+}
+
+function expandComment(id){
+    var comment = document.getElementById("comment" + id);
+    $(comment).show();
+    var banner = document.getElementById("banner" + id);
+    $(banner).remove();
 }

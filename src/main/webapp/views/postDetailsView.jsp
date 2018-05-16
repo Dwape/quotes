@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <title>Edit Post</title>
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
+    <link rel="stylesheet" href="../css/postDetails.css" type="text/css">
 </head>
-<body onload="getCommentArray();">
+<body onload="getCommentArray();displayVote();">
 
 <c:choose>
     <c:when test="<%=request.getRemoteUser() != null%>">
@@ -16,51 +17,53 @@
         <jsp:include page="_menu.jsp"></jsp:include>
     </c:otherwise>
 </c:choose>
+<div class="container">
+    <p style="display: none" id="user"><%=request.getRemoteUser()%></p>
+    <div class="card mb-4" style="width: 40rem;">
+        <h5 class="card-header">"${quote}"</h5>
+        <div class="card-body pb-2">
+            <h6 class="card-subtitle mb-2 text-muted">from <a href="#" class="card-link">${bookTitle}</a> by<a href="#" class="card-link ml-1">${bookAuthor}</a></h6>
+            <p class="card-text">${text}</p>
 
-<p style="display: none" id="user"><%=request.getRemoteUser()%></p>
-<div class="card mb-4" style="width: 40rem;">
-    <h5 class="card-header">"${quote}"</h5>
-    <div class="card-body pb-2">
-        <h6 class="card-subtitle mb-2 text-muted">from <a href="#" class="card-link">${bookTitle}</a> by<a href="#" class="card-link ml-1">${bookAuthor}</a></h6>
-        <p class="card-text">${text}</p>
-
-        <footer class="blockquote-footer">posted by ${postedBy} on ${datePosted.toLocaleString()}</footer>
-        <input type="hidden" name="idPost" value="${id}">
-    </div>
-</div>
-<c:choose>
-    <c:when test="<%=request.getRemoteUser() != null%>">
-        <div class="form-group mt-4">
-            <label for="replyText">Write a comment</label>
-            <textarea class="form-control" id="replyText" rows="3" style="width: 40rem;" name="text"></textarea>
+            <footer class="blockquote-footer">posted by ${postedBy} on ${datePosted.toLocaleString()}</footer>
+            <i id="upvote-post" class="fas fa-arrow-circle-up remove-vote" onClick="upVotePost()"></i>
+            <i id="downvote-post" class="fas fa-arrow-circle-down remove-vote" onClick="downVotePost()"></i>
         </div>
-        <input type="hidden" name="idPost" id="replyPostId" value="${id}">
-        <button type="submit" id="submitPostReply" class="btn btn-danger">Submit</button>
-    </c:when>
-</c:choose>
-<div id="comments"></div>
+    </div>
+    <c:choose>
+        <c:when test="<%=request.getRemoteUser() != null%>">
+            <div class="form-group mt-4">
+                <label for="replyText">Write a comment</label>
+                <textarea class="form-control" id="replyText" rows="3" style="width: 40rem;" name="text"></textarea>
+            </div>
+            <input type="hidden" name="idPost" id="replyPostId" value="${id}">
+            <button type="submit" id="submitPostReply" class="btn btn-danger">Submit</button>
+        </c:when>
+    </c:choose>
+    <div id="comments"></div>
 
-<div id="genericComment" style="display: none;">
-<div class="card boxx mb-4" style="width: 40rem;">
-    <div class="card-body">
-        <p class="card-text" id="description"></p>
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-6 p-0" style="height: 20px"><footer class="blockquote-footer" id="footer"></footer></div>
-                <div class="col-1 p-0"><a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
+    <div id="genericComment" style="display: none;">
+    <div class="card boxx mb-4" style="width: 40rem;">
+        <div class="card-body">
+            <p class="card-text" id="description"></p>
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-6 p-0" style="height: 20px"><footer class="blockquote-footer" id="footer"></footer></div>
+                    <div class="col-1 p-0"><a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-    <div id="replyForm" style="display: none">
-        <div class="form-group mt-4">
-            <label for="commentText">Reply to the comment</label>
-            <textarea class="form-control" id="commentText" rows="3" style="width: 40rem;" name="text"></textarea>
+        <div id="replyForm" style="display: none">
+            <div class="form-group mt-4">
+                <label for="commentText">Reply to the comment</label>
+                <textarea class="form-control" id="commentText" rows="3" style="width: 40rem;" name="text"></textarea>
+            </div>
+            <input type="hidden" name="idPost" id="idPost" value="${id}">
+            <input type="hidden" name="idParent" id="idParent" value="${comment.id}">
+            <button type="submit" id="submitReply" class="btn btn-danger">Submit</button>
         </div>
-        <input type="hidden" name="idPost" id="idPost" value="${id}">
-        <input type="hidden" name="idParent" id="idParent" value="${comment.id}">
-        <button type="submit" id="submitReply" class="btn btn-danger">Submit</button>
     </div>
 </div>
 

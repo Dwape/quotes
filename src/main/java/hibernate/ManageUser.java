@@ -4,6 +4,7 @@ import hibernate.HibernateFactory;
 import model.Comment;
 import model.Post;
 import model.User;
+import model.Vote;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -225,9 +226,19 @@ public class ManageUser{
         updateUser(user);
     }
 
-    public static void removePost(User user, Comment comment){
+    public static void removeComment(User user, Comment comment){
         //maybe we need to look for the user in the database here.
         user.getCommentArray().remove(comment);
+        updateUser(user);
+    }
+
+    public static void addVote(User user, Vote vote){
+        user.getVoteArray().add(vote);
+        updateUser(user);
+    }
+
+    public static void removeVote(User user, Vote vote){
+        user.getVoteArray().remove(vote);
         updateUser(user);
     }
 }

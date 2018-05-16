@@ -1,7 +1,13 @@
 package database;
 
+import hibernate.ManageBook;
+import hibernate.ManagePost;
 import hibernate.ManageUser;
+import hibernate.ManageVote;
+import model.Book;
+import model.Post;
 import model.User;
+import model.Vote;
 import org.junit.Test;
 
 import java.sql.Date;
@@ -43,5 +49,18 @@ public class HibernateTest {
         assert(user2 == null);
         User user3 = ManageUser.verifyUser("Giannini", "5454");
         assert(user3 == null);*/
+    }
+
+    @Test
+    public void addVoteToPostTest(){
+        Book book = new Book("1","Hobbit","JRR Tolkien");
+        ManageBook.addBook(book);
+        User user = new User("Giansco", "gianluca.scolaro@ing.austral.edu.ar", "pass", "Gianluca", "Scolaro", "1967-8-2");
+        ManageUser.addUser(user);
+        Post post = new Post("Hobbits are evil", new Date(2018,5,9),"Really? why?",book,user);
+        ManagePost.addPost(post);
+
+        Vote vote = new Vote(post,null,user,true);
+        ManageVote.addVoteToPost(vote);
     }
 }

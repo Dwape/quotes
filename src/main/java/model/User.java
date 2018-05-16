@@ -46,6 +46,9 @@ public class User {
     @OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
     private Set<Comment> commentArray = new HashSet<>();
 
+    @OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
+    private Set<Vote> voteArray = new HashSet<>();
+
     public User() {}
 
     public User(String username, String email, String password, String name, String surname, String dateOfBirth){
@@ -117,5 +120,9 @@ public class User {
 
     public Set<Comment> getCommentArray() {
         return commentArray;
+    }
+
+    public Set<Vote> getVoteArray() {
+        return voteArray;
     }
 }

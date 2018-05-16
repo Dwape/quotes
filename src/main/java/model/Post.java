@@ -60,6 +60,9 @@ public class Post {
     @OneToMany(mappedBy = "post", fetch=FetchType.EAGER)
     private Set<Comment> commentArray = new HashSet<>();
 
+    @OneToMany(mappedBy = "post", fetch=FetchType.EAGER)
+    private Set<Vote> voteArray = new HashSet<>();
+
     public Post(){}
 
     public Post(String quote, Date datePosted, String description, Book book, User user) {
@@ -120,5 +123,9 @@ public class Post {
 
     public Set<Comment> getCommentArray() {
         return commentArray;
+    }
+
+    public Set<Vote> getVoteArray() {
+        return voteArray;
     }
 }

@@ -3,6 +3,7 @@ package hibernate;
 import model.Book;
 import model.Comment;
 import model.Post;
+import model.Vote;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -157,6 +158,16 @@ public class ManagePost {
     public static void addComment(Post post, Comment comment){
         //maybe we need to look for the user in the database here.
         post.getCommentArray().add(comment);
+        updatePost(post);
+    }
+
+    public static void addVote(Post post, Vote vote){
+        post.getVoteArray().add(vote);
+        updatePost(post);
+    }
+
+    public static void removeVote(Post post, Vote vote){
+        post.getVoteArray().remove(vote);
         updatePost(post);
     }
 }

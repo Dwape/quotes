@@ -1,6 +1,7 @@
 package hibernate;
 
 import model.Comment;
+import model.Vote;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -69,5 +70,17 @@ public class ManageComment {
         //maybe we need to look for the user in the database here.
         parent.getCommentArray().add(child);
         updateComment(parent);
+    }
+
+    public static void addVote(Comment comment, Vote vote){
+        //maybe we need to look for the user in the database here.
+        comment.getVoteArray().add(vote);
+        updateComment(comment);
+    }
+
+    public static void removeVote(Comment comment, Vote vote){
+        //maybe we need to look for the user in the database here.
+        comment.getVoteArray().remove(vote);
+        updateComment(comment);
     }
 }

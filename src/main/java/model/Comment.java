@@ -36,6 +36,9 @@ public class Comment {
     @OneToMany(mappedBy = "parent", fetch=FetchType.EAGER)
     private Set<Comment> commentArray = new HashSet<>();
 
+    @OneToMany(mappedBy = "comment", fetch=FetchType.EAGER)
+    private Set<Vote> voteArray = new HashSet<>();
+
     private Date datePosted;
 
     private String description;
@@ -104,5 +107,9 @@ public class Comment {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Vote> getVoteArray() {
+        return voteArray;
     }
 }

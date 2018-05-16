@@ -113,3 +113,53 @@ function addNewComment(comment){
         document.getElementById("comments").appendChild(comment);
     }
 }
+
+function displayVote() {
+    var idPost = document.getElementById("idPost").value;
+    $.ajax({
+        url: "/postDetailsVote?id=" + idPost,
+        success: function(result){
+            paintUpVote(result);
+        }
+    });
+}
+
+function upVotePost(){
+    var postId = document.getElementById("idPost").value;
+    $.ajax({
+        method: "POST",
+        url: "/postDetailsVote",
+        data: { isPositive: true, idPost: postId },
+        success: function(result){
+            paintUpVote(result);
+        }
+    });
+}
+
+function paintUpVote(result){
+    if(result === "true"){
+        $("#upvote-post").addClass("remove-vote").removeClass("up-vote");
+    }else{
+        $("#upvote-post").addClass("up-vote").removeClass("remove-vote");
+    }
+}
+
+/*function downVotePost(){
+    var postId = document.getElementById("idPost").value;
+    $.ajax({
+        method: "POST",
+        url: "/postDetailsVote",
+        data: { isPositive: false, idPost: postId },
+        success: function(result){
+            paintDownVote(result);
+        }
+    });
+}*/
+
+function paintDownVote(result){
+    if(result === "true"){
+        $("#upvote-post").addClass("remove-vote").removeClass("down-vote");
+    }else{
+        $("#upvote-post").addClass("down-vote").removeClass("remove-vote");
+    }
+}

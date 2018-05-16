@@ -1,0 +1,15 @@
+.up-vote {
+    color: blue;
+}
+
+.remove-vote {
+    color: black;
+}
+
+.down-vote {
+    color: red;
+}
+
+.fa-arrow-circle-up {
+    cursor: pointer;
+}

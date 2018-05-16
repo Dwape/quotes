@@ -31,7 +31,7 @@
 <c:choose>
     <c:when test="<%=request.getRemoteUser() != null%>">
         <div class="form-group">
-            <textarea class="form-control" id="replyText" rows="3" style="width: 40rem;" name="text" placeholder="Write a comment"></textarea>
+            <textarea class="form-control" id="replyText" maxlength="5000" rows="3" style="width: 40rem;" name="text" placeholder="Write a comment"></textarea>
         </div>
         <input type="hidden" name="idPost" id="replyPostId" value="${id}">
         <button type="submit" id="submitPostReply" class="btn btn-danger">Submit</button>
@@ -56,7 +56,7 @@
     </div>
     <div id="replyForm" style="display: none">
         <div class="form-group">
-            <textarea class="form-control" id="commentText" rows="3" style="width: 40rem;" name="text" placeholder="Reply to the comment"></textarea>
+            <textarea class="form-control" id="commentText" maxlength="5000" rows="3" style="width: 40rem;" name="text" placeholder="Reply to the comment"></textarea>
         </div>
         <input type="hidden" name="idPost" id="idPost" value="${id}">
         <input type="hidden" name="idParent" id="idParent" value="${comment.id}">

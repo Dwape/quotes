@@ -38,6 +38,7 @@ public class Comment {
 
     private Date datePosted;
 
+    @Column(length=5000)
     private String description;
 
     public Comment(){}

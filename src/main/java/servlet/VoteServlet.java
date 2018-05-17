@@ -38,9 +38,9 @@ public class VoteServlet extends HttpServlet {
 
         User user = ManageUser.retrieveUser(request.getRemoteUser());
 
-        long voteId = ManageVote.hasUserVotedPost(id,user.getUsername());
+        Vote vote = ManageVote.hasUserVotedPost(id,user.getUsername());
 
-        String outPrint = voteId == -1 ? "true" : "false";
+        String outPrint = vote.getId() == -1 ? "true" : ("false " + String.valueOf(vote.isPositive()));
 
         PrintWriter out = response.getWriter();
         out.print(outPrint);
@@ -61,18 +61,23 @@ public class VoteServlet extends HttpServlet {
         long idPost = Long.parseLong(parameters.get("idPost")[0]);
         Post post = ManagePost.retrievePost(idPost);
 
-        long voteId = ManageVote.hasUserVotedPost(idPost,user.getUsername());
+        Vote voteMatched = ManageVote.hasUserVotedPost(idPost,user.getUsername());
 
         Vote vote = new Vote(post,null,user,isPositive);
 
         String outPrint;
 
-        if (voteId == -1){
+        if (voteMatched.getId() == -1){
             ManageVote.addVoteToPost(vote);
             outPrint = "false";
         }else {
-            ManageVote.deleteVoteFromPost(voteId);
-            outPrint = "true";
+            if (voteMatched.isPositive() != vote.isPositive()){
+                ManageVote.addVoteToPost(vote);
+                outPrint = "false";
+            }else{
+                outPrint = "true";
+            }
+            ManageVote.deleteVoteFromPost(voteMatched.getId());
         }
 
         PrintWriter out = response.getWriter();

@@ -10,6 +10,7 @@
     color: red;
 }
 
-.fa-arrow-circle-up {
+
+.fa-arrow-circle-down, .fa-arrow-circle-up {
     cursor: pointer;
 }

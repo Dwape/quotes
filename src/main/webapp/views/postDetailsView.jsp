@@ -26,8 +26,8 @@
             <p class="card-text">${text}</p>
 
             <footer class="blockquote-footer">posted by ${postedBy} on ${datePosted.toLocaleString()}</footer>
-            <i id="upvote-post" class="fas fa-arrow-circle-up remove-vote" onClick="upVotePost()"></i>
-            <i id="downvote-post" class="fas fa-arrow-circle-down remove-vote" onClick="downVotePost()"></i>
+            <i id="upvote-post" class="fas fa-arrow-circle-up remove-vote" onClick="votePost(true)"></i>
+            <i id="downvote-post" class="fas fa-arrow-circle-down remove-vote" onClick="votePost(false)"></i>
         </div>
     </div>
     <c:choose>

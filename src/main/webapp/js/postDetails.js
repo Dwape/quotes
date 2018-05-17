@@ -119,24 +119,27 @@ function displayVote() {
     $.ajax({
         url: "/postDetailsVote?id=" + idPost,
         success: function(result){
-            paintUpVote(result);
+            var strings = result.split(" ");
+            if (strings[0] === 'false') strings[1]==='true' ? paintUpVote('false'):paintDownVote('false');
         }
     });
 }
 
-function upVotePost(){
+function votePost(isUpVote){
+    isUpVote ? paintUpVote("false"): paintDownVote("false");//so as to not have to wait for it to be colored
     var postId = document.getElementById("idPost").value;
     $.ajax({
         method: "POST",
         url: "/postDetailsVote",
-        data: { isPositive: true, idPost: postId },
+        data: { isPositive: isUpVote, idPost: postId },
         success: function(result){
-            paintUpVote(result);
+            isUpVote ? paintUpVote(result): paintDownVote(result);
         }
     });
 }
 
 function paintUpVote(result){
+    $("#downvote-post").addClass("remove-vote").removeClass("down-vote");
     if(result === "true"){
         $("#upvote-post").addClass("remove-vote").removeClass("up-vote");
     }else{
@@ -144,22 +147,11 @@ function paintUpVote(result){
     }
 }
 
-/*function downVotePost(){
-    var postId = document.getElementById("idPost").value;
-    $.ajax({
-        method: "POST",
-        url: "/postDetailsVote",
-        data: { isPositive: false, idPost: postId },
-        success: function(result){
-            paintDownVote(result);
-        }
-    });
-}*/
-
 function paintDownVote(result){
+    $("#upvote-post").addClass("remove-vote").removeClass("up-vote");
     if(result === "true"){
-        $("#upvote-post").addClass("remove-vote").removeClass("down-vote");
+        $("#downvote-post").addClass("remove-vote").removeClass("down-vote");
     }else{
-        $("#upvote-post").addClass("down-vote").removeClass("remove-vote");
+        $("#downvote-post").addClass("down-vote").removeClass("remove-vote");
     }
 }

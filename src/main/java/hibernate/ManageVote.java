@@ -6,7 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ManageVote {
@@ -114,18 +116,28 @@ public class ManageVote {
         }
     }
 
-    public static long hasUserVotedPost(long postID, String username){
+    public static Vote hasUserVotedPost(long postID, String username){
         Transaction tx = null;
-        List results = new ArrayList();
+        long voteID = -1;
+        Boolean isPositive = null;
 
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            Query query = session.createQuery("SELECT V.id FROM Vote V WHERE idPost= " + postID + " AND username = '" + username +"'");
-            results = query.list();
+            Query query = session.createQuery("SELECT V.id,V.isPositive FROM Vote V WHERE idPost= " + postID + " AND username = '" + username +"'");
+            Iterator results = query.list().iterator();
+
+            while ( results.hasNext() ) {
+                Object[] tuple = (Object[]) results.next();
+                voteID = (Long) tuple[0];
+                isPositive = (Boolean) tuple[1];
+            }
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
-        return results.isEmpty() ? -1 : (Long) results.get(0);
+        Vote vote = new Vote();
+        vote.setId(voteID);
+        if (isPositive!=null) vote.setPositive(isPositive);
+        return vote;
     }
 }

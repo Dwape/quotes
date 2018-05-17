@@ -1,25 +1,27 @@
 package servlet;
 
-import hibernate.ManagePost;
-import hibernate.ManageUser;
-import hibernate.ManageVote;
-import model.Post;
-import model.User;
-import model.Vote;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Map;
+        import hibernate.ManageComment;
+        import hibernate.ManagePost;
+        import hibernate.ManageUser;
+        import hibernate.ManageVote;
+        import model.Comment;
+        import model.Post;
+        import model.User;
+        import model.Vote;
+        import javax.servlet.ServletException;
+        import javax.servlet.annotation.WebServlet;
+        import javax.servlet.http.HttpServlet;
+        import javax.servlet.http.HttpServletRequest;
+        import javax.servlet.http.HttpServletResponse;
+        import java.io.IOException;
+        import java.io.PrintWriter;
+        import java.util.Map;
 
-@WebServlet("/postDetailsVote")//??
-public class VoteServlet extends HttpServlet {
+@WebServlet("/commentVote")//??
+public class CommentVoteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public VoteServlet() {
+    public CommentVoteServlet() {
         super();
     }
 
@@ -27,7 +29,7 @@ public class VoteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String idPost = request.getParameter("id");
+        /*String idPost = request.getParameter("id");
         long id = Long.parseLong(idPost);
 
         User user = ManageUser.retrieveUser(request.getRemoteUser());
@@ -38,7 +40,7 @@ public class VoteServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         out.print(outPrint);
-        out.flush();
+        out.flush();*/
     }
 
     @Override
@@ -51,27 +53,26 @@ public class VoteServlet extends HttpServlet {
 
         User user = ManageUser.retrieveUser(request.getRemoteUser());
 
-        //Maybe only independent comments should have the post id
-        long idPost = Long.parseLong(parameters.get("idPost")[0]);
-        Post post = ManagePost.retrievePost(idPost);
+        long idComment = Long.parseLong(parameters.get("idComment")[0]);
+        Comment comment = ManageComment.retrieveComment(idComment);
 
-        Vote voteMatched = ManageVote.hasUserVotedPost(idPost,user.getUsername());
+        Vote voteMatched = ManageVote.hasUserVotedComment(idComment,user.getUsername());
 
-        Vote vote = new Vote(post,null,user,isPositive);
+        Vote vote = new Vote(null,comment,user,isPositive);
 
         String outPrint;
 
         if (voteMatched.getId() == -1){
-            ManageVote.addVoteToPost(vote);
+            ManageVote.addVoteToComment(vote);
             outPrint = "false";
         }else {
             if (voteMatched.isPositive() != vote.isPositive()){
-                ManageVote.addVoteToPost(vote);
+                ManageVote.addVoteToComment(vote);
                 outPrint = "false";
             }else{
                 outPrint = "true";
             }
-            ManageVote.deleteVoteFromPost(voteMatched.getId());
+            ManageVote.deleteVoteFromComment(voteMatched.getId());
         }
 
         PrintWriter out = response.getWriter();

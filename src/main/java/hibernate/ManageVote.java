@@ -140,4 +140,29 @@ public class ManageVote {
         if (isPositive!=null) vote.setPositive(isPositive);
         return vote;
     }
+
+    public static Vote hasUserVotedComment(long commentID, String username){
+        Transaction tx = null;
+        long voteID = -1;
+        Boolean isPositive = null;
+
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            Query query = session.createQuery("SELECT V.id,V.isPositive FROM Vote V WHERE idComment= " + commentID + " AND username = '" + username +"'");
+            Iterator results = query.list().iterator();
+
+            while ( results.hasNext() ) {
+                Object[] tuple = (Object[]) results.next();
+                voteID = (Long) tuple[0];
+                isPositive = (Boolean) tuple[1];
+            }
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        Vote vote = new Vote();
+        vote.setId(voteID);
+        if (isPositive!=null) vote.setPositive(isPositive);
+        return vote;
+    }
 }

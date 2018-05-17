@@ -52,6 +52,31 @@ function createComment(comment, idParent){
     var date = new Date(comment.datePosted); //check how to correct date format.
     commentStructure.querySelector("#footer").innerText = "posted by " + comment.username + " on " + date.toLocaleString(); //date need to be parsed.
     commentStructure.querySelector("#idParent").value = idParent; //is this necessary
+
+    commentStructure.querySelector("#upvote-comment").onclick = function () {
+        var commentID = commentStructure.getAttribute("id");
+        $.ajax({
+            method: "POST",
+            url: "/commentVote",
+            data: { isPositive: true, idComment: comment.id },
+            success: function(result){
+                paintUpVoteComment(result, commentID);
+            }
+        });
+    };
+
+    commentStructure.querySelector("#downvote-comment").onclick = function () {
+        var commentID = commentStructure.getAttribute("id");
+        $.ajax({
+            method: "POST",
+            url: "/commentVote",
+            data: { isPositive: false, idComment: comment.id },
+            success: function(result){
+                paintDownVoteComment(result, commentID);
+            }
+        });
+    };
+
     commentStructure.querySelector("#replyForm").setAttribute("id", "form" + comment.id);
     if (document.getElementById("user").innerText !== "null") {
         var replyLink = commentStructure.querySelector("#replyLink");
@@ -155,3 +180,37 @@ function paintDownVote(result){
         $("#downvote-post").addClass("down-vote").removeClass("remove-vote");
     }
 }
+
+function paintUpVoteComment(result,commentID) {
+    var comment = document.getElementById(commentID);
+    comment.querySelector("#downvote-comment").classList.remove("down-vote");
+    comment.querySelector("#downvote-comment").classList.add("remove-vote");
+    if(result === "true"){
+        comment.querySelector("#upvote-comment").classList.remove("up-vote");
+        comment.querySelector("#upvote-comment").classList.add("remove-vote");
+        /*$("#upvote-post").addClass("remove-vote").removeClass("up-vote");*/
+    }else{
+        comment.querySelector("#upvote-comment").classList.remove("remove-vote");
+        comment.querySelector("#upvote-comment").classList.add("up-vote");
+        /*$("#upvote-post").addClass("up-vote").removeClass("remove-vote");*/
+    }
+}
+
+function paintDownVoteComment(result,commentID) {
+    var comment = document.getElementById(commentID);
+    comment.querySelector("#upvote-comment").classList.remove("up-vote");
+    comment.querySelector("#upvote-comment").classList.add("remove-vote");
+    if(result === "true"){
+        comment.querySelector("#downvote-comment").classList.remove("down-vote");
+        comment.querySelector("#downvote-comment").classList.add("remove-vote");
+        /*$("#upvote-post").addClass("remove-vote").removeClass("up-vote");*/
+    }else{
+        comment.querySelector("#downvote-comment").classList.remove("remove-vote");
+        comment.querySelector("#downvote-comment").classList.add("down-vote");
+        /*$("#upvote-post").addClass("up-vote").removeClass("remove-vote");*/
+    }
+}
+/*
+function voteComment(isUpVote){
+    var commentID = document.
+}*/

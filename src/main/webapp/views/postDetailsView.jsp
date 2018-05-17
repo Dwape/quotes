@@ -49,8 +49,9 @@
             <div class="container">
                 <div class="row justify-content-between">
                     <div class="col-6 p-0" style="height: 20px"><footer class="blockquote-footer" id="footer"></footer></div>
-                    <div class="col-1 p-0"><a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
-                    </div>
+                    <i id="upvote-comment" class="fas fa-arrow-circle-up remove-vote"></i>
+                    <i id="downvote-comment" class="fas fa-arrow-circle-down remove-vote"></i>
+                    <div class="col-1 p-0"><a id="replyLink" style="cursor: pointer" class="card-link">Reply</a></div>
                 </div>
             </div>
         </div>

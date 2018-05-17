@@ -25,8 +25,8 @@
                     <div class="container">
                         <div class="row justify-content-between">
                             <div class="col-6 p-0" style="height: 20px"><footer class="blockquote-footer">posted by ${post.user.username} on ${post.datePosted.toLocaleString()}</footer></div>
-                            <div class="col-2 p-0"><a href="${pageContext.request.contextPath}/editPost?id=${post.id}" class="card-link">Edit</a>
-                            <a href="${pageContext.request.contextPath}/deletePost?id=${post.id}" class="card-link" style="color:red">Delete</a></div>
+                            <div class="col-1 p-0"><a href="${pageContext.request.contextPath}/editPost?id=${post.id}" class="card-link">Edit</a>
+                            </div>
                         </div>
                     </div>
                 </div>

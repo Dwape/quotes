@@ -118,13 +118,17 @@ public class ManagePost {
         updatePost(post);
     }
 
+    /**
+     * Searches for posts in the database using Lucene.
+     * @param searchTerm The search term to be used in the search.
+     * @return A list with the posts that match the searchTerm.
+     */
     public static List<Post> searchPosts(String searchTerm){
         Transaction tx = null;
         List<Post> result = new ArrayList<>();
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             FullTextSession fullTextSession = Search.getFullTextSession(session);
             tx = fullTextSession.beginTransaction();
-            //fullTextSession.createIndexer().startAndWait(); //check if it is necessary.
             QueryBuilder qb = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Post.class).get();
 
             org.apache.lucene.search.Query query = qb
@@ -137,17 +141,12 @@ public class ManagePost {
 
             org.apache.lucene.search.Query query4 = qb
                     .bool()
-                    //.should(query2)
                     .should(query)
                     .createQuery();
 
-            // wrap Lucene query in a org.hibernate.Query
-            //Query hibQuery = fullTextSession.createFullTextQuery(query, Post.class);
             Query hibQuery2 = fullTextSession.createFullTextQuery(query4, Post.class);
-            //result = hibQuery.list(); //check if cast works
-            result = hibQuery2.list(); //check if cast works
+            result = hibQuery2.list();
             tx.commit();
-            //session.close(); //may be necessary.
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();

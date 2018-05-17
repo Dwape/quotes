@@ -28,13 +28,13 @@
             <footer class="blockquote-footer">posted by ${postedBy} on ${datePosted.toLocaleString()}</footer>
             <i id="upvote-post" class="fas fa-arrow-circle-up remove-vote" onClick="votePost(true)"></i>
             <i id="downvote-post" class="fas fa-arrow-circle-down remove-vote" onClick="votePost(false)"></i>
+            <input type="hidden" name="idPost" value="${id}">
         </div>
     </div>
     <c:choose>
         <c:when test="<%=request.getRemoteUser() != null%>">
-            <div class="form-group mt-4">
-                <label for="replyText">Write a comment</label>
-                <textarea class="form-control" id="replyText" rows="3" style="width: 40rem;" name="text"></textarea>
+            <div class="form-group">
+                <textarea class="form-control" id="replyText" maxlength="5000" rows="3" style="width: 40rem;" name="text" placeholder="Write a comment"></textarea>
             </div>
             <input type="hidden" name="idPost" id="replyPostId" value="${id}">
             <button type="submit" id="submitPostReply" class="btn btn-danger">Submit</button>
@@ -42,28 +42,45 @@
     </c:choose>
     <div id="comments"></div>
 
-    <div id="genericComment" style="display: none;">
-    <div class="card boxx mb-4" style="width: 40rem;">
-        <div class="card-body">
-            <p class="card-text" id="description"></p>
-            <div class="container">
-                <div class="row justify-content-between">
-                    <div class="col-6 p-0" style="height: 20px"><footer class="blockquote-footer" id="footer"></footer></div>
+    <div id="genericComment" class="comment" style="display: none;">
+        <div class="card boxx mb-4" style="width: 40rem;" id="cardComment">
+            <div class="card-body">
+                <p class="card-text" id="description"></p>
+                <div class="container" id="commentContainer">
+                    <div class="row justify-content-between">
+                        <div class="col-6 p-0" style="height: 20px"><footer class="blockquote-footer" id="footer"></footer></div>
+                        <div class="col-2 p-0">
+                            <a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
+                            <i id="collapse" style="cursor: pointer" class="fas fa-angle-up"></i>
+                        </div>
+                    </div>
                     <i id="upvote-comment" class="fas fa-arrow-circle-up remove-vote"></i>
                     <i id="downvote-comment" class="fas fa-arrow-circle-down remove-vote"></i>
-                    <div class="col-1 p-0"><a id="replyLink" style="cursor: pointer" class="card-link">Reply</a></div>
                 </div>
             </div>
         </div>
-    </div>
         <div id="replyForm" style="display: none">
-            <div class="form-group mt-4">
-                <label for="commentText">Reply to the comment</label>
-                <textarea class="form-control" id="commentText" rows="3" style="width: 40rem;" name="text"></textarea>
+            <div class="form-group">
+                <textarea class="form-control" id="commentText" maxlength="5000" rows="3" style="width: 40rem;" name="text" placeholder="Reply to the comment"></textarea>
             </div>
             <input type="hidden" name="idPost" id="idPost" value="${id}">
             <input type="hidden" name="idParent" id="idParent" value="${comment.id}">
             <button type="submit" id="submitReply" class="btn btn-danger">Submit</button>
+        </div>
+    </div>
+</div>
+
+<div id="genericBanner" class="banner" style="display: none">
+    <div class="card boxx mb-4" style="width: 40rem;" id="cardBanner">
+        <div class="card-body">
+            <div class="container" id="bannerContainer">
+                <div class="row justify-content-between">
+                    <div class="col-7 p-0" style="height: 20px"><footer class="blockquote-footer" id="bannerFooter"></footer></div>
+                    <div class="col-1 p-0">
+                        <i id="expand" style="cursor: pointer" class="fas fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

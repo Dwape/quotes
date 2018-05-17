@@ -87,13 +87,21 @@ function createComment(comment, idParent){
         replyButton.onclick = function(){
             var replyText = commentStructure.querySelector("#commentText");
             var idPost = commentStructure.querySelector("#idPost");
-            writeReply(comment.id, idPost.value, replyText.value);
-            showReplyWindow(replyIdOpen); //hides reply text-box
-            replyText.value = "";
+            if (replyText.value !== ""){
+                writeReply(comment.id, idPost.value, replyText.value);
+                showReplyWindow(replyIdOpen); //hides reply text-box
+                replyText.value = "";
+            }
         }
     } else {
         commentStructure.querySelector("#replyLink").setAttribute("style", "display: none");
     }
+    //add hideComment to collapse button.
+    var collapse = commentStructure.querySelector("#collapse");
+    collapse.onclick = function(){
+        collapseComment(comment.id);
+        //this.setAttribute("class", "fas fa-plus");
+    };
     return commentStructure;
 }
 
@@ -123,7 +131,6 @@ function writeReply(idParent, idPost, replyText){
             addNewComment(comment);
         }
     });
-    //show the new comment that was added.
 }
 
 //when added comments will not be sorted by votes
@@ -131,12 +138,58 @@ function writeReply(idParent, idPost, replyText){
 //the newest node could be shown at the top and it could change color to show it is new.
 function addNewComment(comment){
     var idParent = comment.querySelector("#idParent").value;
+    var parent;
+    var commentHighlight = comment.cloneNode(true);
+    var card = commentHighlight.querySelector("#cardComment");
+    comment.setAttribute("style", "margin-left: " + comment.style.marginLeft + "; position: absolute;");
+    card.setAttribute("class", "card boxx mb-4 bg-dark text-white");
     if (idParent !== "undefined"){
-        var parent = document.getElementById("comment" + idParent);
-        parent.appendChild(comment);
+        parent = document.getElementById("comment" + idParent);
+        //weird workaround (the comment has some children which are the comment in itself)
+        parent.insertBefore(commentHighlight, parent.childNodes[4]);
+        parent.insertBefore(comment, parent.childNodes[4]);
     } else {
-        document.getElementById("comments").appendChild(comment);
+        parent = document.getElementById("comments");
+        parent.insertBefore(commentHighlight, parent.firstChild);
+        parent.insertBefore(comment, parent.firstChild);
     }
+    changeColor(comment, commentHighlight); //experimental
+}
+
+//Changes the color of a comment to show it is the latest one.
+//Fades to the original color after the specified time in millis.
+function changeColor(comment, commentHighlight){
+    $(commentHighlight).fadeTo(5000, 0).queue(function(){
+        comment.setAttribute("style", "margin-left: " + comment.style.marginLeft);
+        $(commentHighlight).remove() //should delete it
+    });
+}
+
+function collapseComment(id){
+    var comment = document.getElementById("comment" + id);
+    var parent = comment.parentElement;
+    var commentBanner = document.getElementById("genericBanner").cloneNode(true);
+    var bannerText = comment.querySelector("#footer").innerText;
+    commentBanner.setAttribute("id", "banner" + id);
+    commentBanner.querySelector("#bannerFooter").innerText = "Comment " + bannerText;
+    parent.insertBefore(commentBanner, comment);
+    if (parent.id === "comments"){
+        commentBanner.setAttribute("style", "display: block;");
+    } else {
+        commentBanner.setAttribute("style", "display: block; margin-left: " + 50 + "px;");
+    }
+    var expand = commentBanner.querySelector("#expand");
+    expand.onclick = function(){
+        expandComment(id);
+    };
+    $(comment).hide();
+}
+
+function expandComment(id){
+    var comment = document.getElementById("comment" + id);
+    $(comment).show();
+    var banner = document.getElementById("banner" + id);
+    $(banner).remove();
 }
 
 function displayVote() {

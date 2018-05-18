@@ -63,6 +63,8 @@ public class Post {
     @OneToMany(mappedBy = "post", fetch=FetchType.EAGER)
     private Set<Vote> voteArray = new HashSet<>();
 
+    private int score;
+
     public Post(){}
 
     public Post(String quote, Date datePosted, String description, Book book, User user) {
@@ -71,6 +73,7 @@ public class Post {
         this.description = description;
         this.book = book;
         this.user = user;
+        this.score = 0;
     }
 
     public String getQuote() {
@@ -127,5 +130,13 @@ public class Post {
 
     public Set<Vote> getVoteArray() {
         return voteArray;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

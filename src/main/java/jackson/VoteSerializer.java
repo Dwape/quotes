@@ -21,10 +21,12 @@ public class VoteSerializer extends StdSerializer<Vote> {
 
     @Override
     public void serialize(Vote vote, JsonGenerator jgen, SerializerProvider provider) throws IOException {
-        /*jgen.writeStartObject();
+        jgen.writeStartObject();
         jgen.writeNumberField("id", vote.getId());
         jgen.writeStringField("username", vote.getUser().getUsername());
         jgen.writeBooleanField("isPositive", vote.isPositive());
-        jgen.writeEndObject();*/
+        jgen.writeNumberField("idPost", vote.getPost().getId());
+        jgen.writeNumberField("idComment", vote.getComment().getId());
+        jgen.writeEndObject();
     }
 }

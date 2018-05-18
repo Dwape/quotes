@@ -115,6 +115,7 @@ public class ManageVote {
             tx = session.beginTransaction();
             Query query;
             if (newVote.getComment() == null){
+                //change so that sql can not be injected.
                 query = session.createQuery("SELECT V.id,V.isPositive FROM Vote V WHERE idPost= " + newVote.getPost().getId() + " AND username = '" + newVote.getUser().getUsername() +"'");
             } else {
                 query = session.createQuery("SELECT V.id,V.isPositive FROM Vote V WHERE idComment= " + newVote.getComment().getId() + " AND username = '" + newVote.getUser().getUsername() +"'");

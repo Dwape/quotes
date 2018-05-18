@@ -59,7 +59,8 @@ function createComment(comment, idParent){
     upvote.onclick = function() {
         var upvote = document.getElementById("upvote" + comment.id); //this
         var downvote = document.getElementById("downvote" + comment.id);
-        paintVote(true, upvote, downvote);
+        var score = document.getElementById("score" + comment.id);
+        paintVote(true, upvote, downvote, score);
         saveVote(true, -1, comment.id);
     };
 
@@ -69,7 +70,8 @@ function createComment(comment, idParent){
     downvote.onclick = function() {
         var upvote = document.getElementById("upvote" + comment.id);
         var downvote = document.getElementById("downvote" + comment.id); //this
-        paintVote(false, upvote, downvote);
+        var score = document.getElementById("score" + comment.id);
+        paintVote(false, upvote, downvote, score);
         saveVote(false, -1, comment.id);
     };
 
@@ -98,6 +100,9 @@ function createComment(comment, idParent){
         collapseComment(comment.id);
         //this.setAttribute("class", "fas fa-plus");
     };
+    var score = commentStructure.querySelector("#score");
+    score.setAttribute("id", "score" + comment.id);
+    score.value = comment.score;
     return commentStructure;
 }
 
@@ -191,6 +196,12 @@ function expandComment(id){
 //may use something similar later.
 function displayVote() {
     var idPost = document.getElementById("idPost").value;
+    $.ajax({
+        url: "/postDetailsVote",
+        success: function(result){
+            paintOldVotes(result, idPost);
+        }
+    });
 }
 
 function votePost(isUpVote){
@@ -199,24 +210,30 @@ function votePost(isUpVote){
     //add vote painting method passing the elements as parameters, so that it can be reused
     var upvote = document.getElementById("upvote-post");
     var downvote = document.getElementById("downvote-post");
-    paintVote(isUpVote, upvote, downvote); //check if this works
+    var score = document.getElementById("score-post");
+    paintVote(isUpVote, upvote, downvote, score); //check if this works
     saveVote(isUpVote, postId, -1); //no comment
 }
 
 //could be changed to add and remove classes.
-function paintVote(isUpVote, upvote, downvote){
+//also increases the score
+function paintVote(isUpVote, upvote, downvote, score){
     if (isUpVote) { //user is upvoting
         if (upvote.style.color === "blue"){
             upvote.setAttribute("style", "color: black");
+            score.innerText = Number(score.innerText)-1;
         } else {
             upvote.setAttribute("style", "color: blue");
+            score.innerText = Number(score.innerText)+1;
         }
         downvote.setAttribute("style", "color: black");
     } else { //user is downvoting
         if (downvote.style.color === "red"){
             downvote.setAttribute("style", "color: black");
+            score.innerText = Number(score.innerText)+1;
         } else {
             downvote.setAttribute("style", "color: red");
+            score.innerText = Number(score.innerText)-1;
         }
         upvote.setAttribute("style", "color: black");
     }
@@ -229,6 +246,28 @@ function saveVote(isPositive, postID, commentID){
         data: { isPositive: isPositive, idPost: postID, idComment: commentID }
     });
 }
+
+/*
+function paintOldVotes(result, idPost){
+    //look for post
+    for (var i=0; i < result.length; i++){
+        if (idPost === result[i][3]){
+            if (result[i][2] === "true"){
+                document.getElementById("upvote-post").setAttribute("style", "color: blue");
+            } else {
+                document.getElementById("downvote-post").setAttribute("style", "color: red");
+            }
+            break;
+        }
+    }
+
+    for (i=0; i < result.length; i++){
+        if ()
+    }
+
+}
+*/
+
 /*
 function voteComment(isUpVote){
     var commentID = document.

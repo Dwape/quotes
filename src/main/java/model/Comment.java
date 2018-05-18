@@ -44,6 +44,8 @@ public class Comment {
     @Column(length=5000)
     private String description;
 
+    private int score;
+
     public Comment(){}
 
     public Comment(User user, Post post, Comment parent, Date datePosted, String description){
@@ -52,6 +54,7 @@ public class Comment {
         this.parent = parent;
         this.datePosted = datePosted;
         this.description = description;
+        this.score = 0;
     }
 
     public Post getPost() {
@@ -112,5 +115,13 @@ public class Comment {
 
     public Set<Vote> getVoteArray() {
         return voteArray;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

@@ -1,5 +1,6 @@
 package servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hibernate.ManageComment;
 import hibernate.ManagePost;
 import hibernate.ManageUser;
@@ -15,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Set;
 
 @WebServlet("/postDetailsVote")
 public class VoteServlet extends HttpServlet {
@@ -25,9 +28,19 @@ public class VoteServlet extends HttpServlet {
         super();
     }
 
+    //doesn't work
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //get all the comments and posts upvoted by the user.
+        User user = ManageUser.retrieveUser(request.getRemoteUser());
+        //we can get all the posts and comments of the user
+        //we could do a query in the database or work directly with the arrays.
+        ObjectMapper mapper = new ObjectMapper();
+        String votesJson = mapper.writeValueAsString(user.getVoteArray());
+        PrintWriter out = response.getWriter();
+        out.print(votesJson);
+        out.flush();
     }
 
     @Override

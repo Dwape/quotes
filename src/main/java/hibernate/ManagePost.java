@@ -161,11 +161,15 @@ public class ManagePost {
     }
 
     public static void addVote(Post post, Vote vote){
+        if (vote.isPositive()) post.setScore(post.getScore()+1);
+        else post.setScore(post.getScore()-1);
         post.getVoteArray().add(vote);
         updatePost(post);
     }
 
     public static void removeVote(Post post, Vote vote){
+        if (vote.isPositive()) post.setScore(post.getScore()-1);
+        else post.setScore(post.getScore()+1);
         post.getVoteArray().remove(vote);
         updatePost(post);
     }

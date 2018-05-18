@@ -43,6 +43,7 @@ public class PostDetailsServlet extends HttpServlet{
         request.setAttribute("bookAuthor", post.getBook().getAuthor());
         request.setAttribute("postedBy", post.getUser().getUsername());
         request.setAttribute("datePosted", post.getDatePosted());
+        request.setAttribute("score", post.getScore());
 
         request.setAttribute("id", id);
 

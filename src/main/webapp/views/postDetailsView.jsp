@@ -26,8 +26,8 @@
                 <p class="card-text">${text}</p>
 
                 <footer class="blockquote-footer">posted by ${postedBy} on ${datePosted.toLocaleString()}</footer>
-                <i id="upvote-post" class="fas fa-arrow-circle-up remove-vote" onClick="votePost(true)"></i>
-                <i id="downvote-post" class="fas fa-arrow-circle-down remove-vote" onClick="votePost(false)"></i>
+                <i id="upvote-post" style="color: black" class="fas fa-arrow-circle-up" onClick="votePost(true)"></i>
+                <i id="downvote-post" style="color: black" class="fas fa-arrow-circle-down" onClick="votePost(false)"></i>
                 <input type="hidden" name="idPost" value="${id}">
             </div>
         </div>
@@ -54,8 +54,8 @@
                                 <i id="collapse" style="cursor: pointer" class="fas fa-angle-up"></i>
                             </div>
                         </div>
-                        <i id="upvote-comment" class="fas fa-arrow-circle-up remove-vote"></i>
-                        <i id="downvote-comment" class="fas fa-arrow-circle-down remove-vote"></i>
+                        <i id="upvote-comment" style="color: black" class="fas fa-arrow-circle-up"></i>
+                        <i id="downvote-comment" style="color: black" class="fas fa-arrow-circle-down"></i>
                     </div>
                 </div>
             </div>

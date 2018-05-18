@@ -55,6 +55,7 @@ function createComment(comment, idParent){
 
     var upvote = commentStructure.querySelector("#upvote-comment");
     upvote.setAttribute("id", "upvote" + comment.id);
+    //upvote = document.getElementById("upvote" + comment.id);
     upvote.onclick = function() {
         var upvote = document.getElementById("upvote" + comment.id); //this
         var downvote = document.getElementById("downvote" + comment.id);
@@ -64,6 +65,7 @@ function createComment(comment, idParent){
 
     var downvote = commentStructure.querySelector("#downvote-comment");
     downvote.setAttribute("id", "downvote" + comment.id);
+    //downvote = document.getElementById("downvote" + comment.id);
     downvote.onclick = function() {
         var upvote = document.getElementById("upvote" + comment.id);
         var downvote = document.getElementById("downvote" + comment.id); //this
@@ -204,19 +206,19 @@ function votePost(isUpVote){
 //could be changed to add and remove classes.
 function paintVote(isUpVote, upvote, downvote){
     if (isUpVote) { //user is upvoting
-        if (upvote.classList.contains("up-vote")){
-            upvote.setAttribute("class", "fas fa-arrow-circle-up remove-vote");
+        if (upvote.style.color === "blue"){
+            upvote.setAttribute("style", "color: black");
         } else {
-            upvote.setAttribute("class", "fas fa-arrow-circle-up up-vote");
+            upvote.setAttribute("style", "color: blue");
         }
-        downvote.setAttribute("class", "fas fa-arrow-circle-down remove-vote");
+        downvote.setAttribute("style", "color: black");
     } else { //user is downvoting
-        if (downvote.classList.contains("down-vote")){
-            downvote.setAttribute("class", "fas fa-arrow-circle-down remove-vote");
+        if (downvote.style.color === "red"){
+            downvote.setAttribute("style", "color: black");
         } else {
-            downvote.setAttribute("class", "fas fa-arrow-circle-down down-vote");
+            downvote.setAttribute("style", "color: red");
         }
-        upvote.setAttribute("class", "fas fa-arrow-circle-up remove-vote");
+        upvote.setAttribute("style", "color: black");
     }
 }
 

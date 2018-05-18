@@ -61,6 +61,6 @@ public class HibernateTest {
         ManagePost.addPost(post);
 
         Vote vote = new Vote(post,null,user,true);
-        ManageVote.addVoteToPost(vote);
+        //ManageVote.addVoteToPost(vote);
     }
 }

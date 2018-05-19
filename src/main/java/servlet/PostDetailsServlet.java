@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hibernate.ManageComment;
 import hibernate.ManagePost;
 import hibernate.ManageUser;
+import hibernate.ManageVote;
 import model.Comment;
 import model.Post;
 import model.User;
+import model.Vote;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -44,6 +46,22 @@ public class PostDetailsServlet extends HttpServlet{
         request.setAttribute("postedBy", post.getUser().getUsername());
         request.setAttribute("datePosted", post.getDatePosted());
         request.setAttribute("score", post.getScore());
+
+        String username = request.getRemoteUser();
+        if (username!=null){
+            User user = ManageUser.retrieveUser(username);
+            Vote vote = new Vote(post, null, user, true); //try this out
+            Vote existing = ManageVote.hasUserVoted(vote);
+            if (existing.getId() != -1){
+                if (existing.isPositive()){
+                    request.setAttribute("vote", "upvote");
+                } else {
+                    request.setAttribute("vote", "downvote");
+                }
+            } else {
+                request.setAttribute("vote", "none");
+            }
+        }
 
         request.setAttribute("id", id);
 

@@ -7,7 +7,7 @@
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
     <link rel="stylesheet" href="../css/postDetails.css" type="text/css">
 </head>
-<body onload="getCommentArray();displayVote();">
+<body onload="getCommentArray();">
 
     <c:choose>
         <c:when test="<%=request.getRemoteUser() != null%>">
@@ -29,6 +29,7 @@
                 <i id="upvote-post" style="color: black" class="fas fa-arrow-circle-up" onClick="votePost(true)"></i>
                 <i id="downvote-post" style="color: black" class="fas fa-arrow-circle-down" onClick="votePost(false)"></i>
                 <span id="score-post">${score}</span>
+                <input type="hidden" id="vote" value="${vote}">
                 <input type="hidden" name="idPost" value="${id}">
             </div>
         </div>

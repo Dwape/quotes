@@ -1,18 +1,12 @@
 package model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import jackson.CommentSerializer;
-import jackson.VoteSerializer;
-import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Indexed
 @Table(name = "vote")
-@JsonSerialize(using = VoteSerializer.class)
 public class Vote {
 
     @Id

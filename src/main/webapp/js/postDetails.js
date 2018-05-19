@@ -9,7 +9,19 @@ function getCommentArray(){
         }
     });
     if (document.getElementById("user").innerText !== "null"){
+        postVoted();
         setupPostReply();
+    }
+}
+
+function postVoted(){
+    var upvote = document.getElementById("upvote-post");
+    var downvote = document.getElementById("downvote-post");
+    var vote = document.getElementById("vote");
+    if (vote.value === "upvote"){
+        upvote.setAttribute("style", "color: blue");
+    } else if (vote.value === "downvote"){
+        downvote.setAttribute("style", "color: red");
     }
 }
 
@@ -75,8 +87,10 @@ function createComment(comment, idParent){
         saveVote(false, -1, comment.id);
     };
 
+    var username = document.getElementById("user").innerText;
+
     commentStructure.querySelector("#replyForm").setAttribute("id", "form" + comment.id);
-    if (document.getElementById("user").innerText !== "null") {
+    if (username !== "null") {
         var replyLink = commentStructure.querySelector("#replyLink");
         replyLink.onclick = function(){
             showReplyWindow(comment.id);
@@ -90,6 +104,14 @@ function createComment(comment, idParent){
                 showReplyWindow(replyIdOpen); //hides reply text-box
                 replyText.value = "";
             }
+        };
+        if (comment.usersVoted.includes(username)){
+            var index = comment.usersVoted.indexOf(username);
+            if (comment.usersVoted[index]){
+                upvote.setAttribute("style", "color: blue");
+            } else {
+                downvote.setAttribute("style", "color: red");
+            }
         }
     } else {
         commentStructure.querySelector("#replyLink").setAttribute("style", "display: none");
@@ -102,7 +124,7 @@ function createComment(comment, idParent){
     };
     var score = commentStructure.querySelector("#score");
     score.setAttribute("id", "score" + comment.id);
-    score.value = comment.score;
+    score.innerText = comment.score;
     return commentStructure;
 }
 
@@ -193,17 +215,6 @@ function expandComment(id){
     $(banner).remove();
 }
 
-//may use something similar later.
-function displayVote() {
-    var idPost = document.getElementById("idPost").value;
-    $.ajax({
-        url: "/postDetailsVote",
-        success: function(result){
-            paintOldVotes(result, idPost);
-        }
-    });
-}
-
 function votePost(isUpVote){
     //the logic should be extended for removing color.
     var postId = document.getElementById("idPost").value;
@@ -224,7 +235,8 @@ function paintVote(isUpVote, upvote, downvote, score){
             score.innerText = Number(score.innerText)-1;
         } else {
             upvote.setAttribute("style", "color: blue");
-            score.innerText = Number(score.innerText)+1;
+            if (downvote.style.color === "red") score.innerText = Number(score.innerText)+2;
+            else score.innerText = Number(score.innerText)+1;
         }
         downvote.setAttribute("style", "color: black");
     } else { //user is downvoting
@@ -232,8 +244,9 @@ function paintVote(isUpVote, upvote, downvote, score){
             downvote.setAttribute("style", "color: black");
             score.innerText = Number(score.innerText)+1;
         } else {
+            if (upvote.style.color === "blue") score.innerText = Number(score.innerText)-2;
+            else score.innerText = Number(score.innerText)-1;
             downvote.setAttribute("style", "color: red");
-            score.innerText = Number(score.innerText)-1;
         }
         upvote.setAttribute("style", "color: black");
     }
@@ -246,29 +259,3 @@ function saveVote(isPositive, postID, commentID){
         data: { isPositive: isPositive, idPost: postID, idComment: commentID }
     });
 }
-
-/*
-function paintOldVotes(result, idPost){
-    //look for post
-    for (var i=0; i < result.length; i++){
-        if (idPost === result[i][3]){
-            if (result[i][2] === "true"){
-                document.getElementById("upvote-post").setAttribute("style", "color: blue");
-            } else {
-                document.getElementById("downvote-post").setAttribute("style", "color: red");
-            }
-            break;
-        }
-    }
-
-    for (i=0; i < result.length; i++){
-        if ()
-    }
-
-}
-*/
-
-/*
-function voteComment(isUpVote){
-    var commentID = document.
-}*/

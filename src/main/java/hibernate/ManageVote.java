@@ -56,6 +56,12 @@ public class ManageVote {
         else {
             if (previousVote.isPositive() != newVote.isPositive()){
                 voteID = saveVote(newVote);
+                if (newVote.getComment() == null){
+                    ManagePost.addVote(newVote.getPost(),newVote);
+                } else {
+                    ManageComment.addVote(newVote.getComment(),newVote);
+                }
+                ManageUser.addVote(newVote.getUser(),newVote);
             }
             deleteVote(previousVote.getId());
         }

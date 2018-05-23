@@ -35,34 +35,6 @@ public class PostDetailsServlet extends HttpServlet{
             throws ServletException, IOException {
 
         long id = Long.parseLong(request.getParameter("id"));
-        Post post = ManagePost.retrievePost(id);
-
-        request.setAttribute("comments", post.getCommentArray());
-
-        request.setAttribute("quote", post.getQuote());
-        request.setAttribute("text", post.getDescription());
-        request.setAttribute("bookTitle", post.getBook().getTitle());
-        request.setAttribute("bookAuthor", post.getBook().getAuthor());
-        request.setAttribute("postedBy", post.getUser().getUsername());
-        request.setAttribute("datePosted", post.getDatePosted());
-        request.setAttribute("score", post.getScore());
-
-        String username = request.getRemoteUser();
-        if (username!=null){
-            User user = ManageUser.retrieveUser(username);
-            Vote vote = new Vote(post, null, user, true); //try this out
-            Vote existing = ManageVote.hasUserVoted(vote);
-            if (existing.getId() != -1){
-                if (existing.isPositive()){
-                    request.setAttribute("vote", "upvote");
-                } else {
-                    request.setAttribute("vote", "downvote");
-                }
-            } else {
-                request.setAttribute("vote", "none");
-            }
-        }
-
         request.setAttribute("id", id);
 
         RequestDispatcher dispatcher //

@@ -1,5 +1,47 @@
 var replyIdOpen;
 
+function loadView(){
+    getPost();
+    getCommentArray();
+}
+
+//returns the post
+function getPost(){
+    var urlString = window.location.href;
+    var url = new URL(urlString);
+    var idPost = url.searchParams.get("id");
+    $.ajax({
+        url: "/getPost?id=" + idPost,
+        success: function(result){
+            displayPost(result);
+        }
+    });
+}
+
+function displayPost(post){
+    var postView = document.getElementById("post");
+    postView.querySelector("#postQuote").innerText = post.quote;
+    postView.querySelector("#postInfo").innerHTML = "from <a href=\"#\" class=\"card-link\">" + post.bookTitle + "</a> by<a href=\"#\" class=\"card-link ml-1\">" + post.bookAuthor+ "</a>";
+    postView.querySelector("#postDescription").innerText = post.description;
+    postView.querySelector("#postFooter").innerText = "posted by " + post.postedBy + " on " + post.datePosted.toLocaleString();
+    postView.querySelector("#score-post").innerText = post.score;
+    var upvote = document.getElementById("upvote-post");
+    var downvote = document.getElementById("downvote-post");
+    if (document.getElementById("user").innerText !== "null"){
+        upvote.onclick = function() {
+            votePost(true, upvote);
+        };
+        downvote.onclick = function() {
+            votePost(false, downvote);
+        };
+        postVoted(post);
+        setupPostReply();
+    } else {
+        upvote.disabled = true;
+        downvote.disable = false;
+    }
+}
+
 function getCommentArray(){
     var idPost = document.getElementById("idPost").value;
     $.ajax({
@@ -8,20 +50,18 @@ function getCommentArray(){
             displayIndependentComments(result);
         }
     });
-    if (document.getElementById("user").innerText !== "null"){
-        postVoted();
-        setupPostReply();
-    }
 }
 
-function postVoted(){
+function postVoted(post){
     var upvote = document.getElementById("upvote-post");
     var downvote = document.getElementById("downvote-post");
-    var vote = document.getElementById("vote");
-    if (vote.value === "upvote"){
-        upvote.setAttribute("style", "color: blue");
-    } else if (vote.value === "downvote"){
-        downvote.setAttribute("style", "color: red");
+    //var vote = document.getElementById("vote");
+    if (post.loggedUserVote !== null){
+        if (post.loggedUserVote === true){
+            upvote.setAttribute("style", "color: blue");
+        } else {
+            downvote.setAttribute("style", "color: red");
+        }
     }
 }
 
@@ -73,7 +113,8 @@ function createComment(comment, idParent){
         var downvote = document.getElementById("downvote" + comment.id);
         var score = document.getElementById("score" + comment.id);
         paintVote(true, upvote, downvote, score);
-        saveVote(true, -1, comment.id);
+        saveVote(true, -1, comment.id, upvote);
+        upvote.disabled = true;
     };
 
     var downvote = commentStructure.querySelector("#downvote-comment");
@@ -84,7 +125,8 @@ function createComment(comment, idParent){
         var downvote = document.getElementById("downvote" + comment.id); //this
         var score = document.getElementById("score" + comment.id);
         paintVote(false, upvote, downvote, score);
-        saveVote(false, -1, comment.id);
+        saveVote(false, -1, comment.id, downvote);
+        upvote.disabled = true;
     };
 
     var username = document.getElementById("user").innerText;
@@ -105,16 +147,18 @@ function createComment(comment, idParent){
                 replyText.value = "";
             }
         };
-        if (comment.usersVoted.includes(username)){
-            var index = comment.usersVoted.indexOf(username);
-            if (comment.usersVoted[index]){
+        if (comment.loggedUserVote !== null){
+            if (comment.loggedUserVote === true){
                 upvote.setAttribute("style", "color: blue");
             } else {
                 downvote.setAttribute("style", "color: red");
             }
         }
     } else {
+        //if user is not logged in
         commentStructure.querySelector("#replyLink").setAttribute("style", "display: none");
+        upvote.disabled = true;
+        downvote.disabled = true;
     }
     //add hideComment to collapse button.
     var collapse = commentStructure.querySelector("#collapse");
@@ -215,7 +259,8 @@ function expandComment(id){
     $(banner).remove();
 }
 
-function votePost(isUpVote){
+function votePost(isUpVote, button){
+    button.disabled = true;
     //the logic should be extended for removing color.
     var postId = document.getElementById("idPost").value;
     //add vote painting method passing the elements as parameters, so that it can be reused
@@ -223,7 +268,7 @@ function votePost(isUpVote){
     var downvote = document.getElementById("downvote-post");
     var score = document.getElementById("score-post");
     paintVote(isUpVote, upvote, downvote, score); //check if this works
-    saveVote(isUpVote, postId, -1); //no comment
+    saveVote(isUpVote, postId, -1, button); //no comment
 }
 
 //could be changed to add and remove classes.
@@ -252,10 +297,13 @@ function paintVote(isUpVote, upvote, downvote, score){
     }
 }
 
-function saveVote(isPositive, postID, commentID){
+function saveVote(isPositive, postID, commentID, button){
     $.ajax({
         method: "POST",
         url: "/postDetailsVote",
-        data: { isPositive: isPositive, idPost: postID, idComment: commentID }
+        data: { isPositive: isPositive, idPost: postID, idComment: commentID },
+        success: function(){
+            button.disabled = false;
+        }
     });
 }

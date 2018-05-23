@@ -3,6 +3,7 @@ package servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hibernate.ManagePost;
+import model.Comment;
 import model.Post;
 
 import javax.servlet.RequestDispatcher;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Set;
 
 @WebServlet("/comments")
 public class CommentsServlet extends HttpServlet {
@@ -32,10 +34,22 @@ public class CommentsServlet extends HttpServlet {
         String idPost = request.getParameter("id");
         long id = Long.parseLong(idPost); //is it getParameter?
         Post post = ManagePost.retrievePost(id);
-        String commentsJson = mapper.writeValueAsString(post.getCommentArray());
+        Set<Comment> comments = post.getCommentArray();
+        String loggedUser = request.getRemoteUser();
+        if (loggedUser != null){
+            for (Comment comment : comments){
+                comment.setLoggedUsername(loggedUser);
+            }
+        }
+        String commentsJson = mapper.writeValueAsString(comments);
         PrintWriter out = response.getWriter();
         out.print(commentsJson);
         out.flush();
+        if (loggedUser != null){
+            for (Comment comment : comments){
+                comment.setLoggedUsername(null);
+            }
+        }
     }
 
     @Override

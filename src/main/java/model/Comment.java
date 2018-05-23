@@ -46,6 +46,9 @@ public class Comment {
 
     private int score;
 
+    @Transient
+    private String loggedUsername;
+
     public Comment(){}
 
     public Comment(User user, Post post, Comment parent, Date datePosted, String description){
@@ -97,6 +100,18 @@ public class Comment {
         this.commentArray = commentArray;
     }
 
+    public void setVoteArray(Set<Vote> voteArray) {
+        this.voteArray = voteArray;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public Date getDatePosted() {
         return datePosted;
     }
@@ -117,11 +132,11 @@ public class Comment {
         return voteArray;
     }
 
-    public int getScore() {
-        return score;
+    public String getLoggedUsername() {
+        return loggedUsername;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setLoggedUsername(String loggedUsername) {
+        this.loggedUsername = loggedUsername;
     }
 }

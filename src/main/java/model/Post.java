@@ -1,5 +1,8 @@
 package model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import jackson.CommentSerializer;
+import jackson.PostSerializer;
 import org.apache.lucene.analysis.commongrams.CommonGramsFilterFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.LowerCaseTokenizerFactory;
@@ -32,6 +35,7 @@ import java.util.Set;
                         @Parameter(name = "maxShingleSize", value = "10")
                 })
         })
+@JsonSerialize(using = PostSerializer.class)
 public class Post {
 
     @Field(index=Index.YES, analyze=Analyze.YES, store=Store.YES)
@@ -64,6 +68,17 @@ public class Post {
     private Set<Vote> voteArray = new HashSet<>();
 
     private int score;
+
+    @Transient
+    private String loggedUsername;
+
+    public String getLoggedUsername() {
+        return loggedUsername;
+    }
+
+    public void setLoggedUsername(String loggedUsername) {
+        this.loggedUsername = loggedUsername;
+    }
 
     public Post(){}
 

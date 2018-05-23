@@ -38,20 +38,31 @@ public class CommentSerializer extends StdSerializer<Comment> {
         jgen.writeObjectField("datePosted", comment.getDatePosted());
         jgen.writeStringField("description", comment.getDescription());
         jgen.writeBooleanField("hasParent", comment.getParent() != null);
+
+        //add if for not logged in users
+
+        if (comment.getLoggedUsername() != null){
+            List<User> users = comment.getVoteArray().stream()
+                    .map(Vote::getUser)
+                    .collect(Collectors.toList());
+            List<String> usersVoted = users.stream()
+                    .map(User::getUsername)
+                    .collect(Collectors.toList());
+            List<Boolean> isPositive = comment.getVoteArray().stream()
+                    .map(Vote::isPositive)
+                    .collect(Collectors.toList());
+
+            int index = usersVoted.indexOf(comment.getLoggedUsername());
+            if (index != -1){
+                jgen.writeBooleanField("loggedUserVote", isPositive.get(index));
+            } else {
+                jgen.writeObjectField("loggedUserVote", null); //check if it works
+            }
+        } else {
+            jgen.writeObjectField("loggedUserVote", null); //check if it works
+        }
+
         jgen.writeNumberField("score", comment.getScore());
-
-        List<User> users = comment.getVoteArray().stream()
-                .map(Vote::getUser)
-                .collect(Collectors.toList());
-        List<String> usersVoted = users.stream()
-                .map(User::getUsername)
-                .collect(Collectors.toList());
-        List<Boolean> isPositive = comment.getVoteArray().stream()
-                .map(Vote::isPositive)
-                .collect(Collectors.toList());
-
-        jgen.writeObjectField("usersVoted", usersVoted);
-        jgen.writeObjectField("isUpvote", isPositive);
 
         jgen.writeEndObject();
     }

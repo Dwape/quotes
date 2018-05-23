@@ -20,15 +20,15 @@
     <div class="container">
         <p style="display: none" id="user"><%=request.getRemoteUser()%></p>
         <div class="card mb-4" id="post" style="width: 40rem;">
-            <h5 class="card-header" id="postQuote">"${quote}"</h5>
+            <h5 class="card-header" id="postQuote"></h5>
             <div class="card-body pb-2">
-                <h6 class="card-subtitle mb-2 text-muted" id="postInfo">from <a href="#" class="card-link">${bookTitle}</a> by<a href="#" class="card-link ml-1">${bookAuthor}</a></h6>
-                <p class="card-text" id="postDescription">${text}</p>
+                <h6 class="card-subtitle mb-2 text-muted" id="postInfo"></h6>
+                <p class="card-text" id="postDescription"></p>
 
-                <footer class="blockquote-footer" id="postFooter">posted by ${postedBy} on ${datePosted.toLocaleString()}</footer>
+                <footer class="blockquote-footer" id="postFooter"></footer>
                 <i id="upvote-post" style="color: black" class="fas fa-arrow-circle-up"></i>
                 <i id="downvote-post" style="color: black" class="fas fa-arrow-circle-down"></i>
-                <span id="score-post">${score}</span>
+                <span id="score-post"></span>
                 <input type="hidden" id="vote" value="${vote}">
                 <input type="hidden" name="idPost" value="${id}">
             </div>

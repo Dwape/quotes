@@ -23,22 +23,23 @@ function displayPost(post){
     postView.querySelector("#postQuote").innerText = post.quote;
     postView.querySelector("#postInfo").innerHTML = "from <a href=\"#\" class=\"card-link\">" + post.bookTitle + "</a> by<a href=\"#\" class=\"card-link ml-1\">" + post.bookAuthor+ "</a>";
     postView.querySelector("#postDescription").innerText = post.description;
-    postView.querySelector("#postFooter").innerText = "posted by " + post.postedBy + " on " + post.datePosted.toLocaleString();
+    var date = new Date(post.datePosted);
+    postView.querySelector("#postFooter").innerText = "posted by " + post.postedBy + " on " + date.toLocaleString();
     postView.querySelector("#score-post").innerText = post.score;
     var upvote = document.getElementById("upvote-post");
     var downvote = document.getElementById("downvote-post");
     if (document.getElementById("user").innerText !== "null"){
         upvote.onclick = function() {
-            votePost(true, upvote);
+            votePost(true);
         };
         downvote.onclick = function() {
-            votePost(false, downvote);
+            votePost(false);
         };
         postVoted(post);
         setupPostReply();
     } else {
         upvote.disabled = true;
-        downvote.disable = false;
+        downvote.disable = true;
     }
 }
 
@@ -105,34 +106,43 @@ function createComment(comment, idParent){
     commentStructure.querySelector("#footer").innerText = "posted by " + comment.username + " on " + date.toLocaleString(); //date need to be parsed.
     commentStructure.querySelector("#idParent").value = idParent; //is this necessary
 
-    var upvote = commentStructure.querySelector("#upvote-comment");
-    upvote.setAttribute("id", "upvote" + comment.id);
-    //upvote = document.getElementById("upvote" + comment.id);
-    upvote.onclick = function() {
-        var upvote = document.getElementById("upvote" + comment.id); //this
-        var downvote = document.getElementById("downvote" + comment.id);
-        var score = document.getElementById("score" + comment.id);
-        paintVote(true, upvote, downvote, score);
-        saveVote(true, -1, comment.id, upvote);
-        upvote.disabled = true;
-    };
-
-    var downvote = commentStructure.querySelector("#downvote-comment");
-    downvote.setAttribute("id", "downvote" + comment.id);
-    //downvote = document.getElementById("downvote" + comment.id);
-    downvote.onclick = function() {
-        var upvote = document.getElementById("upvote" + comment.id);
-        var downvote = document.getElementById("downvote" + comment.id); //this
-        var score = document.getElementById("score" + comment.id);
-        paintVote(false, upvote, downvote, score);
-        saveVote(false, -1, comment.id, downvote);
-        upvote.disabled = true;
-    };
-
     var username = document.getElementById("user").innerText;
 
     commentStructure.querySelector("#replyForm").setAttribute("id", "form" + comment.id);
+
+    var upvote = commentStructure.querySelector("#upvote-comment");
+    upvote.setAttribute("id", "upvote" + comment.id);
+
+    var downvote = commentStructure.querySelector("#downvote-comment");
+    downvote.setAttribute("id", "downvote" + comment.id);
+
     if (username !== "null") {
+        //upvote = document.getElementById("upvote" + comment.id);
+        upvote.onclick = function() {
+            var upvote = document.getElementById("upvote" + comment.id); //this
+            var downvote = document.getElementById("downvote" + comment.id);
+            if (!upvote.disabled){ //this
+                var score = document.getElementById("score" + comment.id);
+                upvote.disabled = true;
+                downvote.disabled = true;
+                paintVote(true, upvote, downvote, score);
+                saveVote(true, -1, comment.id);
+            }
+        };
+
+        //downvote = document.getElementById("downvote" + comment.id);
+        downvote.onclick = function() {
+            var upvote = document.getElementById("upvote" + comment.id);
+            var downvote = document.getElementById("downvote" + comment.id); //this
+            if (!downvote.disabled){ //this
+                var score = document.getElementById("score" + comment.id);
+                upvote.disabled = true;
+                downvote.disabled = true;
+                paintVote(false, upvote, downvote, score);
+                saveVote(false, -1, comment.id);
+            }
+        };
+
         var replyLink = commentStructure.querySelector("#replyLink");
         replyLink.onclick = function(){
             showReplyWindow(comment.id);
@@ -259,16 +269,21 @@ function expandComment(id){
     $(banner).remove();
 }
 
-function votePost(isUpVote, button){
-    button.disabled = true;
-    //the logic should be extended for removing color.
-    var postId = document.getElementById("idPost").value;
-    //add vote painting method passing the elements as parameters, so that it can be reused
+function votePost(isUpVote){
     var upvote = document.getElementById("upvote-post");
     var downvote = document.getElementById("downvote-post");
-    var score = document.getElementById("score-post");
-    paintVote(isUpVote, upvote, downvote, score); //check if this works
-    saveVote(isUpVote, postId, -1, button); //no comment
+    if (!upvote.disabled && !downvote.disabled){
+        //the logic should be extended for removing color.
+        var postId = document.getElementById("idPost").value;
+        //add vote painting method passing the elements as parameters, so that it can be reused
+        upvote = document.getElementById("upvote-post");
+        downvote = document.getElementById("downvote-post");
+        upvote.disabled = true;
+        downvote.disabled = true;
+        var score = document.getElementById("score-post");
+        paintVote(isUpVote, upvote, downvote, score); //check if this works
+        saveVote(isUpVote, postId, -1); //no comment
+    }
 }
 
 //could be changed to add and remove classes.
@@ -297,13 +312,19 @@ function paintVote(isUpVote, upvote, downvote, score){
     }
 }
 
-function saveVote(isPositive, postID, commentID, button){
+function saveVote(isPositive, postID, commentID){
     $.ajax({
         method: "POST",
         url: "/postDetailsVote",
         data: { isPositive: isPositive, idPost: postID, idComment: commentID },
         success: function(){
-            button.disabled = false;
+            if (commentID !== -1){
+                document.getElementById("upvote" + commentID).disabled = false;
+                document.getElementById("downvote" + commentID).disabled = false;
+            } else {
+                document.getElementById("upvote-post").disabled = false;
+                document.getElementById("downvote-post").disabled = false;
+            }
         }
     });
 }

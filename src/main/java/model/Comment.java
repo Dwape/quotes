@@ -34,6 +34,7 @@ public class Comment {
 
     //children
     @OneToMany(mappedBy = "parent", fetch=FetchType.EAGER)
+    @OrderBy("score DESC")
     private Set<Comment> commentArray = new HashSet<>();
 
     @OneToMany(mappedBy = "comment", fetch=FetchType.EAGER)

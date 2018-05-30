@@ -4,6 +4,8 @@ import model.Book;
 import model.Comment;
 import model.Post;
 import model.Vote;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -144,7 +146,14 @@ public class ManagePost {
                     .should(query)
                     .createQuery();
 
-            Query hibQuery2 = fullTextSession.createFullTextQuery(query4, Post.class);
+            org.hibernate.search.FullTextQuery hibQuery2 = fullTextSession.createFullTextQuery(query4, Post.class);
+
+            //posts are still not sorted correctly.
+            org.apache.lucene.search.Sort sort = new Sort(
+                    SortField.FIELD_SCORE,
+                    new SortField("score", SortField.Type.INT, true));
+            hibQuery2.setSort(sort);
+
             result = hibQuery2.list();
             tx.commit();
         } catch (HibernateException e) {

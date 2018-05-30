@@ -62,11 +62,14 @@ public class Post {
     private Book book;
 
     @OneToMany(mappedBy = "post", fetch=FetchType.EAGER)
+    @OrderBy("score DESC")
     private Set<Comment> commentArray = new HashSet<>();
 
     @OneToMany(mappedBy = "post", fetch=FetchType.EAGER)
     private Set<Vote> voteArray = new HashSet<>();
 
+    @Field
+    @SortableField(forField = "score")
     private int score;
 
     @Transient

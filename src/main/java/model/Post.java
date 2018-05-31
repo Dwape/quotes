@@ -160,7 +160,7 @@ public class Post {
         return counter;
     }
 
-    public void setScore(int score) {
+    public void setScore(int score){
         this.score = score;
     }
 }

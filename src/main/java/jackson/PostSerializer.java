@@ -4,12 +4,15 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import model.Comment;
 import model.Post;
 import model.User;
 import model.Vote;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PostSerializer extends StdSerializer<Post> {
@@ -36,7 +39,10 @@ public class PostSerializer extends StdSerializer<Post> {
         jgen.writeStringField("bookAuthor", post.getBook().getAuthor());
         jgen.writeObjectField("datePosted", post.getDatePosted());
 
-        if (post.getLoggedUsername() != null){
+        String loggedUser = post.getLoggedUsername();
+
+        if (loggedUser != null){
+
             List<User> users = post.getVoteArray().stream()
                     .map(Vote::getUser)
                     .collect(Collectors.toList());
@@ -47,7 +53,7 @@ public class PostSerializer extends StdSerializer<Post> {
                     .map(Vote::isPositive)
                     .collect(Collectors.toList());
 
-            int index = usersVoted.indexOf(post.getLoggedUsername());
+            int index = usersVoted.indexOf(loggedUser);
             if (index != -1){
                 jgen.writeBooleanField("loggedUserVote", isPositive.get(index));
             } else {
@@ -58,6 +64,7 @@ public class PostSerializer extends StdSerializer<Post> {
         }
 
         jgen.writeNumberField("score", post.getScore());
+        jgen.writeObjectField("comments", post.getCommentArray());
 
         jgen.writeEndObject();
     }

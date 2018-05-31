@@ -2,7 +2,6 @@ var replyIdOpen;
 
 function loadView(){
     getPost();
-    getCommentArray();
 }
 
 //returns the post
@@ -14,6 +13,7 @@ function getPost(){
         url: "/getPost?id=" + idPost,
         success: function(result){
             displayPost(result);
+            displayIndependentComments(result.comments);
         }
     });
 }
@@ -41,16 +41,6 @@ function displayPost(post){
         upvote.disabled = true;
         downvote.disable = true;
     }
-}
-
-function getCommentArray(){
-    var idPost = document.getElementById("idPost").value;
-    $.ajax({
-        url: "/comments?id=" + idPost,
-        success: function(result){
-            displayIndependentComments(result);
-        }
-    });
 }
 
 function postVoted(post){

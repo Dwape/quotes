@@ -2,6 +2,7 @@ package hibernate;
 
 import model.Comment;
 import model.Post;
+import model.User;
 import model.Vote;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -18,20 +19,6 @@ public class ManageVote {
     public ManageVote() {
     }
 
-    private static void updateVote(Vote vote){
-
-        Transaction tx = null;
-
-        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
-            session.update(vote);
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) tx.rollback();
-            e.printStackTrace();
-        }
-    }
-
     /**
      * Adds a new vote to the database.
      * @param newVote The vote to be added to the database.
@@ -44,41 +31,25 @@ public class ManageVote {
 
         Vote previousVote = hasUserVoted(newVote);
 
-        if (previousVote.getId() == -1){
-            voteID = saveVote(newVote);
-            if (newVote.getComment() == null){
-                ManagePost.addVote(newVote.getPost(),newVote);
-            } else {
-                ManageComment.addVote(newVote.getComment(),newVote);
-            }
-            ManageUser.addVote(newVote.getUser(),newVote);
-        }
-        else {
-            if (previousVote.isPositive() != newVote.isPositive()){
-                voteID = saveVote(newVote);
-                if (newVote.getComment() == null){
-                    ManagePost.addVote(newVote.getPost(),newVote);
-                } else {
-                    ManageComment.addVote(newVote.getComment(),newVote);
-                }
-                ManageUser.addVote(newVote.getUser(),newVote);
-            }
-            deleteVote(previousVote.getId());
-        }
-        return voteID;
-    }
-
-    public static Long saveVote(Vote newVote){
         Transaction tx = null;
-        Long voteID = null;
-        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
-            voteID = (Long) session.save(newVote);
-            newVote.setId(voteID); //sets the vote's id to the generated one.
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) tx.rollback();
-            e.printStackTrace();
+        if ((previousVote.getId() == -1) || (previousVote.isPositive() != newVote.isPositive())) {
+            try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+                tx = session.beginTransaction();
+                voteID = (Long) session.save(newVote);
+                newVote.setId(voteID); //sets the vote's id to the generated one.
+                if (newVote.getComment() == null){
+                    //ManagePost.addVote(newVote.getPost(), newVote);
+                } else {
+                    //ManageComment.addVote(newVote.getComment(), newVote);
+                }
+                tx.commit();
+            } catch (HibernateException e) {
+                if (tx != null) tx.rollback();
+                e.printStackTrace();
+            }
+        }
+        if (previousVote.getId() != -1) {
+            deleteVote(previousVote.getId());
         }
         return voteID;
     }
@@ -88,27 +59,30 @@ public class ManageVote {
      * This method must not be called for a vote that does not exist in the database.
      * @param voteID The user's id, used as the key in the database.
      */
+    //long start = System.currentTimeMillis(); //REMOVE
+    //long timeElapsed = System.currentTimeMillis() - start; //REMOVE
+    //System.out.println("Time elapsed: " + timeElapsed); //REMOVE
     public static void deleteVote(Long voteID) {
 
         Transaction tx = null;
-        Vote vote = null;
+        Vote vote;
 
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
             vote = session.get(Vote.class, voteID);
 
             session.delete(vote);
+
+            if (vote.getComment() == null) {
+                //ManagePost.removeVote(vote.getPost(), vote);
+            } else {
+                //ManageComment.removeVote(vote.getComment(), vote);
+            }
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
-        if (vote.getComment() == null){
-            ManagePost.removeVote(vote.getPost(),vote);
-        } else {
-            ManageComment.removeVote(vote.getComment(),vote);
-        }
-        ManageUser.removeVote(vote.getUser(), vote);
     }
 
     //change the method's name

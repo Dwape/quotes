@@ -105,8 +105,14 @@ public class Comment {
         this.voteArray = voteArray;
     }
 
+    //this will most likely be inefficient, look for a different way of doing it
     public int getScore() {
-        return score;
+        int counter = 0;
+        for (Vote vote : this.voteArray) {
+            if (vote.isPositive()) counter++;
+            else counter--;
+        }
+        return counter;
     }
 
     public void setScore(int score) {

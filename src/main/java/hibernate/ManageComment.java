@@ -71,20 +71,4 @@ public class ManageComment {
         parent.getCommentArray().add(child);
         updateComment(parent);
     }
-
-    public static void addVote(Comment comment, Vote vote){
-        //maybe we need to look for the user in the database here.
-        if (vote.isPositive()) comment.setScore(comment.getScore()+1);
-        else comment.setScore(comment.getScore()-1);
-        comment.getVoteArray().add(vote);
-        updateComment(comment);
-    }
-
-    public static void removeVote(Comment comment, Vote vote){
-        //maybe we need to look for the user in the database here.
-        if (vote.isPositive()) comment.setScore(comment.getScore()-1);
-        else comment.setScore(comment.getScore()+1);
-        comment.getVoteArray().remove(vote);
-        updateComment(comment);
-    }
 }

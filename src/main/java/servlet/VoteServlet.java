@@ -19,6 +19,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.logging.Logger;
 
 @WebServlet("/postDetailsVote")
 public class VoteServlet extends HttpServlet {
@@ -36,7 +38,6 @@ public class VoteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         Map<String, String[]> parameters = request.getParameterMap();
 
         boolean isPositive = Boolean.parseBoolean(parameters.get("isPositive")[0]);
@@ -52,7 +53,6 @@ public class VoteServlet extends HttpServlet {
         } else {
             comment = ManageComment.retrieveComment(idComment);
         }
-
         Vote vote = new Vote(post,comment,user,isPositive);
 
         ManageVote.addVote(vote);

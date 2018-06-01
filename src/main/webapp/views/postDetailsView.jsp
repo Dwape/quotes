@@ -7,7 +7,7 @@
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
     <link rel="stylesheet" href="../css/postDetails.css" type="text/css">
 </head>
-<body onload="loadView();">
+<body onload="loadView(); findImage();">
 
     <c:choose>
         <c:when test="<%=request.getRemoteUser() != null%>">
@@ -17,20 +17,30 @@
             <jsp:include page="_menu.jsp"></jsp:include>
         </c:otherwise>
     </c:choose>
+
     <div class="container">
         <p style="display: none" id="user"><%=request.getRemoteUser()%></p>
-        <div class="card mb-4" id="post" style="width: 40rem;">
-            <h5 class="card-header" id="postQuote"></h5>
-            <div class="card-body pb-2">
-                <h6 class="card-subtitle mb-2 text-muted" id="postInfo"></h6>
-                <p class="card-text" id="postDescription"></p>
-
-                <footer class="blockquote-footer" id="postFooter"></footer>
-                <i id="upvote-post" style="color: black" class="fas fa-arrow-circle-up"></i>
-                <i id="downvote-post" style="color: black" class="fas fa-arrow-circle-down"></i>
-                <span id="score-post"></span>
-                <input type="hidden" id="vote" value="${vote}">
-                <input type="hidden" name="idPost" value="${id}">
+        <div class="row">
+            <div class="col-7" >
+                <div class="card mb-4" id="post" style="width: 40rem;">
+                    <h5 class="card-header" id="postQuote"></h5>
+                    <div class="card-body pb-2">
+                        <h6 class="card-subtitle mb-2 text-muted" id="postInfo"></h6>
+                        <p class="card-text" id="postDescription"></p>
+                        <input type="hidden" id="idBook" value="${idBook}">
+                        <footer class="blockquote-footer" id="postFooter"></footer>
+                        <i id="upvote-post" style="color: black" class="fas fa-arrow-circle-up"></i>
+                        <i id="downvote-post" style="color: black" class="fas fa-arrow-circle-down"></i>
+                        <span id="score-post"></span>
+                        <input type="hidden" id="vote" value="${vote}">
+                        <input type="hidden" name="idPost" value="${id}">
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <a href="https://books.google.com/ebooks?id=${idBook}">
+                    <img id="bookImage" style="border-radius: 3%;" height="178" width="128" src="../assets/images/Image-not-available.jpg">
+                </a>
             </div>
         </div>
         <c:choose>
@@ -93,6 +103,7 @@
 <jsp:include page="bootstrapBody.jsp"></jsp:include>
 <script src="../js/postDetails.js"></script>
 <script src="../js/shortcut.js"></script>
+<script src="../js/bookImage.js"></script>
 <script src="../js/jquery/jquery-3.3.1.min.js"></script>
 </body>
 </html>

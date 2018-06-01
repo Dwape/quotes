@@ -36,6 +36,7 @@ public class PostDetailsServlet extends HttpServlet{
 
         long id = Long.parseLong(request.getParameter("id"));
         request.setAttribute("id", id);
+        request.setAttribute("idBook", ManagePost.retrievePost(id).getBook().getIdBook());
 
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/views/postDetailsView.jsp");

@@ -39,7 +39,8 @@
                     <textarea class="form-control" id="replyText" maxlength="5000" rows="3" style="width: 40rem;" name="text" placeholder="Write a comment"></textarea>
                 </div>
                 <input type="hidden" name="idPost" id="replyPostId" value="${id}">
-                <button type="submit" id="submitPostReply" class="btn btn-danger">Submit</button>
+                <small id="shortcutInfo" class="form-text text-muted mb-3">Tip: you can press Ctrl + Enter to submit your comment</small>
+                <button type="submit" id="submitPostReply" class="btn btn-danger mb-3">Submit</button>
             </c:when>
         </c:choose>
         <div id="comments"></div>
@@ -69,7 +70,7 @@
                 <input type="hidden" name="idPost" id="idPost" value="${id}">
                 <input type="hidden" name="idParent" id="idParent" value="${comment.id}">
                 <input type="hidden" name="idParent" id="idComment">
-                <button type="submit" id="submitReply" class="btn btn-danger">Submit</button>
+                <button type="submit" id="submitReply" class="btn btn-danger mb-3">Submit</button>
             </div>
         </div>
     </div>

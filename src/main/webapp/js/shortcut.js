@@ -1,5 +1,5 @@
 $(document).keydown(function(evt){
-    if (evt.enter && (evt.ctrlKey)){ //ctrl+enter cmd (or windows key) is browser dependent
+    if (evt.keyCode===13 && (evt.ctrlKey)){ //ctrl+enter cmd (or windows key) is browser dependent
         evt.preventDefault();
         if (document.getElementById("user").innerText !== "null"){
             reply();

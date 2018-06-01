@@ -68,6 +68,7 @@
                 </div>
                 <input type="hidden" name="idPost" id="idPost" value="${id}">
                 <input type="hidden" name="idParent" id="idParent" value="${comment.id}">
+                <input type="hidden" name="idParent" id="idComment">
                 <button type="submit" id="submitReply" class="btn btn-danger">Submit</button>
             </div>
         </div>
@@ -90,6 +91,7 @@
 
 <jsp:include page="bootstrapBody.jsp"></jsp:include>
 <script src="../js/postDetails.js"></script>
+<script src="../js/shortcut.js"></script>
 <script src="../js/jquery/jquery-3.3.1.min.js"></script>
 </body>
 </html>

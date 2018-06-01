@@ -95,6 +95,7 @@ function createComment(comment, idParent){
     var date = new Date(comment.datePosted); //check how to correct date format.
     commentStructure.querySelector("#footer").innerText = "posted by " + comment.username + " on " + date.toLocaleString(); //date need to be parsed.
     commentStructure.querySelector("#idParent").value = idParent; //is this necessary
+    commentStructure.querySelector("#idComment").value = comment.id; //is this necessary
 
     var username = document.getElementById("user").innerText;
 
@@ -136,6 +137,8 @@ function createComment(comment, idParent){
         var replyLink = commentStructure.querySelector("#replyLink");
         replyLink.onclick = function(){
             showReplyWindow(comment.id);
+            var replyText = commentStructure.querySelector("#commentText");
+            replyText.focus();
         };
         var replyButton = commentStructure.querySelector("#submitReply");
         replyButton.onclick = function(){

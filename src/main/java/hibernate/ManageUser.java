@@ -231,14 +231,4 @@ public class ManageUser{
         user.getCommentArray().remove(comment);
         updateUser(user);
     }
-
-    public static void addVote(User user, Vote vote){
-        user.getVoteArray().add(vote);
-        updateUser(user);
-    }
-
-    public static void removeVote(User user, Vote vote){
-        user.getVoteArray().remove(vote);
-        updateUser(user);
-    }
 }

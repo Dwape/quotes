@@ -9,10 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class ManageVote {
 
@@ -32,15 +29,20 @@ public class ManageVote {
         Vote previousVote = hasUserVoted(newVote);
 
         Transaction tx = null;
+
         if ((previousVote.getId() == -1) || (previousVote.isPositive() != newVote.isPositive())) {
             try (Session session = HibernateFactory.getSessionFactory().openSession()) {
                 tx = session.beginTransaction();
                 voteID = (Long) session.save(newVote);
                 newVote.setId(voteID); //sets the vote's id to the generated one.
                 if (newVote.getComment() == null){
-                    //ManagePost.addVote(newVote.getPost(), newVote);
+                    Post post = newVote.getPost();
+                    post.addVote(newVote.isPositive());
+                    session.update(post);
                 } else {
-                    //ManageComment.addVote(newVote.getComment(), newVote);
+                    Comment comment = newVote.getComment();
+                    comment.addVote(newVote.isPositive());
+                    session.update(comment);
                 }
                 tx.commit();
             } catch (HibernateException e) {
@@ -59,9 +61,6 @@ public class ManageVote {
      * This method must not be called for a vote that does not exist in the database.
      * @param voteID The user's id, used as the key in the database.
      */
-    //long start = System.currentTimeMillis(); //REMOVE
-    //long timeElapsed = System.currentTimeMillis() - start; //REMOVE
-    //System.out.println("Time elapsed: " + timeElapsed); //REMOVE
     public static void deleteVote(Long voteID) {
 
         Transaction tx = null;
@@ -75,8 +74,12 @@ public class ManageVote {
 
             if (vote.getComment() == null) {
                 //ManagePost.removeVote(vote.getPost(), vote);
+                Post post = vote.getPost();
+                post.removeVote(vote.isPositive());
             } else {
                 //ManageComment.removeVote(vote.getComment(), vote);
+                Comment comment = vote.getComment();
+                comment.removeVote(vote.isPositive());
             }
             tx.commit();
         } catch (HibernateException e) {
@@ -102,7 +105,7 @@ public class ManageVote {
             }
             Iterator results = query.list().iterator();
 
-            while ( results.hasNext() ) {
+            if (results.hasNext()){
                 Object[] tuple = (Object[]) results.next();
                 voteID = (Long) tuple[0];
                 isPositive = (Boolean) tuple[1];

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jackson.CommentSerializer;
 import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -105,14 +107,8 @@ public class Comment {
         this.voteArray = voteArray;
     }
 
-    //this will most likely be inefficient, look for a different way of doing it
     public int getScore() {
-        int counter = 0;
-        for (Vote vote : this.voteArray) {
-            if (vote.isPositive()) counter++;
-            else counter--;
-        }
-        return counter;
+        return this.score;
     }
 
     public void setScore(int score){
@@ -145,5 +141,15 @@ public class Comment {
 
     public void setLoggedUsername(String loggedUsername) {
         this.loggedUsername = loggedUsername;
+    }
+
+    public void addVote(boolean positive){
+        if (positive) this.score = this.score+1;
+        else this.score = this.score-1;
+    }
+
+    public void removeVote(boolean positive){
+        if (positive) this.score = this.score-1;
+        else this.score = this.score+1;
     }
 }

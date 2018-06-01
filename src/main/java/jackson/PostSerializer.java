@@ -38,6 +38,7 @@ public class PostSerializer extends StdSerializer<Post> {
         jgen.writeStringField("bookTitle", post.getBook().getTitle());
         jgen.writeStringField("bookAuthor", post.getBook().getAuthor());
         jgen.writeObjectField("datePosted", post.getDatePosted());
+        jgen.writeStringField("idBook", post.getBook().getIdBook());
 
         String loggedUser = post.getLoggedUsername();
 

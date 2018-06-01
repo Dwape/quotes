@@ -7,7 +7,7 @@
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
     <link rel="stylesheet" href="../css/postDetails.css" type="text/css">
 </head>
-<body onload="loadView(); findImage();">
+<body onload="loadView();">
 
     <c:choose>
         <c:when test="<%=request.getRemoteUser() != null%>">
@@ -27,7 +27,6 @@
                     <div class="card-body pb-2">
                         <h6 class="card-subtitle mb-2 text-muted" id="postInfo"></h6>
                         <p class="card-text" id="postDescription"></p>
-                        <input type="hidden" id="idBook" value="${idBook}">
                         <footer class="blockquote-footer" id="postFooter"></footer>
                         <i id="upvote-post" style="color: black" class="fas fa-arrow-circle-up"></i>
                         <i id="downvote-post" style="color: black" class="fas fa-arrow-circle-down"></i>
@@ -38,7 +37,7 @@
                 </div>
             </div>
             <div class="col-3">
-                <a href="https://books.google.com/ebooks?id=${idBook}">
+                <a id="imageLink" href="">
                     <img id="bookImage" style="border-radius: 3%;" height="178" width="128" src="../assets/images/Image-not-available.jpg">
                 </a>
             </div>

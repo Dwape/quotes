@@ -1,9 +1,6 @@
-function findImage(){
-    var idBook = document.getElementById("idBook").value;
-    httpGet(idBook);
-}
+function findImage(idBook){
 
-function httpGet(idBook){
+    document.getElementById("imageLink").href = "https://books.google.com/ebooks?id=" + idBook;
 
     $.ajax({
         url: "https://www.googleapis.com/books/v1/volumes/"+ idBook,

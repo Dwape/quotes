@@ -21,13 +21,16 @@ function getPost(){
 function displayPost(post){
     var postView = document.getElementById("post");
     postView.querySelector("#postQuote").innerText = post.quote;
-    postView.querySelector("#postInfo").innerHTML = "from <a href=\"#\" class=\"card-link\">" + post.bookTitle + "</a> by<a href=\"#\" class=\"card-link ml-1\">" + post.bookAuthor+ "</a>";
+    postView.querySelector("#postInfo").innerHTML = "from <a href=\"https://books.google.com/ebooks?id="+ post.idBook +"\" class=\"card-link\">" + post.bookTitle + "</a> by<a href=\"https://en.wikipedia.org/wiki/"+ post.bookAuthor + "\" class=\"card-link ml-1\">" + post.bookAuthor+ "</a>";
     postView.querySelector("#postDescription").innerText = post.description;
     var date = new Date(post.datePosted);
     postView.querySelector("#postFooter").innerText = "posted by " + post.postedBy + " on " + date.toLocaleString();
     postView.querySelector("#score-post").innerText = post.score;
     var upvote = document.getElementById("upvote-post");
     var downvote = document.getElementById("downvote-post");
+
+    findImage(post.idBook); //display the book's image.
+
     if (document.getElementById("user").innerText !== "null"){
         upvote.onclick = function() {
             votePost(true);
@@ -191,6 +194,7 @@ function showReplyWindow(id){
     replyIdOpen = id;
 }
 
+//replies will need to be read so that mentions can be supported.
 function writeReply(idParent, idPost, replyText){
     $.ajax({
         method: "POST",

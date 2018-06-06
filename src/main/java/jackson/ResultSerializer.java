@@ -5,59 +5,59 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import hibernate.HibernateFactory;
-import model.Comment;
+import model.Post;
 import model.User;
 import model.Vote;
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CommentSerializer extends StdSerializer<Comment> {
+public class ResultSerializer extends StdSerializer<Post> {
 
-    public CommentSerializer() {
+    public ResultSerializer() {
         this(null);
     }
 
-    public CommentSerializer(Class<Comment> c) {
-        super(c);
+    public ResultSerializer(Class<Post> p) {
+        super(p);
     }
 
     @Override
     public void serialize(
-            Comment comment, JsonGenerator jgen, SerializerProvider provider)
+            Post post, JsonGenerator jgen, SerializerProvider provider)
             throws IOException, JsonProcessingException {
 
-        //Hibernate.initialize(comment);
 
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
-            comment = session.get(Comment.class, comment.getId());
+            post = session.get(Post.class, post.getId());
             jgen.writeStartObject();
-            jgen.writeNumberField("id", comment.getId());
-            jgen.writeObjectField("commentArray", comment.getCommentArray());
-            jgen.writeStringField("username", comment.getUser().getUsername());
-            jgen.writeObjectField("datePosted", comment.getDatePosted());
-            jgen.writeStringField("description", comment.getDescription());
-            jgen.writeBooleanField("hasParent", comment.getParent() != null);
+            jgen.writeNumberField("id", post.getId());
+            jgen.writeStringField("quote", post.getQuote());
+            jgen.writeStringField("description", post.getDescription());
+            jgen.writeStringField("postedBy", post.getUser().getUsername());
+            jgen.writeStringField("bookTitle", post.getBook().getTitle());
+            jgen.writeStringField("bookAuthor", post.getBook().getAuthor());
+            jgen.writeObjectField("datePosted", post.getDatePosted());
+            jgen.writeStringField("idBook", post.getBook().getIdBook());
 
-            //add if for not logged in users
+            String loggedUser = post.getLoggedUsername();
 
-            if (comment.getLoggedUsername() != null){
-                List<User> users = comment.getVoteArray().stream()
+            if (loggedUser != null){
+
+                List<User> users = post.getVoteArray().stream()
                         .map(Vote::getUser)
                         .collect(Collectors.toList());
                 List<String> usersVoted = users.stream()
                         .map(User::getUsername)
                         .collect(Collectors.toList());
-                List<Boolean> isPositive = comment.getVoteArray().stream()
+                List<Boolean> isPositive = post.getVoteArray().stream()
                         .map(Vote::isPositive)
                         .collect(Collectors.toList());
 
-                int index = usersVoted.indexOf(comment.getLoggedUsername());
+                int index = usersVoted.indexOf(loggedUser);
                 if (index != -1){
                     jgen.writeBooleanField("loggedUserVote", isPositive.get(index));
                 } else {
@@ -67,7 +67,7 @@ public class CommentSerializer extends StdSerializer<Comment> {
                 jgen.writeObjectField("loggedUserVote", null); //check if it works
             }
 
-            jgen.writeNumberField("score", comment.getScore());
+            jgen.writeNumberField("score", post.getScore());
 
             jgen.writeEndObject();
         } catch (HibernateException e) {

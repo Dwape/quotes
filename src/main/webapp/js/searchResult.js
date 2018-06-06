@@ -1,6 +1,6 @@
 var filters = [["author", "", 0], ["title", "", 0]]; //maybe the active option could be saved here directly.
 
-$(document).ready(function() {
+function loadFilters(){
     if (!noResult()){
         addCategory("author");
         addCategory("title");
@@ -8,7 +8,7 @@ $(document).ready(function() {
         addOptions("title", "#titleList");
         showResultCount();
     }
-});
+}
 
 function addCategory(type){
     var title = document.getElementById(type + "Head");
@@ -61,7 +61,7 @@ function checkCondition(){
 function hide(option, type){
     var title = document.getElementById(type + "Head"); //the title of the filter type that is being used
     title.setAttribute("active", option); //sets "active" to the selected option
-    var posts = document.getElementsByClassName("card");
+    var posts = document.getElementsByClassName("card boxx mb-4"); //check
     var list = document.getElementsByClassName(type);
 
     //new filters need to be added here
@@ -79,7 +79,7 @@ function hide(option, type){
 }
 
 function showAll(){
-    var posts = document.getElementsByClassName("card");
+    var posts = document.getElementsByClassName("card boxx mb-4");
     for (var i=0; i < filters.length; i++){
         var list = document.getElementsByClassName(filters[i][0]);
         for (var j=0; j < list.length; j++){
@@ -118,7 +118,7 @@ function typeToIndex(type){
 }
 
 function noResult(){
-    var posts = document.getElementsByClassName("card");
+    var posts = document.getElementsByClassName("card boxx mb-4");
     if (posts.length < 1){
         var alert = document.getElementById("noResult");
         alert.style.display = "block";

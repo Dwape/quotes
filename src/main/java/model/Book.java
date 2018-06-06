@@ -21,7 +21,7 @@ public class Book {
     @Column(name = "idBook")
     private String idBook;
 
-    @OneToMany(mappedBy = "book", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "book", fetch=FetchType.LAZY)
     private Set<Post> postArray = new HashSet<>();
 
     public Book(){}

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/resultView.css">
     <link rel="stylesheet" href="../css/searchResult.css">
 </head>
-<body>
+<body onload="findPosts();">
     <c:choose>
         <c:when test="<%=request.getRemoteUser() != null%>">
             <jsp:include page="_menuLoggedIn.jsp"></jsp:include>
@@ -37,29 +37,31 @@
 
             </div>
 
-            <div class="col-9" >
+            <div id="postColumn" class="col-9" >
                 <h3 class="mb-4">Search results for: "${q}"</h3>
+                <input type="hidden" id="searchTerm" value="${q}">
                 <h4 id="noResult" style="display: none">No posts found</h4>
-                <c:forEach items="${posts}" var="post">
-                    <div class="card boxx mb-4" id="post" style="width: 40rem;">
-                        <h5 class="card-header">"${post.quote}"</h5>
-                        <div class="card-body">
-                            <h6 class="card-subtitle mb-2 text-muted">from <a href="#" class="card-link">${post.book.title}</a> by<a href="#" class="card-link ml-1">${post.book.author}</a></h6>
-                            <p class="card-text">${post.description}</p>
-                            <div style="display: inline-flex">
-                                <footer class="blockquote-footer">posted by ${post.user.username} on ${post.datePosted.toLocaleString()}</footer>
-                            </div>
+                <div class="" id="genericPost" style="width: 40rem; display: none">
+                    <h5 class="card-header" id="quote"></h5>
+                    <a href="${pageContext.request.contextPath}/postDetails?id=" id="redirect" class="divLink">
+                    </a>
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted" id="info"></h6>
+                        <p class="card-text" id="description"></p>
+                        <div style="display: inline-flex">
+                            <footer class="blockquote-footer" id="footer"></footer>
                         </div>
-                        <a class="divLink" type="hidden" href="${pageContext.request.contextPath}/postDetails?id=${post.id}"></a>
                     </div>
-                    <input type="shown" style="display: none" id="bookTitle" class="title" name="bookTitle" value="${post.book.title}">
-                    <input type="shown" style="display: none" id="bookAuthor" class="author" name="bookAuthor" value="${post.book.author}">
-                </c:forEach>
+                    <input type="shown" style="display: none" id="bookTitle" class="" name="bookTitle" value="">
+                    <input type="shown" style="display: none" id="bookAuthor" class="" name="bookAuthor" value="">
+                </div>
             </div>
         </div>
     </div>
 
 <jsp:include page="bootstrapBody.jsp"></jsp:include>
+<script src="../js/jquery/jquery-3.3.1.min.js"></script>
 <script src="../js/searchResult.js"></script>
+<script src="../js/resultPosts.js"></script>
 </body>
 </html>

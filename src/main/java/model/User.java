@@ -39,14 +39,14 @@ public class User {
     private String dateOfBirth;
 
     //look for a different way of doing this.
-    @OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
     private Set<Post> postArray = new HashSet<>();
 
     //comments written by the user
-    @OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
     private Set<Comment> commentArray = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
     private Set<Vote> voteArray = new HashSet<>();
 
     public User() {}

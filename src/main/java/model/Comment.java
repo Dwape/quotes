@@ -35,11 +35,11 @@ public class Comment {
     private Comment parent;
 
     //children
-    @OneToMany(mappedBy = "parent", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "parent", fetch=FetchType.LAZY)
     @OrderBy("score DESC")
     private Set<Comment> commentArray = new HashSet<>();
 
-    @OneToMany(mappedBy = "comment", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "comment", fetch=FetchType.LAZY)
     private Set<Vote> voteArray = new HashSet<>();
 
     private Date datePosted;

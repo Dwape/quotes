@@ -35,7 +35,7 @@ import java.util.Set;
                         @Parameter(name = "maxShingleSize", value = "10")
                 })
         })
-@JsonSerialize(using = PostSerializer.class)
+//@JsonSerialize(using = PostSerializer.class)
 public class Post {
 
     @Field(index=Index.YES, analyze=Analyze.YES, store=Store.YES)
@@ -61,11 +61,11 @@ public class Post {
     @JoinColumn(name="idBook", nullable = false)
     private Book book;
 
-    @OneToMany(mappedBy = "post", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "post", fetch=FetchType.LAZY)
     @OrderBy("score DESC")
     private Set<Comment> commentArray = new HashSet<>();
 
-    @OneToMany(mappedBy = "post", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "post", fetch=FetchType.LAZY)
     private Set<Vote> voteArray = new HashSet<>();
 
     @Field

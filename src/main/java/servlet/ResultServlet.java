@@ -25,8 +25,8 @@ public class ResultServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String searchTerm = request.getParameter("q");
-        List<Post> results = ManagePost.searchPosts(searchTerm);
-        request.setAttribute("posts", results);
+        //List<Post> results = ManagePost.searchPosts(searchTerm);
+        //request.setAttribute("posts", results);
         request.setAttribute("q", searchTerm);
 
         RequestDispatcher dispatcher //

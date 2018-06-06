@@ -22,7 +22,7 @@ public class Vote {
     @JoinColumn(name="idComment")
     private Comment comment;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="username", nullable = false)
     private User user;
 

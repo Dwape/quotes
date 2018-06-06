@@ -1,8 +1,13 @@
 package servlet;
 
+import hibernate.HibernateFactory;
 import hibernate.ManageUser;
+import model.Comment;
 import model.Post;
 import model.User;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,7 +32,18 @@ public class UserInfoServlet extends HttpServlet {
             throws ServletException, IOException {
 
         User user = ManageUser.retrieveUser(request.getRemoteUser());
-        List<Post> posts = new ArrayList<>(user.getPostArray());
+        List<Post> posts = new ArrayList<>();
+        Transaction tx = null;
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            user = session.get(User.class, user.getUsername());
+            posts = new ArrayList<>(user.getPostArray());
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+
         request.setAttribute("posts", posts);
         //System.out.println(posts.get(0).getQuote());
 

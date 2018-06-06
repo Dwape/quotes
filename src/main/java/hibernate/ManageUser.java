@@ -205,7 +205,15 @@ public class ManageUser{
      */
     public static void addPost(User user, Post post){
         //maybe we need to look for the user in the database here.
-        user.getPostArray().add(post);
+        Transaction tx = null;
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            user.getPostArray().add(post);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
         updateUser(user);
     }
 

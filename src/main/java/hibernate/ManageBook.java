@@ -35,7 +35,15 @@ public class ManageBook {
      */
     public static void addPost(Book book, Post post){
         //maybe we need to look for the user in the database here.
-        book.getPostArray().add(post);
+        Transaction tx = null;
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            book.getPostArray().add(post);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
         updateBook(book);
     }
 

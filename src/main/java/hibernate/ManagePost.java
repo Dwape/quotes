@@ -1,9 +1,6 @@
 package hibernate;
 //java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:hsqldb/hemrajdb --dbname.0 testdb
-import model.Book;
-import model.Comment;
-import model.Post;
-import model.Vote;
+import model.*;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.hibernate.HibernateException;
@@ -36,13 +33,17 @@ public class ManagePost {
             tx = session.beginTransaction();
             postID = (Long) session.save(newPost);
             newPost.setId(postID); //sets the user's id to the generated one.
+            User user = session.get(User.class, newPost.getUser().getUsername());
+            Book book = session.get(Book.class, newPost.getBook().getIdBook());
+            user.getPostArray().add(newPost);
+            book.getPostArray().add(newPost);
+            //session.update(newPost.getUser());
+            //session.update(newPost.getBook());
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
-        ManageUser.addPost(newPost.getUser(), newPost);
-        ManageBook.addPost(newPost.getBook(), newPost);
         return postID;
     }
 

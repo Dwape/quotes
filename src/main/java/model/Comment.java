@@ -22,7 +22,7 @@ public class Comment {
     @DocumentId
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="username", nullable = false)
     private User user;
 
@@ -30,7 +30,7 @@ public class Comment {
     @JoinColumn(name="idPost", nullable = false)
     private Post post;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="parent")
     private Comment parent;
 

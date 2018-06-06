@@ -15,6 +15,7 @@ import org.hibernate.Transaction;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CommentSerializer extends StdSerializer<Comment> {
@@ -39,7 +40,6 @@ public class CommentSerializer extends StdSerializer<Comment> {
             comment = session.get(Comment.class, comment.getId());
             jgen.writeStartObject();
             jgen.writeNumberField("id", comment.getId());
-            jgen.writeObjectField("commentArray", comment.getCommentArray());
             jgen.writeStringField("username", comment.getUser().getUsername());
             jgen.writeObjectField("datePosted", comment.getDatePosted());
             jgen.writeStringField("description", comment.getDescription());
@@ -69,6 +69,19 @@ public class CommentSerializer extends StdSerializer<Comment> {
             }
 
             jgen.writeNumberField("score", comment.getScore());
+
+            Set<Comment> comments = comment.getCommentArray();
+            if (loggedUser != null){
+                for (Comment child : comments){
+                    child.setLoggedUsername(loggedUser);
+                }
+            }
+            jgen.writeObjectField("commentArray", comment.getCommentArray());
+            if (loggedUser != null){
+                for (Comment child : comments){
+                    child.setLoggedUsername(null);
+                }
+            }
 
             jgen.writeEndObject();
         } catch (HibernateException e) {

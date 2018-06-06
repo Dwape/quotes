@@ -47,7 +47,7 @@ public class Post {
 
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="username", nullable = false)
     private User user;
 
@@ -57,7 +57,7 @@ public class Post {
     @Column(name = "idPost")
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idBook", nullable = false)
     private Book book;
 

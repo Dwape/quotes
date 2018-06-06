@@ -32,6 +32,7 @@ public class ResultSerializer extends StdSerializer<Post> {
 
 
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            String loggedUser = post.getLoggedUsername();
             post = session.get(Post.class, post.getId());
             jgen.writeStartObject();
             jgen.writeNumberField("id", post.getId());
@@ -42,8 +43,6 @@ public class ResultSerializer extends StdSerializer<Post> {
             jgen.writeStringField("bookAuthor", post.getBook().getAuthor());
             jgen.writeObjectField("datePosted", post.getDatePosted());
             jgen.writeStringField("idBook", post.getBook().getIdBook());
-
-            String loggedUser = post.getLoggedUsername();
 
             if (loggedUser != null){
 

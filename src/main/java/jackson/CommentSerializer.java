@@ -35,6 +35,7 @@ public class CommentSerializer extends StdSerializer<Comment> {
         //Hibernate.initialize(comment);
 
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            String loggedUser = comment.getLoggedUsername();
             comment = session.get(Comment.class, comment.getId());
             jgen.writeStartObject();
             jgen.writeNumberField("id", comment.getId());
@@ -46,7 +47,7 @@ public class CommentSerializer extends StdSerializer<Comment> {
 
             //add if for not logged in users
 
-            if (comment.getLoggedUsername() != null){
+            if (loggedUser != null){
                 List<User> users = comment.getVoteArray().stream()
                         .map(Vote::getUser)
                         .collect(Collectors.toList());
@@ -57,7 +58,7 @@ public class CommentSerializer extends StdSerializer<Comment> {
                         .map(Vote::isPositive)
                         .collect(Collectors.toList());
 
-                int index = usersVoted.indexOf(comment.getLoggedUsername());
+                int index = usersVoted.indexOf(loggedUser);
                 if (index != -1){
                     jgen.writeBooleanField("loggedUserVote", isPositive.get(index));
                 } else {

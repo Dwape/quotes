@@ -14,11 +14,11 @@ public class Vote {
     @Column(name = "idVote")
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idPost")
     private Post post;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idComment")
     private Comment comment;
 

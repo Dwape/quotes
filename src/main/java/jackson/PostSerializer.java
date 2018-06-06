@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import hibernate.HibernateFactory;
+import model.Comment;
 import model.Post;
 import model.User;
 import model.Vote;
@@ -13,6 +14,7 @@ import org.hibernate.Session;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PostSerializer extends StdSerializer<Post> {
@@ -32,6 +34,7 @@ public class PostSerializer extends StdSerializer<Post> {
 
 
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            String loggedUser = post.getLoggedUsername();
             post = session.get(Post.class, post.getId());
             jgen.writeStartObject();
             jgen.writeNumberField("id", post.getId());
@@ -42,8 +45,6 @@ public class PostSerializer extends StdSerializer<Post> {
             jgen.writeStringField("bookAuthor", post.getBook().getAuthor());
             jgen.writeObjectField("datePosted", post.getDatePosted());
             jgen.writeStringField("idBook", post.getBook().getIdBook());
-
-            String loggedUser = post.getLoggedUsername();
 
             if (loggedUser != null){
 
@@ -68,7 +69,19 @@ public class PostSerializer extends StdSerializer<Post> {
             }
 
             jgen.writeNumberField("score", post.getScore());
+
+            Set<Comment> comments = post.getCommentArray();
+            if (loggedUser != null){
+                for (Comment comment : comments){
+                    comment.setLoggedUsername(loggedUser);
+                }
+            }
             jgen.writeObjectField("comments", post.getCommentArray());
+            if (loggedUser != null){
+                for (Comment comment : comments){
+                    comment.setLoggedUsername(null);
+                }
+            }
 
             jgen.writeEndObject();
         } catch (HibernateException e) {

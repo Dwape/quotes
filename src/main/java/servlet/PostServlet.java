@@ -48,24 +48,28 @@ public class PostServlet extends HttpServlet {
 
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             post = session.get(Post.class, post.getId());
-            String loggedUser = request.getRemoteUser();
+            //String loggedUser = request.getRemoteUser();
             post.setLoggedUsername(request.getRemoteUser()); //check if it works
+            /*
             Set<Comment> comments = post.getCommentArray();
             if (loggedUser != null){
                 for (Comment comment : comments){
                     comment.setLoggedUsername(loggedUser);
                 }
             }
+            */
             String postJson = mapper.writeValueAsString(post);
             PrintWriter out = response.getWriter();
             out.print(postJson);
             out.flush();
             post.setLoggedUsername(null); //if this is done with comments here, we should set username to null
+            /*
             if (loggedUser != null){
                 for (Comment comment : comments){
                     comment.setLoggedUsername(null);
                 }
             }
+            */
         } catch (HibernateException e) {
             e.printStackTrace();
         }

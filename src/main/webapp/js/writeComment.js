@@ -56,26 +56,33 @@ function addNewComment(comment){
 function processMentions(replyText){
     //iterate through the comment text to see if there are any mentions
     var newText = "";
-    var username = ""; //reading a username
+    var username = "";
+    var newSentence = true;
+    var readingMention = false; //reading a username
     for (var i=0; i < replyText.length; i++){
         var char = replyText.charAt(i);
-        if (username.length > 0){
+        if (readingMention){
             if (char === ' ' || char === '.' || char === ','){ //should include any character that is not allowed in usernames
-                newText += username.substr(1, username.length-1) + "\"> " + username + "</a>"; //remove the @
+                if (username.length === 0) {
+                    newText += '@';
+                } else {
+                    newText += "<a href=\"/userDetails?username=" + username + "\"> @" + username + "</a>";
+                }
                 newText += char;
                 username = "";
+                readingMention = false;
             } else {
                 username += char;
             }
         } else {
-            if (char === '@'){
-                username += '@';
-                newText += "<a href=\"/userDetails?username="; //should add context path here?
+            if (char === '@' && newSentence){
+                readingMention = true;
             } else newText += char;
         }
+        newSentence = char === ' '; //if we are in a new sentence
     }
-    if (username.length > 0) {
-        newText += username.substr(1, username.length-1) + "\"> " + username + " </a>";
+    if (readingMention) {
+        newText += "<a href=\"/userDetails?username=" + username + "\"> @" + username + " </a>";
     }
     return newText;
 }

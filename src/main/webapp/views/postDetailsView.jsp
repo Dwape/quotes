@@ -101,6 +101,7 @@
 
 <jsp:include page="bootstrapBody.jsp"></jsp:include>
 <script src="../js/postDetails.js"></script>
+<script src="../js/writeComment.js"></script>
 <script src="../js/shortcut.js"></script>
 <script src="../js/bookImage.js"></script>
 <script src="../js/jquery/jquery-3.3.1.min.js"></script>

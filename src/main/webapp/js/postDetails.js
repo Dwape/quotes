@@ -1,5 +1,3 @@
-var replyIdOpen;
-
 function loadView(){
     getPost();
 }
@@ -22,7 +20,7 @@ function displayPost(post){
     var postView = document.getElementById("post");
     postView.querySelector("#postQuote").innerText = post.quote;
     postView.querySelector("#postInfo").innerHTML = "from <a href=\"https://books.google.com/ebooks?id="+ post.idBook +"\" class=\"card-link\">" + post.bookTitle + "</a> by<a href=\"https://en.wikipedia.org/wiki/"+ post.bookAuthor + "\" class=\"card-link ml-1\">" + post.bookAuthor+ "</a>";
-    postView.querySelector("#postDescription").innerText = post.description;
+    postView.querySelector("#postDescription").innerHTML = processMentions(post.description);
     var date = new Date(post.datePosted);
     postView.querySelector("#postFooter").innerText = "posted by " + post.postedBy + " on " + date.toLocaleString();
     postView.querySelector("#score-post").innerText = post.score;
@@ -94,7 +92,7 @@ function createComment(comment, idParent){
     var level = 0;
     if (comment.hasParent) level = 1;
     commentStructure.setAttribute("style", "display: block; margin-left: " + level*50 + "px;");
-    commentStructure.querySelector("#description").innerText = comment.description;
+    commentStructure.querySelector("#description").innerHTML = processMentions(comment.description); //showing mentions as links
     var date = new Date(comment.datePosted); //check how to correct date format.
     commentStructure.querySelector("#footer").innerText = "posted by " + comment.username + " on " + date.toLocaleString(); //date need to be parsed.
     commentStructure.querySelector("#idParent").value = idParent; //is this necessary
@@ -176,58 +174,6 @@ function createComment(comment, idParent){
     score.setAttribute("id", "score" + comment.id);
     score.innerText = comment.score;
     return commentStructure;
-}
-
-function showReplyWindow(id){
-    if (replyIdOpen === id){
-        var form = document.getElementById("form" + replyIdOpen);
-        form.setAttribute("style", "display: none;");
-        replyIdOpen = undefined;
-        return;
-    }
-    if (replyIdOpen !== undefined){
-        var oldForm = document.getElementById("form" + replyIdOpen);
-        oldForm.setAttribute("style", "display: none;");
-    }
-    form = document.getElementById("form" + id);
-    form.setAttribute("style", "display: block;");
-    replyIdOpen = id;
-}
-
-//replies will need to be read so that mentions can be supported.
-function writeReply(idParent, idPost, replyText){
-    $.ajax({
-        method: "POST",
-        url: "/postDetails",
-        data: { replyText: replyText, idPost: idPost, idParent: idParent },
-        success: function(result){
-            var comment = createComment(result, idParent);
-            addNewComment(comment);
-        }
-    });
-}
-
-//when added comments will not be sorted by votes
-//this can be fixed if we get all the children of the parent node and compare their score.
-//the newest node could be shown at the top and it could change color to show it is new.
-function addNewComment(comment){
-    var idParent = comment.querySelector("#idParent").value;
-    var parent;
-    var commentHighlight = comment.cloneNode(true);
-    var card = commentHighlight.querySelector("#cardComment");
-    comment.setAttribute("style", "margin-left: " + comment.style.marginLeft + "; position: absolute;");
-    card.setAttribute("class", "card boxx mb-4 bg-dark text-white");
-    if (idParent !== "undefined"){
-        parent = document.getElementById("comment" + idParent);
-        //weird workaround (the comment has some children which are the comment in itself)
-        parent.insertBefore(commentHighlight, parent.childNodes[4]);
-        parent.insertBefore(comment, parent.childNodes[4]);
-    } else {
-        parent = document.getElementById("comments");
-        parent.insertBefore(commentHighlight, parent.firstChild);
-        parent.insertBefore(comment, parent.firstChild);
-    }
-    changeColor(comment, commentHighlight); //experimental
 }
 
 //Changes the color of a comment to show it is the latest one.

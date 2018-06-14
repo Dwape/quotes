@@ -26,7 +26,7 @@ public class Comment {
     @JoinColumn(name="username", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idPost", nullable = false)
     private Post post;
 

@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/secure/userInfo")
+@WebServlet("/userInfo")
 public class UserInfoServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -31,6 +31,7 @@ public class UserInfoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        /*
         User user = ManageUser.retrieveUser(request.getRemoteUser());
         List<Post> posts = new ArrayList<>();
         Transaction tx = null;
@@ -44,8 +45,15 @@ public class UserInfoServlet extends HttpServlet {
             e.printStackTrace();
         }
 
+
         request.setAttribute("posts", posts);
+        */
         //System.out.println(posts.get(0).getQuote());
+
+        String username = request.getParameter("username");
+        //List<Post> results = ManagePost.searchPosts(searchTerm);
+        //request.setAttribute("posts", results);
+        request.setAttribute("username", username);
 
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/views/userInfoView.jsp");

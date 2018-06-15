@@ -5,35 +5,44 @@
     <meta charset="UTF-8">
     <title>User Info</title>
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
+    <link rel="stylesheet" href="../css/resultView.css">
+    <link rel="stylesheet" href="../css/searchResult.css">
 </head>
-<body>
+<body onload="findUserPosts();">
 
-    <jsp:include page="_menuLoggedIn.jsp"></jsp:include>
-    <div class="container ml-5 mb-4">
-        <h3>Hello <%=request.getRemoteUser()%>!</h3>
+    <c:choose>
+        <c:when test="<%=request.getRemoteUser() != null%>">
+            <jsp:include page="_menuLoggedIn.jsp"></jsp:include>
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="_menu.jsp"></jsp:include>
+        </c:otherwise>
+    </c:choose>
 
-        <b>Manage your posts:</b>
-    </div>
     <%--Gender: ${loginedUser.gender } <br />--%>
-    <div class="container">
-        <c:forEach items="${posts}" var="post">
-            <div class="card mb-4" style="width: 40rem;">
-                <h5 class="card-header">"${post.quote}"</h5>
-                <div class="card-body pb-2">
-                    <h6 class="card-subtitle mb-2 text-muted">from <a href="#" class="card-link">${post.book.title}</a> by<a href="#" class="card-link ml-1">${post.book.author}</a></h6>
-                    <p class="card-text">${post.description}</p>
-                    <div class="container">
-                        <div class="row justify-content-between">
-                            <div class="col-6 p-0" style="height: 20px"><footer class="blockquote-footer">posted by ${post.user.username} on ${post.datePosted.toLocaleString()}</footer></div>
-                            <div class="col-1 p-0"><a href="${pageContext.request.contextPath}/editPost?id=${post.id}" class="card-link">Edit</a>
-                            </div>
-                        </div>
-                    </div>
+    <div class="container" id="postColumn">
+        <h3 class="mb-4">User: "${username}"</h3>
+        <input type="hidden" id="username" value="${username}">
+        <h4 id="noResult" style="display: none">No posts found</h4>
+        <div class="" id="genericPost" style="width: 40rem; display: none">
+            <h5 class="card-header" id="quote"></h5>
+            <a href="${pageContext.request.contextPath}/postDetails?id=" id="redirect" class="divLink">
+            </a>
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted" id="info"></h6>
+                <p class="card-text" id="description"></p>
+                <div style="display: inline-flex">
+                    <footer class="blockquote-footer" id="footer"></footer>
                 </div>
             </div>
-        </c:forEach>
+            <input type="shown" style="display: none" id="bookTitle" class="" name="bookTitle" value="">
+            <input type="shown" style="display: none" id="bookAuthor" class="" name="bookAuthor" value="">
+        </div>
     </div>
 
-    <jsp:include page="bootstrapBody.jsp"></jsp:include>
+<jsp:include page="bootstrapBody.jsp"></jsp:include>
+<script src="../js/jquery/jquery-3.3.1.min.js"></script>
+<script src="../js/userInfo.js"></script>
+<script src="../js/resultPosts.js"></script>
 </body>
 </html>

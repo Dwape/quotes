@@ -66,7 +66,7 @@ function processMentions(replyText){
                 if (username.length === 0) {
                     newText += '@';
                 } else {
-                    newText += "<a href=\"/userDetails?username=" + username + "\"> @" + username + "</a>";
+                    newText += "<a href=\"/userInfo?username=" + username + "\"> @" + username + "</a>";
                 }
                 newText += char;
                 username = "";
@@ -82,7 +82,7 @@ function processMentions(replyText){
         newSentence = char === ' '; //if we are in a new sentence
     }
     if (readingMention) {
-        newText += "<a href=\"/userDetails?username=" + username + "\"> @" + username + " </a>";
+        newText += "<a href=\"/userInfo?username=" + username + "\"> @" + username + " </a>";
     }
     return newText;
 }

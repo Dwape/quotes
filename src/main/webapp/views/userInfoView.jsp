@@ -23,7 +23,7 @@
     <div class="container" id="postColumn">
         <h3 class="mb-4">User: "${username}"</h3>
         <input type="hidden" id="username" value="${username}">
-        <h4 id="noResult" style="display: none">No posts found</h4>
+        <h4 id="noResult" style="display: none">This user hasn't posted anything yet</h4>
         <div class="" id="genericPost" style="width: 40rem; display: none">
             <h5 class="card-header" id="quote"></h5>
             <a href="${pageContext.request.contextPath}/postDetails?id=" id="redirect" class="divLink">

@@ -2,6 +2,29 @@
 /*body {
     font: 16px Arial;
 }*/
+.clickable{
+    cursor: pointer;
+}
+
+#sumbit-button{
+    font-size: large;
+    padding: 8px 18px;
+}
+
+#watermark-icon{
+    -webkit-transform: scale(4);
+    -moz-transform:    scale(4);
+    -ms-transform:     scale(4);
+    -o-transform:      scale(4);
+    transform:         scale(4);
+}
+
+.button-container{
+    text-align: end;
+    padding-right: 11px;
+    padding-bottom: 11px;
+}
+
 .autocomplete {
     /*the container must be positioned relative:*/
     position: relative;

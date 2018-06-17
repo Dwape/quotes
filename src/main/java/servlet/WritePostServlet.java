@@ -42,6 +42,7 @@ public class WritePostServlet extends HttpServlet {
         User user = ManageUser.retrieveUser(request.getRemoteUser());
 
         String quote = request.getParameter("quote");
+        quote = quote.replaceAll("^\"|\"$", "");
         String postText = request.getParameter("text");
         String bookId = request.getParameter("bookId");
         String bookTitle = request.getParameter("bookTitle");

@@ -76,4 +76,24 @@ public class ManageBook {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Retrieves a book from the database, by using its key (id).
+     * @param id The book's id, used as key in the database.
+     * @return The book.
+     */
+    public static Book retrieveBook(String id){
+
+        Transaction tx = null;
+        Book book = null;
+
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            book = session.get(Book.class, id);
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return book;
+    }
 }

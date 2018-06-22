@@ -31,6 +31,8 @@
                         <i id="upvote-post" style="color: black" class="fas fa-arrow-circle-up"></i>
                         <i id="downvote-post" style="color: black" class="fas fa-arrow-circle-down"></i>
                         <span id="score-post"></span>
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                         <input type="hidden" id="vote" value="${vote}">
                         <input type="hidden" name="idPost" value="${id}">
                     </div>

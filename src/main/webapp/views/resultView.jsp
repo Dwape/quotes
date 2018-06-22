@@ -24,7 +24,7 @@
                     <!-- Sidebar Header -->
                     <div class="sidebar-header">
                         <h5 style="font-weight:bold">Filter results</h5>
-                        <a onclick="clearFilters();" style="cursor: pointer">clear filters</a>
+                        <a onclick="clearFilters();" style="cursor: pointer">Clear filters</a>
                     </div>
             <!-- Sidebar Links -->
                 <ul class="authorList" id="authorList" style="list-style-type: none">

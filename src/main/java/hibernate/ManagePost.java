@@ -4,6 +4,7 @@ import model.*;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -11,7 +12,9 @@ import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ManagePost {
@@ -168,6 +171,36 @@ public class ManagePost {
         //maybe we need to look for the user in the database here.
         post.getCommentArray().add(comment);
         updatePost(post);
+    }
+
+    public static ArrayList<Post> getMostPopular(){
+        Transaction tx = null;
+        ArrayList<Post> posts = new ArrayList<>();
+
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            SQLQuery query;
+
+            //change so that sql can not be injected.
+            query = session.createSQLQuery("SELECT POST.IDPOST FROM POST ORDER BY SCORE DESC LIMIT 10");
+
+            Iterator results = query.list().iterator();
+
+            while (results.hasNext()){
+                Post post = new Post();
+
+                BigInteger tuple = (BigInteger) results.next();
+                post.setId(tuple.longValue());
+                /*post.setQuote((String) tuple[0]);
+                Book book = ManageBook.retrieveBook((String)tuple[1]);
+                post.setBook(book);*/
+                posts.add(post);
+            }
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return posts;
     }
 }
 

@@ -4,54 +4,47 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
+    <link rel="stylesheet" href="../css/loginView.css">
 </head>
 <body>
 
     <jsp:include page="_menu.jsp"></jsp:include>
 
-    <%--<h3>Login Page</h3>
-
-    <p style="color: red;">${errorMessage}</p>
-
-    <form method="POST" action="${pageContext.request.contextPath}/login" >
-        <input type="hidden" name="redirectId" value="${param.redirectId}" />
-        <table border="0">
-            <tr>
-                <td>User Name</td>
-                <td><input type="text" name="username" value= "${loginedUser.username}" required/> </td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><input type="password" name="password" value= "${loginedUser.password}" required/> </td>
-            </tr>
-
-            <tr>
-                <td colspan ="2">
-                    <input type="submit" value= "Submit" />
-                    <a href="${pageContext.request.contextPath}/">Cancel</a>
-                </td>
-            </tr>
-        </table>
-    </form>--%>
-
-    <div style="width: 30%" class="container bg-primary text-white p-3 rounded">
+    <%--<div style="width: 30%" class="container bg-primary text-white p-3 rounded">
         <form method="POST" action="j_security_check">
             <div class="form-group">
-                <%--<input type="hidden" name="redirectId" value="${param.redirectId}" />--%>
+                &lt;%&ndash;<input type="hidden" name="redirectId" value="${param.redirectId}" />&ndash;%&gt;
                 <label for="exampleInputUsername">Username</label>
                 <input type="text" name="j_username" class="form-control form-control-sm" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Enter username" required>
-                <%--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>--%>
+                &lt;%&ndash;<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>&ndash;%&gt;
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
                 <input type="password" name="j_password" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Password">
             </div>
-            <%--<div class="form-check">
+            &lt;%&ndash;<div class="form-check">
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>--%>
+            </div>&ndash;%&gt;
             <button type="submit" class="btn btn-danger">Submit</button>
         </form>
+    </div>--%>
+
+    <div class="container">
+        <div class="card card-container">
+            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+            <p id="profile-name" class="profile-name-card"></p>
+            <form method="POST" action="j_security_check" class="form-signin">
+
+                <label for="exampleInputUsername">Username</label>
+                <input type="text" name="j_username" class="form-control form-control-sm" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Enter username" required autofocus>
+
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="j_password" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Password" required>
+
+                <button type="submit" class="btn btn-lg btn-primary btn-block btn-signin">Sign in</button>
+            </form><!-- /form -->
+        </div><!-- /card-container -->
     </div>
 
 

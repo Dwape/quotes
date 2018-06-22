@@ -1,8 +1,12 @@
-.home-page {
-    background: white;
-    color: white;
+.content{
+    background-image: url(../assets/images/GermanyMountains.jpg);
+    background-size: cover;
+    height: -webkit-fill-available;
 }
 
+.search-box{
+    border: 1.5px black solid;
+}
 
 .form-control-borderless {
     border: 0;
@@ -39,3 +43,8 @@
     -webkit-box-shadow: none;
     box-shadow: none;
 }*/
+
+.custom-center{
+    margin-left: auto!important;
+    margin-right: auto!important;
+}

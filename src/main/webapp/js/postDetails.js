@@ -16,7 +16,10 @@ function getPost(){
     });
 }
 
+var post;
+
 function displayPost(post){
+    this.post = post;
     var postView = document.getElementById("post");
     postView.querySelector("#postQuote").innerText = post.quote;
     postView.querySelector("#postInfo").innerHTML = "from <a href=\"https://books.google.com/ebooks?id="+ post.idBook +"\" class=\"card-link\">" + post.bookTitle + "</a> by<a href=\"https://en.wikipedia.org/wiki/"+ post.bookAuthor + "\" class=\"card-link ml-1\">" + post.bookAuthor+ "</a>";
@@ -26,6 +29,10 @@ function displayPost(post){
     postView.querySelector("#score-post").innerText = post.score;
     var upvote = document.getElementById("upvote-post");
     var downvote = document.getElementById("downvote-post");
+
+    /*page = post.page;
+    publisher = post.publisher;
+    datePublished = post.datePublished;*/
 
     findImage(post.idBook); //display the book's image.
 
@@ -41,6 +48,14 @@ function displayPost(post){
     } else {
         upvote.disabled = true;
         downvote.disable = true;
+    }
+
+    //disable copy icon
+    if(noExtraInfo()){
+        var icon = document.getElementById('copy');
+        icon.setAttribute('data-content','Copy to clipboard unavailable');
+        icon.children[0].setAttribute('hidden','');
+        icon.children[1].removeAttribute('hidden');
     }
 }
 
@@ -270,4 +285,40 @@ function saveVote(isPositive, postID, commentID){
             }
         }
     });
+}
+
+function copyToClipboard() {
+
+    /* Get the text field */
+    var text = this.post.bookAuthor + ", " + this.post.bookTitle + " (" + this.post.placePublished + ": " + this.post.publisher + ", " + this.post.datePublished + "), " + this.post.page +".";
+
+    if (window.clipboardData && window.clipboardData.setData) {
+        // IE specific code path to prevent textarea being shown while dialog is visible.
+        return clipboardData.setData("Text", text);
+
+    } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+        var textarea = document.createElement("textarea");
+        textarea.textContent = text;
+        textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+        } catch (ex) {
+            console.warn("Copy to clipboard failed.", ex);
+            return false;
+        } finally {
+            document.body.removeChild(textarea);
+        }
+    }
+}
+
+/*$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});*/
+
+$('[data-toggle="popover"]').popover({'trigger':'hover'});
+
+function noExtraInfo() {
+    return this.post.datePublished === 'unknown' || this.post.publisher === 'unknown' || this.post.page === "" || this.post.placePublished === "";
 }

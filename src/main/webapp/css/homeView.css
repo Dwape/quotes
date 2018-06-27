@@ -1,7 +1,15 @@
+html{
+    height: fit-content;
+}
+
+body, .content {
+    height: 100%;
+}
+
 .content{
     background-image: url(../assets/images/GermanyMountains.jpg);
     background-size: cover;
-    height: -webkit-fill-available;
+    padding-bottom: 3rem!important;
 }
 
 .search-box{

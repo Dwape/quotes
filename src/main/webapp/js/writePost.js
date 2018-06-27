@@ -1,53 +1,4 @@
-//check if non used json can be removed after another search is done.
 
-/*$(function () {
-    var value = $('#book').val();
-    if ( value.length > 3 && value != "Search for books" ){
-        search();
-    }
-});*/
-
-/*
-$('#book').each(function() {
-    var elem = $(this);
-    var oldTime = new Date().getTime();
-
-    // Save current value of element
-    elem.data('oldVal', elem.val());
-
-    // Look for changes in the value
-    elem.bind("propertychange change click keyup input paste", function(event){
-        // If value has changed...
-        if (elem.data('oldVal') != elem.val()) {
-            // Updated stored value
-            elem.data('oldVal', elem.val());
-
-            var newTime = new Date().getTime();
-            // Do action
-            console.log(newTime-oldTime);
-            if (newTime-oldTime >= 500 && elem.val().length > 3){
-                oldTime = newTime;
-                search();
-            }
-        }
-    });
-});
-*/
-
-
-
-//jQuery autocomplete
-/*$(function () {
-
-    $( "#book" ).autocomplete({
-        source: function (request, response) {
-            var searchTerm = document.getElementById("book").value;
-            if (searchTerm.length >= 3){
-                return httpGet('https://www.googleapis.com/books/v1/volumes?q=' + searchTerm + '&projection=lite&orderBy=relevance&langRestrict=en&maxResults=5');
-            }
-        }
-    });
-});*/
 var result = [];
 autocomplete(document.getElementById("book"));
 
@@ -200,6 +151,12 @@ function drop(data) {
         } else {
             book[2] = data.items[i].volumeInfo.authors[0];
         }
+        var publisher = data.items[i].volumeInfo.publisher;
+        if (publisher === undefined) book[3] = 'unknown';
+        else book[3] = publisher;
+        if (data.items[i].volumeInfo.publishedDate === undefined) book[4] = 'unknown';
+        else book[4] = data.items[i].volumeInfo.publishedDate.substring(0, 4);
+
         books.push(book);
         /*select.options.add( new Option(book[1] + ' by ' + book[2]));*/
         availableTags.push(book[1] + ' by ' + book[2]);
@@ -214,6 +171,8 @@ function drop(data) {
         document.getElementById("bookId").value = books[0][0];
         document.getElementById("bookTitle").value = books[0][1];
         document.getElementById("bookAuthor").value = books[0][2];
+        document.getElementById("bookPublisher").value = books[0][3];
+        document.getElementById("bookPublishedDate").value = books[0][4];
     }
 
     result = availableTags;

@@ -36,10 +36,47 @@
                 <input type="hidden" id="bookId" name="bookId">
                 <input type="hidden" id="bookTitle" name="bookTitle">
                 <input type="hidden" id="bookAuthor" name="bookAuthor">
-                <%--<button type="submit" class="btn btn-outline-primary">Post</button>--%>
-                <div class="button-container">
+                <div class="button-container d-flex justify-content-between">
+                    <button type="button" id="info-button" class="btn btn-lg btn-secondary" data-toggle="modal" data-target="#citeModal">
+                        Add extra info
+                    </button>
                     <button type="submit" class="btn btn-lg btn-primary" id="sumbit-button" type="submit">Post</button>
                 </div>
+
+                <%--Modal--%>
+                <div class="modal fade" id="citeModal" tabindex="-1" role="dialog" aria-labelledby="citeModalTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="citeModalTitle">Extra information</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group mb-0">
+                                    <label for="postPage">Page number</label>
+                                    <input type="text" name="postPage" class="form-control form-control-sm mb-2" id="postPage" placeholder="Enter the page number where others may find your quote">
+
+                                    <label for="bookPublisher">Publisher</label>
+                                    <input type="text" name="bookPublisher" class="form-control form-control-sm mb-2" id="bookPublisher" placeholder="Enter the publisher of the book">
+
+                                    <label for="bookPlacePublished">Place Published</label>
+                                    <input type="text" name="bookPlacePublished" class="form-control form-control-sm mb-2" id="bookPlacePublished" placeholder="Enter the place of publication of the book">
+
+                                    <label for="bookPublishedDate">Date Published</label>
+                                    <input type="text" name="bookPublishedDate" class="form-control form-control-sm mb-2" id="bookPublishedDate" placeholder="Enter year (YYYY) of publication of the book">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%-- / Modal--%>
+
             </form>
         </div>
     </div>
@@ -52,33 +89,6 @@
     </div>
 </div>--%>
 
-<%--<div style="width: 30%" class="container bg-primary text-white p-3 rounded">
-    <form method="POST" autocomplete="off" action="${pageContext.request.contextPath}/writePost">
-        <div class="form-group">
-            <label for="exampleInputUsername">Quote</label>
-            <input type="text" name="quote" class="form-control form-control-sm" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Enter quote" required>
-        </div>
-        <div class="form-group">
-            <label for="postText">Additional text</label>
-            <textarea class="form-control" id="postText" rows="5" name="text"></textarea>
-        </div>
-        <div class="form-group ui-widget">
-            <div class="container p-0 autocomplete">
-                <label for="book">Book</label>
-                <input pattern=".{3,}" type="text" id="book" name="searchText" class="form-control form-control-sm" placeholder="Search for books" required>
-            </div>
-        </div>
-        &lt;%&ndash;<div class="form-group" id="bookSearchBar">
-            <select class="form-control form-control-sm">
-                <option value="default">Select a book</option>
-            </select>
-        </div>&ndash;%&gt;
-        <input type="hidden" id="bookId" name="bookId">
-        <input type="hidden" id="bookTitle" name="bookTitle">
-        <input type="hidden" id="bookAuthor" name="bookAuthor">
-        <button type="submit" class="btn btn-danger">Post</button>
-    </form>
-</div>--%>
 <jsp:include page="bootstrapBody.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

@@ -46,7 +46,6 @@
                             <div>
                                 <i id="upvote-post" style="color: black" class="fas fa-arrow-circle-up"></i>
                                 <i id="downvote-post" style="color: black" class="fas fa-arrow-circle-down mr-2"></i>
-
                                 <a tabindex="0" class="remove-blue" role="button" data-toggle="popover"
                                    data-trigger="focus" data-content="Copy to clipboard" id="copy">
                                     <i class="fas fa-clipboard" onclick="copyToClipboard()"></i>
@@ -79,23 +78,25 @@
         <div id="genericComment" class="comment" style="display: none;">
             <div class="card boxx mb-4" style="width: 40rem;" id="cardComment">
                 <div class="card-body">
-                    <div class="container" id="descriptionContainter">
+                    <div class="container" id="commentContainer">
                         <div class="row justify-content-between">
-                            <div class="col-10 p-0" style="height: 20px">
+                            <div class="col-10 p-0">
                                 <p class="card-text" id="description"></p>
                             </div>
                             <div class="col-1 p-0">
                                 <i id="collapse" style="cursor: pointer" class="fas fa-angle-up"></i>
                             </div>
                         </div>
-                    </div>
-                    <div class="container" id="commentContainer">
-                        <footer class="blockquote-footer mb-2 mt-2" id="footer"></footer>
+                        <div class="row justify-content-between">
+                            <div class="col-6 p-0">
+                                <footer class="blockquote-footer mb-2 mt-2" id="footer"></footer>
+                            </div>
+                        </div>
                         <div class="row justify-content-between">
                             <div class="col-4 p-0" style="height: 20px">
                                 <i id="upvote-comment" style="color: black" class="fas fa-arrow-circle-up"></i>
                                 <i id="downvote-comment" style="color: black" class="fas fa-arrow-circle-down"></i>
-                                <span id="score">0</span>
+                                <span id="score" style="margin-left: 5px">0</span>
                             </div>
                             <div class="col-1 p-0 mr-3">
                                 <a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>

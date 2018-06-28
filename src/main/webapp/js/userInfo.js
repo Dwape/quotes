@@ -5,7 +5,6 @@ function findUserPosts(){
         success: function(result){
             var json = JSON.parse(result);
             displayUserPosts(json);
-            loadFilters(); //shows the filters
         }
     });
 }

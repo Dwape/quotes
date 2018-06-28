@@ -62,7 +62,7 @@ function processMentions(replyText){
     for (var i=0; i < replyText.length; i++){
         var char = replyText.charAt(i);
         if (readingMention){
-            if (char === ' ' || char === '.' || char === ','){ //should include any character that is not allowed in usernames
+            if (char === ' ' || char === '.' || char === ',' || char === '@'){ //should include any character that is not allowed in usernames
                 if (username.length === 0) {
                     newText += '@';
                 } else {

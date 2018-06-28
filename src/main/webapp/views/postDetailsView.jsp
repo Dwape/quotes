@@ -67,7 +67,7 @@
         <c:choose>
             <c:when test="<%=request.getRemoteUser() != null%>">
                 <div class="form-group">
-                    <textarea class="form-control" id="replyText" maxlength="5000" rows="3" style="width: 40rem;" name="text" placeholder="Write a comment"></textarea>
+                    <textarea class="form-control" id="replyText" maxlength="5000" rows="4" style="width: 50rem;" name="text" placeholder="Write a comment"></textarea>
                 </div>
                 <input type="hidden" name="idPost" id="replyPostId" value="${id}">
                 <small id="shortcutInfo" class="form-text text-muted mb-3">Tip: you can press Ctrl + Enter to submit your comment</small>
@@ -79,18 +79,28 @@
         <div id="genericComment" class="comment" style="display: none;">
             <div class="card boxx mb-4" style="width: 40rem;" id="cardComment">
                 <div class="card-body">
-                    <p class="card-text" id="description"></p>
-                    <div class="container" id="commentContainer">
+                    <div class="container" id="descriptionContainter">
                         <div class="row justify-content-between">
-                            <div class="col-6 p-0" style="height: 20px"><footer class="blockquote-footer" id="footer"></footer></div>
-                            <div class="col-2 p-0">
-                                <a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
+                            <div class="col-10 p-0" style="height: 20px">
+                                <p class="card-text" id="description"></p>
+                            </div>
+                            <div class="col-1 p-0">
                                 <i id="collapse" style="cursor: pointer" class="fas fa-angle-up"></i>
                             </div>
                         </div>
-                        <i id="upvote-comment" style="color: black" class="fas fa-arrow-circle-up"></i>
-                        <i id="downvote-comment" style="color: black" class="fas fa-arrow-circle-down"></i>
-                        <span id="score">0</span>
+                    </div>
+                    <div class="container" id="commentContainer">
+                        <footer class="blockquote-footer mb-2 mt-2" id="footer"></footer>
+                        <div class="row justify-content-between">
+                            <div class="col-4 p-0" style="height: 20px">
+                                <i id="upvote-comment" style="color: black" class="fas fa-arrow-circle-up"></i>
+                                <i id="downvote-comment" style="color: black" class="fas fa-arrow-circle-down"></i>
+                                <span id="score">0</span>
+                            </div>
+                            <div class="col-1 p-0 mr-3">
+                                <a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

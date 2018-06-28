@@ -32,7 +32,7 @@
             </div>
             <div class="col-7" >
                 <div class="card mb-4" id="post" style="width: 40rem;">
-                    <div class="card-header row  mx-0" >
+                    <div class="card-header row  mx-0 bg-dark" >
                         <div class="col-1 p-0">
                             <span id="score-post" style="font-size: large"></span>
                             <i class="fas fa-fire" style="transform: scale(1.2)"></i>
@@ -70,7 +70,7 @@
                 </div>
                 <input type="hidden" name="idPost" id="replyPostId" value="${id}">
                 <small id="shortcutInfo" class="form-text text-muted mb-3">Tip: you can press Ctrl + Enter to submit your comment</small>
-                <button type="submit" id="submitPostReply" class="btn btn-danger mb-3">Submit</button>
+                <button type="submit" id="submitPostReply" class="btn btn-dark mb-3">Submit</button>
             </c:when>
         </c:choose>
         <div id="comments"></div>
@@ -112,7 +112,7 @@
                 <input type="hidden" name="idPost" id="idPost" value="${id}">
                 <input type="hidden" name="idParent" id="idParent" value="${comment.id}">
                 <input type="hidden" name="idParent" id="idComment">
-                <button type="submit" id="submitReply" class="btn btn-danger mb-3">Submit</button>
+                <button type="submit" id="submitReply" class="btn btn-dark mb-3">Submit</button>
             </div>
         </div>
     </div>

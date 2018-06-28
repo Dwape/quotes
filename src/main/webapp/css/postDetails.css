@@ -15,3 +15,20 @@
     margin-left: 10px;
     margin-bottom: -5px;
 }
+
+body, html {
+    background-color: #eff0f2;
+}
+
+#postQuote{
+    color: white;
+    margin-top: 2px;
+}
+
+#score-post{
+    color: white;
+}
+
+.fa-fire{
+    color: white;
+}

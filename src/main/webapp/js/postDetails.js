@@ -23,13 +23,15 @@ function displayPost(post){
     var postView = document.getElementById("post");
     postView.querySelector("#postQuote").innerText = post.quote;
     postView.querySelector("#postInfo").innerHTML = "from <a href=\"https://books.google.com/ebooks?id="+ post.idBook +"\" class=\"card-link\">" + post.bookTitle + "</a> by<a href=\"https://en.wikipedia.org/wiki/"+ post.bookAuthor + "\" class=\"card-link ml-1\">" + post.bookAuthor+ "</a>";
-    //document.getElementsByClassName("twitter-share-button")[0].setAttribute("data-text", post.quote);
     postView.querySelector("#postDescription").innerHTML = processMentions(post.description);
     var date = new Date(post.datePosted);
     postView.querySelector("#postFooter").innerText = "posted by " + post.postedBy + " on " + date.toLocaleString();
     postView.querySelector("#score-post").innerText = post.score;
     var upvote = document.getElementById("upvote-post");
     var downvote = document.getElementById("downvote-post");
+
+    document.getElementsByClassName("twitter-share-button")[0].href += post.quote;
+    loadButton();
 
     /*page = post.page;
     publisher = post.publisher;

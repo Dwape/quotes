@@ -6,6 +6,10 @@
     <title>Edit Post</title>
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
     <link rel="stylesheet" href="../css/postDetails.css" type="text/css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quotes: book quotes discussion" />
+    <meta name="twitter:description" content="Find millions of quotes explained." />
+    <meta name="twitter:image" content="https://i.imgur.com/B3vHzpN.png" />
 </head>
 <body onload="loadView();">
 
@@ -47,6 +51,7 @@
                                    data-trigger="focus" data-content="Copy to clipboard" id="copy">
                                     <i class="fas fa-clipboard" onclick="copyToClipboard()"></i>
                                     <i class="fas fa-clipboard disabled-icon" hidden></i>
+                                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false" data-text="This is not working">Tweet</a>
                                 </a>
                             </div>
                             <footer class="blockquote-footer" id="postFooter"></footer>
@@ -121,5 +126,6 @@
 <script src="../js/shortcut.js"></script>
 <script src="../js/bookImage.js"></script>
 <script src="../js/jquery/jquery-3.3.1.min.js"></script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
 </html>

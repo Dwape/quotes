@@ -47,6 +47,8 @@ public class Post {
 
     private String description;
 
+    private String page;
+
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="username", nullable = false)
     private User user;
@@ -92,6 +94,7 @@ public class Post {
         this.book = book;
         this.user = user;
         this.score = 0;
+        this.page = null;
     }
 
     public String getQuote() {
@@ -166,5 +169,13 @@ public class Post {
     public void removeVote(boolean positive){
         if (positive) this.score = this.score-1;
         else this.score = this.score+1;
+    }
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
     }
 }

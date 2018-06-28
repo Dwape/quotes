@@ -6,7 +6,7 @@
     cursor: pointer;
 }
 
-#sumbit-button{
+#sumbit-button, #info-button{
     font-size: large;
     padding: 8px 18px;
 }
@@ -21,7 +21,8 @@
 
 .button-container{
     text-align: end;
-    padding-right: 11px;
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
     padding-bottom: 11px;
 }
 

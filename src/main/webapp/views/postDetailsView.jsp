@@ -21,27 +21,41 @@
     <div class="container">
         <p style="display: none" id="user"><%=request.getRemoteUser()%></p>
         <div class="row">
-            <div class="col-7" >
-                <div class="card mb-4" id="post" style="width: 40rem;">
-                    <h5 class="card-header" id="postQuote"></h5>
-                    <div class="card-body pb-2">
-                        <h6 class="card-subtitle mb-2 text-muted" id="postInfo"></h6>
-                        <p class="card-text" id="postDescription"></p>
-                        <footer class="blockquote-footer" id="postFooter"></footer>
-                        <i id="upvote-post" style="color: black" class="fas fa-arrow-circle-up"></i>
-                        <i id="downvote-post" style="color: black" class="fas fa-arrow-circle-down"></i>
-                        <span id="score-post"></span>
-                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
-                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                        <input type="hidden" id="vote" value="${vote}">
-                        <input type="hidden" name="idPost" value="${id}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
+            <div class="col-auto">
                 <a id="imageLink" href="">
                     <img id="bookImage" style="border-radius: 3%;" height="178" width="128" src="../assets/images/Image-not-available.jpg">
                 </a>
+            </div>
+            <div class="col-7" >
+                <div class="card mb-4" id="post" style="width: 40rem;">
+                    <div class="card-header row  mx-0" >
+                        <div class="col-1 p-0">
+                            <span id="score-post" style="font-size: large"></span>
+                            <i class="fas fa-fire" style="transform: scale(1.2)"></i>
+                        </div>
+                        <h5 id="postQuote"></h5>
+                    </div>
+                    <div class="card-body pb-2">
+                        <h6 class="card-subtitle mb-2 text-muted" id="postInfo"></h6>
+                        <p class="card-text" id="postDescription"></p>
+                        <div class="row d-flex justify-content-between mx-0">
+                            <div>
+                                <i id="upvote-post" style="color: black" class="fas fa-arrow-circle-up"></i>
+                                <i id="downvote-post" style="color: black" class="fas fa-arrow-circle-down mr-2"></i>
+
+                                <a tabindex="0" class="remove-blue" role="button" data-toggle="popover"
+                                   data-trigger="focus" data-content="Copy to clipboard" id="copy">
+                                    <i class="fas fa-clipboard" onclick="copyToClipboard()"></i>
+                                    <i class="fas fa-clipboard disabled-icon" hidden></i>
+                                </a>
+                            </div>
+                            <footer class="blockquote-footer" id="postFooter"></footer>
+
+                            <input type="hidden" id="vote" value="${vote}">
+                            <input type="hidden" name="idPost" value="${id}">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <c:choose>

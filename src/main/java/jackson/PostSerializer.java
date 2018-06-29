@@ -45,9 +45,9 @@ public class PostSerializer extends StdSerializer<Post> {
             jgen.writeStringField("bookAuthor", post.getBook().getAuthor());
             jgen.writeObjectField("datePosted", post.getDatePosted());
             jgen.writeStringField("idBook", post.getBook().getIdBook());
-            jgen.writeStringField("publisher", post.getBook().getPublisher());
-            jgen.writeStringField("datePublished", post.getBook().getDatePublished());
-            jgen.writeStringField("placePublished", post.getBook().getPlacePublished());
+            jgen.writeStringField("publisher", post.getPublisher());
+            jgen.writeStringField("datePublished", post.getDatePublished());
+            jgen.writeStringField("placePublished", post.getPlacePublished());
             jgen.writeStringField("page", post.getPage());
 
             if (loggedUser != null){

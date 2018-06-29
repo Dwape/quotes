@@ -53,7 +53,7 @@ public class ManageAccountServlet extends HttpServlet {
         // should redirect to manage user
 
         doGet(request, response);
-        //response.sendRedirect("/register");
+        //response.sendRedirect("/secure/manageAccount");
 
         //display message saying changes were saved.
     }

@@ -49,6 +49,15 @@ public class Post {
 
     private String page;
 
+    @Column(name = "publisher")
+    private String publisher;
+
+    @Column(name = "datePublished")
+    private String datePublished;
+
+    @Column(name = "placePublished")
+    private String placePublished;
+
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="username", nullable = false)
     private User user;
@@ -95,6 +104,9 @@ public class Post {
         this.user = user;
         this.score = 0;
         this.page = null;
+        this.publisher = null;
+        this.datePublished = null;
+        this.placePublished = null;
     }
 
     public String getQuote() {
@@ -177,5 +189,29 @@ public class Post {
 
     public void setPage(String page) {
         this.page = page;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getDatePublished() {
+        return datePublished;
+    }
+
+    public void setDatePublished(String datePublished) {
+        this.datePublished = datePublished;
+    }
+
+    public String getPlacePublished() {
+        return placePublished;
+    }
+
+    public void setPlacePublished(String placePublished) {
+        this.placePublished = placePublished;
     }
 }

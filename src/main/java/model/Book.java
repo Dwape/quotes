@@ -17,15 +17,6 @@ public class Book {
     @Column(name = "author")
     private String author;
 
-    @Column(name = "publisher")
-    private String publisher;
-
-    @Column(name = "datePublished")
-    private String datePublished;
-
-    @Column(name = "placePublished")
-    private String placePublished;
-
     @Id
     @Column(name = "idBook")
     private String idBook;
@@ -39,9 +30,6 @@ public class Book {
         this.idBook = id;
         this.title = title;
         this.author = author;
-        this.publisher = null;
-        this.datePublished = null;
-        this.placePublished = null;
         this.postArray = new HashSet<>();
     }
 
@@ -75,29 +63,5 @@ public class Book {
 
     public void setPostArray(Set<Post> postArray) {
         this.postArray = postArray;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public String getDatePublished() {
-        return datePublished;
-    }
-
-    public void setDatePublished(String datePublished) {
-        this.datePublished = datePublished;
-    }
-
-    public String getPlacePublished() {
-        return placePublished;
-    }
-
-    public void setPlacePublished(String placePublished) {
-        this.placePublished = placePublished;
     }
 }

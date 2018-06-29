@@ -55,11 +55,11 @@ public class WritePostServlet extends HttpServlet {
         //String book = request.getParameter("book");
         //Book id should be provided by Google books api.
         Book book = new Book(bookId, bookTitle, bookAuthor);
-        book.setPublisher(bookPublisher);
-        book.setDatePublished(bookPublishedDate);
-        book.setPlacePublished(bookPlacePublished);
         Post post = new Post(quote, datePosted, postText, book, user);
         post.setPage(postPage);
+        post.setPublisher(bookPublisher);
+        post.setDatePublished(bookPublishedDate);
+        post.setPlacePublished(bookPlacePublished);
 
         try{
             ManageBook.addBook(book); //adds the book to the database.

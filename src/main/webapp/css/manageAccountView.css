@@ -1,3 +1,17 @@
+body, html {
+    height: 100%;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgb(104, 145, 162), rgb(176,224,230));
+}
+
+.badge{
+    margin-bottom: 16px;
+    font-size: medium!important;
+    color: white!important;
+    font-weight: unset!important;
+    cursor: pointer;
+}
+
 .btn-signin{
     font-weight: 700;
     height: 36px;
@@ -70,6 +84,24 @@
     transition: all 0.218s;
 }
 
+#save-btn{
+    background-color: rgb(104, 145, 162);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: none;
+}
+
+#save-btn:hover,
+#save-btn:active,
+#save-btn:focus {
+    background-color: #4285F4;
+}
+
+.header{
+    max-width: 350px;
+    padding: 40px 40px;
+}
 /*
 .btn.btn-signin:hover,
 .btn.btn-signin:active,

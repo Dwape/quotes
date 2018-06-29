@@ -32,14 +32,15 @@
                             <input pattern=".{3,}" type="text" id="book" name="searchText" class="form-control form-control-sm" placeholder="Search for books" required>
                         </div>
                     </div>
+                    <a class="badge badge-secondary" data-toggle="modal" data-target="#citeModal">Add extra info</a>
                 </div>
                 <input type="hidden" id="bookId" name="bookId">
                 <input type="hidden" id="bookTitle" name="bookTitle">
                 <input type="hidden" id="bookAuthor" name="bookAuthor">
-                <div class="button-container d-flex justify-content-between">
-                    <button type="button" id="info-button" class="btn btn-lg btn-secondary" data-toggle="modal" data-target="#citeModal">
+                <div class="button-container d-flex justify-content-end">
+                    <%--<button type="button" id="info-button" class="btn btn-lg btn-secondary" data-toggle="modal" data-target="#citeModal">
                         Add extra info
-                    </button>
+                    </button>--%>
                     <button type="submit" class="btn btn-lg btn-primary" id="sumbit-button" type="submit">Post</button>
                 </div>
 
@@ -70,7 +71,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                                <button type="button" class="btn btn-primary" id="save-btn" data-dismiss="modal">Save</button>
                             </div>
                         </div>
                     </div>

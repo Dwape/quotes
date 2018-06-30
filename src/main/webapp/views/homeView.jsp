@@ -44,8 +44,8 @@
             <!--end of col-->
         </div>
 
-        <div class="card mx-5 mb-2 mt-5 text-center custom-center" style="background-color: rgb(176,224,230); max-width: 1000px">
-            <div class="card-header p-2 pl-3"><h5>Popular Quotes</h5></div>
+        <div class="card mx-5 mb-2 mt-5 text-center custom-center" style="background-color: #343a40; max-width: 1000px">
+            <div class="card-header p-2 pl-3"><h5 class="popular-header">Popular Quotes</h5></div>
         </div>
 
         <div class="card mx-5 custom-center" style="max-width: 1000px">

@@ -37,7 +37,7 @@
                             <span id="score-post" style="font-size: large"></span>
                             <i class="fas fa-fire" style="transform: scale(1.2)"></i>
                         </div>
-                        <h5 id="postQuote"></h5>
+                        <h5 class="col-11" id="postQuote"></h5>
                     </div>
                     <div class="card-body pb-2">
                         <h6 class="card-subtitle mb-2 text-muted" id="postInfo"></h6>
@@ -78,28 +78,26 @@
         <div id="genericComment" class="comment" style="display: none;">
             <div class="card boxx mb-4" style="width: 40rem;" id="cardComment">
                 <div class="card-body">
-                    <div class="container" id="commentContainer">
-                        <div class="row justify-content-between">
-                            <div class="col-10 p-0">
-                                <p class="card-text" id="description"></p>
+                    <div class="row m-0" id="commentContainer">
+                        <div class="col-1 p-0">
+                            <div class="col-12 p-0">
+                                <span id="score">0</span>
+                                <i class="fas fa-fire" style="color: black" id="fire-icon"></i>
                             </div>
-                            <div class="col-1 p-0">
-                                <i id="collapse" style="cursor: pointer" class="fas fa-angle-up"></i>
-                            </div>
+                            <div class="col-12 p-0"><i id="upvote-comment" style="color: black" class="fas fa-arrow-circle-up"></i></div>
+                            <div class="col-12 p-0"><i id="downvote-comment" style="color: black" class="fas fa-arrow-circle-down"></i></div>
                         </div>
-                        <div class="row justify-content-between">
-                            <div class="col-6 p-0">
-                                <footer class="blockquote-footer mb-2 mt-2" id="footer"></footer>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between">
-                            <div class="col-4 p-0" style="height: 20px">
-                                <i id="upvote-comment" style="color: black" class="fas fa-arrow-circle-up"></i>
-                                <i id="downvote-comment" style="color: black" class="fas fa-arrow-circle-down"></i>
-                                <span id="score" style="margin-left: 5px">0</span>
-                            </div>
-                            <div class="col-1 p-0 mr-3">
-                                <a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
+                        <div class="col-11 p-0">
+                            <div class="row m-0 justify-content-between">
+                                <div class="col-12 p-0 d-flex justify-content-between">
+                                    <p class="card-text" id="description"></p>
+                                    <i id="collapse" style="cursor: pointer" class="fas fa-angle-up"></i>
+                                </div>
+                                <div class="col-12 p-0 d-flex justify-content-between align-items-end">
+                                    <a id="replyLink" style="cursor: pointer" class="card-link">Reply</a>
+                                    <footer class="blockquote-footer" id="footer"></footer>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -123,7 +121,7 @@
                 <div class="container" id="bannerContainer">
                     <div class="row justify-content-between">
                         <div class="col-7 p-0" style="height: 20px"><footer class="blockquote-footer" id="bannerFooter"></footer></div>
-                        <div class="col-1 p-0">
+                        <div class="col-auto p-0 d-flex justify-content-between">
                             <i id="expand" style="cursor: pointer" class="fas fa-angle-down"></i>
                         </div>
                     </div>

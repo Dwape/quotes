@@ -53,6 +53,18 @@ function addNewComment(comment){
     changeColor(comment, commentHighlight); //experimental
 }
 
+/*function processText(replyText){
+    var txt = processMentions(replyText);
+    return trimText(txt,350);
+}
+
+function trimText(str,length){
+    if(str.length > length){
+        return str.substring(0,length) + '...'
+    }
+    return str;
+}*/
+
 function processMentions(replyText){
     //iterate through the comment text to see if there are any mentions
     var newText = "";

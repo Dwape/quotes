@@ -3,55 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+    <link rel="stylesheet" href="../css/register.css">
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
 </head>
 <body>
 
     <jsp:include page="_menu.jsp"></jsp:include>
 
-    <h3>Register</h3>
+    <div class="container p-0 d-flex justify-content-start header">
+        <div class="col p-0">
+            <h3>Register</h3>
+            <p style="color: red;">${errorMessage}</p>
+        </div>
+    </div>
 
-    <p style="color: red;">${errorMessage}</p>
+    <div class="container">
+        <div class="card card-container">
+            <form method="POST" action="${pageContext.request.contextPath}/register">
+                <input type="hidden" name="redirectId" value="${param.redirectId}" />
 
-    <form method="POST" action="${pageContext.request.contextPath}/register">
-        <input type="hidden" name="redirectId" value="${param.redirectId}" />
-        <table border="0">
-            <tr>
-                <td>Name</td>
-                <td><input type="text" name="name" required/> </td>
-            </tr>
-            <tr>
-                <td>Surname</td>
-                <td><input type="text" name="surname" required/> </td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td><input type="email" name="email" required/> </td>
-            </tr>
-            <tr>
-                <td>User Name</td>
-                <td><input type="text" name="username" required/> </td>
-            </tr>
-            <tr>
-                <td>Date of Birth</td>
-                <td><input type="date" name="dateOfBirth" required/> </td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><input type="password" name="password" required/> </td>
-            </tr>
-            <tr>
-                <td>Confirm Password</td>
-                <td><input type="password" name="confirmPassword" required/> </td>
-            </tr>
-            <tr>
-                <td colspan ="2">
-                    <input type="submit" value= "Submit" />
-                    <a href="${pageContext.request.contextPath}/">Cancel</a>
-                </td>
-            </tr>
-        </table>
-    </form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input class="form-control" name="name" id="name" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="surname">Surname</label>
+                    <input type="text" name="surname" class="form-control form-control-sm" id="surname" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" class="form-control form-control-sm" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input class="form-control" name="username" id="username" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <input type="date" name="dateOfBirth" class="form-control form-control-sm" id="dateOfBirth" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">New Password</label>
+                    <input type="password" name="password" class="form-control form-control-sm" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" name="confirmPassword" class="form-control form-control-sm" id="confirmPassword" required>
+                </div>
+
+                <button type="submit" id="register-submit" class="btn btn-lg btn-primary btn-block btn-signin">Submit</button>
+                <div class="my-3"><a href="${pageContext.request.contextPath}/index">Cancel</a></div>
+            </form>
+        </div>
+    </div>
+
+
     <jsp:include page="bootstrapBody.jsp"></jsp:include>
 </body>
 </html>

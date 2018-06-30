@@ -7,6 +7,7 @@
     <jsp:include page="bootstrapHead.jsp"></jsp:include>
     <link rel="stylesheet" href="../css/resultView.css">
     <link rel="stylesheet" href="../css/searchResult.css">
+    <link rel="stylesheet" href="../css/userInfo.css">
 </head>
 <body onload="findUserPosts();">
 

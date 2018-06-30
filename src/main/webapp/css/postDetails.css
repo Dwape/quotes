@@ -22,7 +22,7 @@ body, html {
 
 #postQuote{
     color: white;
-    margin-top: 2px;
+    margin:0px;
 }
 
 #score-post{

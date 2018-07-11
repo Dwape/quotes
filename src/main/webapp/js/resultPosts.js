@@ -37,3 +37,8 @@ function createPost(post){
 
     return postStructure;
 }
+/*
+
+$('.stick-top').affix({
+    offset: {top: 50}
+});*/

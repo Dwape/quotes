@@ -20,7 +20,7 @@
     <div class="container">
         <div class="row">
             <div class="col-3 wrapper" id="wrapper">
-                <nav id="sidebar">
+                <nav class="sticky-top" id="sidebar">
                     <!-- Sidebar Header -->
                     <div class="sidebar-header">
                         <h5 style="font-weight:bold">Filter results</h5>

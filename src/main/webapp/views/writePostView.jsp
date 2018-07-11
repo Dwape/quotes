@@ -18,13 +18,13 @@
                 <div class="card-header">
                     <div class="form-group mb-0">
                         <label for="exampleInputUsername">Quote</label>
-                        <input type="text" name="quote" class="form-control form-control-sm" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Enter quote" required>
+                        <input type="text" name="quote" class="form-control form-control-sm" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Enter quote" maxlength="255" required>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
                         <label for="postText">Ask a question or make a statement!</label>
-                        <textarea class="form-control" id="postText" rows="5" name="text"></textarea>
+                        <textarea class="form-control" id="postText" rows="5" name="text" maxlength="255"></textarea>
                     </div>
                     <div class="form-group ui-widget mb-0">
                         <div class="container p-0 autocomplete">
